@@ -13,5 +13,5 @@ La plateforme fournit les fonctionnalité comme :
     - la géolocalisation du client
 
 ### Auteur
-Flavien-hugs (Pythonist et Developpeur Web et Mobile)
-**Twitter : [@flavien-hugs](https://twitter.com/flavien_hugs)**
+[flavien-hugs](https://twitter.com/flavien_hugs) (Pythonist et Developpeur Web et Mobile)
+**Twitter : [flavien-hugs](https://twitter.com/flavien_hugs)**
