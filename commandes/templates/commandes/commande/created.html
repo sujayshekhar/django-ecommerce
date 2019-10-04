@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block head_title %}{% trans "Success" %}{% endblock head_title %}
+
+{% block carousel %}
+{% endblock carousel %}
+
+{% block content %}
+    <!--Main layout-->
+    <main class="mt-5 pt-4">
+        <section class="container wow fadeIn">
+            <h1 class="my h2 text-center text-uppercase font-weight-bold">{% trans "Super !" %}</h1>
+            <div class="row wow fadeIn">
+                <div class="col-md-12 text-center">
+                    {% trans "Votre commande a été enregistré avec success.
+                    La référence de votre commmande est " %}  <strong>{{ commande.id }}</strong>.
+                </div>
+            </div>
+        </section>
+    </main><!--./Main layout-->
+{% endblock content %}

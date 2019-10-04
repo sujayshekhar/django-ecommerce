@@ -1,0 +1,575 @@
+			{% load i18n static %}
+
+            <style>
+                .row-sm {
+                    margin-right: -7px;
+                    margin-left: -7px;
+                    display: -ms-flexbox;
+                    display: -webkit-box;
+                    display: flex;
+                    -ms-flex-wrap: wrap;
+                    flex-wrap: wrap;
+                }
+
+                .row-sm > [class^="col"] {
+                    padding-left: 7px;
+                    padding-right: 7px;
+                }
+
+                ul.row-sm {
+                    list-style: none;
+                    padding: 0;
+                    margin-bottom: 0;
+                }
+
+                .menu-category li {
+                    position: relative;
+                    display: block;
+                }
+
+                .menu-category > li > a {
+                    display: block;
+                    padding: 8px 13px;
+                    color: #333;
+                    transition: all .3s ease 0s;
+                }
+
+                .menu-category li:hover a {
+                    color: #ff4136;
+                    background-color: #f9f9f9;
+                    -webkit-transition: all 0.3s;
+                    transition: all 0.3s;
+                }
+
+                .menu-category li .category-menu-dropdown,
+                .menu-category li .category-menu-dropdown2,
+                .menu-category li .category-menu-dropdown3 {
+                    position: absolute;
+                    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
+                    background: #fff none repeat scroll 0 0; padding: 52px 30px;
+                    left: 110%; opacity: 0; visibility: hidden;
+                    top: 0; transition: all 0.3s ease 0s; height: 325px; width: 635px;
+                    z-index: 999999999;
+                }
+
+                .menu-category li .category-menu-dropdown2 { top: -40px; }
+                .menu-category li .category-menu-dropdown3 { top: -280px; }
+
+                .menu-category li:hover .category-menu-dropdown,
+                .menu-category li:hover .category-menu-dropdown2,
+                .menu-category li:hover .category-menu-dropdown3 {
+                    opacity: 1; left: 100%; visibility: visible;
+                }
+
+                .menu-category li .category-common h4 {
+                    font-size: 14px; font-weight: 600;
+                    letter-spacing: 0.5px; text-transform: uppercase; }
+
+                .menu-category li .category-common { float: left; width: 50%; }
+
+                .menu-category li .category-common ul li{ border: medium none; }
+
+                .menu-category li .category-common ul li a {
+                    padding: 3px 0; color: #333; background-color: transparent;
+                }
+                .menu-category li .category-common ul li a:hover {
+                    background-color: transparent; color: #ff4136;
+                }
+
+                .owl-prev, .owl-next {
+                    z-index: 9;
+                    top: 50%;
+                    -webkit-transform: translateY(-50%);
+                        transform: translateY(-50%);
+                    position: absolute;
+                }
+
+                .owl-prev {left: -30px; content: "<";}
+                .owl-next {right: -30px; content: ">";}
+
+                .slider-main .owl-prev, .slider-main .owl-next {
+                    padding: 18px 7px;
+                    color: #FFF;
+                    background-color: rgba(0, 0, 0, 0.4);
+                }
+
+                .slider-main .owl-nav [class*='owl-']:hover {
+                    background: #241;
+                    color: #FFF;
+                }
+
+                .slider-main .owl-prev {left: 0;}
+                .slider-main .owl-next {right: 0;}
+                .slider-main .item-slide {height: 325px; }
+                .slider-main .item-slide img {
+                    min-width: 100%;
+                    min-height: 100%;
+                    -o-object-fit: cover;
+                       object-fit: cover;
+                }
+
+                .box {
+                    padding: 1rem 1.2rem;
+                }
+
+                .icon {
+                    display: -webkit-inline-box;
+                    display: -ms-inline-flexbox;
+                    -webkit-box-align: center;
+                        -ms-flex-align: center;
+                }
+
+                .icon .icon-wrap {position: relative;}
+
+                .icon .text-wrap {
+                    line-height: 1.2;
+                    padding-left: 10px;
+                }
+                .icon small, .icon .title { display: block; }
+
+                .icon-sm {
+                    width: 42px;
+                    height: 42px;
+                    line-height: 42px;
+                    font-size: 22px;
+                }
+            </style>
+
+            <!-- Carousel Products-->
+			<section class="section-main mt-3 mb-3">
+                <div class="container">
+                    <div class="row row-sm">
+                        <aside class="col-md-3 col-lg-3 col-sm-12">
+                            <div class="d-flex card shadow-sm text-dark rounded-0 pb-1">
+                                <ul class="menu-category text-muted m-0 p-0">
+                                    <li><a href="#">
+                                        <i class="fa fa-home fa-1x mr-1"></i>
+                                            {% trans "Home equipments" %}
+                                        </a>
+
+                                        <div class="category-menu-dropdown text-left p-3">
+                                            <div class="category-part-1 category-common">
+                                                <div class="mb-3">
+                                                    <h6 class="font-weight-bold text-uppercase">
+                                                        {% trans "megamenu heading" %}
+                                                    </h6>
+                                                    <ul class="list-unstyled">
+                                                        <li class="nav-item">
+                                                            <a href="" class="nav-link text-small pb-0">Unique feature</a>
+                                                        </li>
+
+                                                        <li class="nav-item">
+                                                            <a href="" class="nav-link text-small pb-0">
+                                                            image responsive</a>
+                                                        </li>
+
+                                                        <li class="nav-item">
+                                                            <a href="" class="nav-link text-small pb-0">
+                                                            auto carousel</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div class="category-part-2 category-common">
+                                                <div class="mb-3">
+                                                    <h6 class="font-weight-bold text-uppercase">
+                                                        {% trans "megamenu heading" %}
+                                                    </h6>
+                                                    <ul class="list-unstyled">
+                                                        <li class="nav-item">
+                                                            <a href="" class="nav-link text-small pb-0">
+                                                            Unique feature</a>
+                                                        </li>
+
+                                                        <li class="nav-item">
+                                                            <a href="" class="nav-link text-small pb-0">
+                                                            image responsive</a>
+                                                        </li>
+
+                                                        <li class="nav-item">
+                                                            <a href="" class="nav-link text-small pb-0">
+                                                            auto carousel</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div class="category-part-3 category-common">
+                                                <div class="mb-3">
+                                                    <h6 class="font-weight-bold text-uppercase">
+                                                        {% trans "megamenu heading" %}
+                                                    </h6>
+                                                    <ul class="list-unstyled">
+                                                        <li class="nav-item">
+                                                            <a href="" class="nav-link text-small pb-0">
+                                                            Unique feature</a>
+                                                        </li>
+
+                                                        <li class="nav-item">
+                                                            <a href="" class="nav-link text-small pb-0">
+                                                            image responsive</a>
+                                                        </li>
+
+                                                        <li class="nav-item">
+                                                            <a href="" class="nav-link text-small pb-0">
+                                                            auto carousel</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div class="category-part-4 category-common">
+                                                <div class="mb-3">
+                                                    <h6 class="font-weight-bold text-uppercase">
+                                                        {% trans "megamenu heading" %}
+                                                    </h6>
+                                                    <ul class="list-unstyled">
+                                                        <li class="nav-item">
+                                                            <a href="" class="nav-link text-small pb-0">
+                                                            Unique feature</a>
+                                                        </li>
+
+                                                        <li class="nav-item">
+                                                            <a href="" class="nav-link text-small pb-0">
+                                                            image responsive</a>
+                                                        </li>
+
+                                                        <li class="nav-item">
+                                                            <a href="" class="nav-link text-small pb-0">
+                                                            auto carousel</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li><a href="#">
+                                        <i class="fa fa-car fa-1x mr-1"></i>
+                                            {% trans "Cars &amp; Motorcyles" %}
+                                        </a>
+
+                                        <div class="category-menu-dropdown2 text-left p-3">
+                                            <div class="category-part-1 category-common">
+                                                <div class="mb-3">
+                                                    <h6 class="font-weight-bold text-uppercase">
+                                                        {% trans "megamenu heading" %}
+                                                    </h6>
+                                                    <ul class="list-unstyled">
+                                                        <li class="nav-item">
+                                                            <a href="" class="nav-link text-small pb-0">Unique feature</a>
+                                                        </li>
+
+                                                        <li class="nav-item">
+                                                            <a href="" class="nav-link text-small pb-0">
+                                                            image responsive</a>
+                                                        </li>
+
+                                                        <li class="nav-item">
+                                                            <a href="" class="nav-link text-small pb-0">
+                                                            auto carousel</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div class="category-part-2 category-common">
+                                                <div class="mb-3">
+                                                    <h6 class="font-weight-bold text-uppercase">
+                                                        {% trans "megamenu heading" %}
+                                                    </h6>
+                                                    <ul class="list-unstyled">
+                                                        <li class="nav-item">
+                                                            <a href="" class="nav-link text-small pb-0">
+                                                            Unique feature</a>
+                                                        </li>
+
+                                                        <li class="nav-item">
+                                                            <a href="" class="nav-link text-small pb-0">
+                                                            image responsive</a>
+                                                        </li>
+
+                                                        <li class="nav-item">
+                                                            <a href="" class="nav-link text-small pb-0">
+                                                            auto carousel</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div class="category-part-3 category-common">
+                                                <div class="mb-3">
+                                                    <h6 class="font-weight-bold text-uppercase">
+                                                        {% trans "megamenu heading" %}
+                                                    </h6>
+                                                    <ul class="list-unstyled">
+                                                        <li class="nav-item">
+                                                            <a href="" class="nav-link text-small pb-0">
+                                                            Unique feature</a>
+                                                        </li>
+
+                                                        <li class="nav-item">
+                                                            <a href="" class="nav-link text-small pb-0">
+                                                            image responsive</a>
+                                                        </li>
+
+                                                        <li class="nav-item">
+                                                            <a href="" class="nav-link text-small pb-0">
+                                                            auto carousel</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div class="category-part-4 category-common">
+                                                <div class="mb-3">
+                                                    <h6 class="font-weight-bold text-uppercase">
+                                                        {% trans "megamenu heading" %}
+                                                    </h6>
+                                                    <ul class="list-unstyled">
+                                                        <li class="nav-item">
+                                                            <a href="" class="nav-link text-small pb-0">
+                                                            Unique feature</a>
+                                                        </li>
+
+                                                        <li class="nav-item">
+                                                            <a href="" class="nav-link text-small pb-0">
+                                                            image responsive</a>
+                                                        </li>
+
+                                                        <li class="nav-item">
+                                                            <a href="" class="nav-link text-small pb-0">
+                                                            auto carousel</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li><a href="#">
+                                        <i class="fa fa-tv fa-1x mr-1"></i>
+                                            {% trans "Television &amp; Audio" %}</a>
+                                    </li>
+
+                                    <li><a href="#">
+                                        <i class="fa fa-laptop fa-1x mr-1"></i>
+                                            {% trans "IT &amp; Electronics" %}</a>
+                                    </li>
+
+                                    <li><a href="#">
+                                        <i class="fa fa-mobile-alt fa-1x mr-1"></i>
+                                            {% trans "Phone &amp; tablet" %}</a>
+                                    </li>
+
+                                    <li><a href="#">
+                                        <i class="fa fa-book-reader fa-1x mr-1"></i>
+                                            {% trans "School materials" %}</a>
+                                    </li>
+
+                                    <li><a href="#">
+                                        <i class="fa fa-gamepad fa-1x mr-1"></i>
+                                            {% trans "Toys &amp; Hobbies" %}</a>
+                                    </li>
+
+                                    <li><a href="#">
+                                        <i class="fa fa-plus-circle fa-x mr-1"></i>
+                                            {% trans "More category" %}</a>
+
+                                        <div class="category-menu-dropdown3 text-left p-3">
+                                            <div class="category-part-1 category-common">
+                                                <div class="mb-3">
+                                                    <h6 class="font-weight-bold text-uppercase">
+                                                        {% trans "megamenu heading" %}
+                                                    </h6>
+                                                    <ul class="list-unstyled">
+                                                        <li class="nav-item">
+                                                            <a href="" class="nav-link text-small pb-0">Unique feature</a>
+                                                        </li>
+
+                                                        <li class="nav-item">
+                                                            <a href="" class="nav-link text-small pb-0">
+                                                            image responsive</a>
+                                                        </li>
+
+                                                        <li class="nav-item">
+                                                            <a href="" class="nav-link text-small pb-0">
+                                                            auto carousel</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div class="category-part-2 category-common">
+                                                <div class="mb-3">
+                                                    <h6 class="font-weight-bold text-uppercase">
+                                                        {% trans "megamenu heading" %}
+                                                    </h6>
+                                                    <ul class="list-unstyled">
+                                                        <li class="nav-item">
+                                                            <a href="" class="nav-link text-small pb-0">
+                                                            Unique feature</a>
+                                                        </li>
+
+                                                        <li class="nav-item">
+                                                            <a href="" class="nav-link text-small pb-0">
+                                                            image responsive</a>
+                                                        </li>
+
+                                                        <li class="nav-item">
+                                                            <a href="" class="nav-link text-small pb-0">
+                                                            auto carousel</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div class="category-part-3 category-common">
+                                                <div class="mb-3">
+                                                    <h6 class="font-weight-bold text-uppercase">
+                                                        {% trans "megamenu heading" %}
+                                                    </h6>
+                                                    <ul class="list-unstyled">
+                                                        <li class="nav-item">
+                                                            <a href="" class="nav-link text-small pb-0">
+                                                            Unique feature</a>
+                                                        </li>
+
+                                                        <li class="nav-item">
+                                                            <a href="" class="nav-link text-small pb-0">
+                                                            image responsive</a>
+                                                        </li>
+
+                                                        <li class="nav-item">
+                                                            <a href="" class="nav-link text-small pb-0">
+                                                            auto carousel</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div class="category-part-4 category-common">
+                                                <div class="mb-3">
+                                                    <h6 class="font-weight-bold text-uppercase">
+                                                        {% trans "megamenu heading" %}
+                                                    </h6>
+                                                    <ul class="list-unstyled">
+                                                        <li class="nav-item">
+                                                            <a href="" class="nav-link text-small pb-0">
+                                                            Unique feature</a>
+                                                        </li>
+
+                                                        <li class="nav-item">
+                                                            <a href="" class="nav-link text-small pb-0">
+                                                            image responsive</a>
+                                                        </li>
+
+                                                        <li class="nav-item">
+                                                            <a href="" class="nav-link text-small pb-0">
+                                                            auto carousel</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </aside> <!-- ./aside -->
+
+                        <div class="col-md-6">
+                            <div class="owl-init slider-main owl-carousel" data-items="1" data-nav="true" data-dots="false">
+                                <div class="item-slide">
+                                    <img src="{% static "img/banners/slide1.jpg" %}">
+                                    <a href="#" class="stretched-link"></a>
+                                </div>
+
+                                <div class="item-slide">
+                                    <img src="{% static "img/banners/slide2.jpg" %}">
+                                    <a href="#" class="stretched-link"></a>
+                                </div>
+
+                                <div class="item-slide">
+                                    <img src="{% static "img/banners/slide3.jpg" %}">
+                                    <a href="#" class="stretched-link"></a>
+                                </div>
+
+                                <div class="item-slide">
+                                    <img src="{% static "img/banners/slide2.jpg" %}">
+                                    <a href="#" class="stretched-link"></a>
+                                </div>
+
+                                <div class="item-slide">
+                                    <img src="{% static "img/banners/slide1.jpg" %}">
+                                    <a href="#" class="stretched-link"></a>
+                                </div>
+
+                                <div class="item-slide">
+                                    <img src="{% static "img/banners/slide3.jpg" %}">
+                                    <a href="#" class="stretched-link"></a>
+                                </div>
+                            </div>
+                        </div><!-- ./carousel -->
+
+                        <aside class="col-md-3 col-lg-3 col-sm-12">
+                            <div class="box d-block border-0 shadow-sm pb-4">
+                                <div class="icon d-inline-flex align-items-center mb-3">
+                                    <div class="text-center icon-wrap icon-sm rounded-circle border-success border text-success d-inline-block">
+                                        <i class="ps-icon-customer-service"></i>
+                                    </div>
+
+                                    <div class="text-wrap">
+                                        <div class="font-weight-bolder">{% trans "Call us" %}</div>
+                                        <small>00 000 000 / 00 000 000</small>
+                                    </div>
+                                </div>
+
+                                <div class="icon d-inline-flex align-items-center mb-3">
+                                    <div class="text-center icon-wrap icon-sm rounded-circle border-success border text-success d-inline-block">
+                                        <i class="ps-icon-delivery"></i>
+                                    </div>
+
+                                    <div class="text-wrap">
+                                        <div class="font-weight-bolder">{% trans "Free delivery" %}</div>
+                                        <small>{% trans "in less than 24H" %}</small>
+                                    </div>
+                                </div> <!-- ./icon -->
+
+                                <div class="icon d-inline-flex align-items-center mb-3">
+                                    <div class="text-center icon-wrap icon-sm rounded-circle border-success border text-success d-inline-block">
+                                        <i class="far fa-clock"></i>
+                                    </div>
+
+                                    <div class="text-wrap">
+                                        <div class="font-weight-bolder">{% trans "Availability" %}</div>
+                                        <small>{% trans "7 days/7" %}</small>
+                                    </div>
+                                </div>
+
+                                <div class="icon d-inline-flex align-items-center mb-3">
+                                    <div class="text-center icon-wrap icon-sm rounded-circle border-success border text-success d-inline-block">
+                                        <i class="ps-icon-money"></i>
+                                    </div>
+
+                                    <div class="text-wrap">
+                                       <div class="font-weight-bolder">{% trans "Payment" %}</div>
+                                       <small>{% trans "in complete security" %}</small>
+                                    </div>
+                                </div>
+
+                                <div class="icon d-inline-flex align-items-center">
+                                    <div class="text-center icon-wrap icon-sm rounded-circle border-success border text-success d-inline-block">
+                                        <i class="fa fa-question"></i>
+                                    </div>
+
+                                    <div class="text-wrap">
+                                        <div class="font-weight-bolder">{% trans "Help" %}</div>
+                                        <small>{% trans "How to buy on een?" %}</small>
+                                    </div>
+                                </div>
+                            </div><!-- ./box -->
+                        </aside><!-- ./col-md-2 -->
+                    </div>
+                </div>
+			</section>

@@ -1,0 +1,110 @@
+{% extends "./register.html" %}
+{% load i18n static %}
+
+<title>
+    {% block head_title %}
+        {% trans "login" %} | unsta inc
+    {% endblock head_title %}
+</title>
+
+{% block content %}
+   <!-- Main product Layout View -->
+    <main class="wrapper p-5">
+        <div class="container justify-content-center">
+            <!-- Grid row -->
+            <section class="row no-gutters">
+                <div class="col-md-6 mr-auto">
+                    <div class="d-flex align-items-md-center px-5">
+                        <div class="container">
+                            <div class="row">
+                                <div class="mx-auto">
+                                    <h3 class="font-weight-bold text-success">{% trans "login" %}</h3>
+                                    <p class="text-muted mb-4 text-justify">
+                                        {% trans "Please enter your username and password to login." %}
+                                    </p>
+
+                                    <form method="POST">
+                                        {% csrf_token %}
+
+                                        <small class="text-muted text-danger">
+                                            {% if errors %}
+                                                {% for error in errors %}
+                                                    {% autoescape off %}
+                                                        {{ error }}
+                                                    {% endautoescape %}
+                                                {% endfor %}
+                                            {% endif %}
+                                        </small>
+
+                                        <div class="md-form form-group mb-3">
+                                            <input id="{{ form.username.id_for_label }}"
+                                            type="text" name="username" class="form-control"
+                                            placeholder="{{ form.username.label }}">
+                                            {{ form.username.errors}}
+                                        </div> <!-- /.username input -->
+
+                                        <div class="md-form form-group mb-3">
+                                            <input id="{{ form.password.id_for_label }}" type="password"
+                                            name="password" class="form-control"
+                                            placeholder="{{ form.password.label }}">
+                                            {{ form.password.errors}}
+                                        </div> <!-- /.password input -->
+
+                                        <div class="d-flex justify-content-around pt-2 mb-3">
+                                            <div>
+                                                <div class="custom-control custom-switch">
+                                                    <input type="checkbox" class="custom-control-input"
+                                                    id="customSwitch">
+                                                    <label for="customSwitch" class="custom-control-label">
+                                                        {% trans "remember me" %}
+                                                    </label>
+                                                </div>
+                                            </div><!-- /.checkbox -->
+
+                                            <div>
+                                                <a href="{% url "accounts:password_reset" %}"
+                                                    class="font-small ml-5 text-danger">
+                                                    <u>{% trans "lost password ?" %}</u>
+                                                </a>
+                                            </div><!-- /.lost password -->
+                                        </div>
+
+                                        <button type="submit" class="btn btn-success btn-block btn-sm text-uppercase mb-3 rounded-pill shadow-sm">
+                                            {% trans "login" %}
+                                        </button><!-- /.button login -->
+
+                                        <div class="pt-2">
+                                            <small class="font-small grey-text text-right">
+                                               <a href="{% url "accounts:password_reset" %}"
+                                               class="text-muted"></a>
+                                            </small>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- content -->
+
+                <div class="col-md-6 border-left">
+                    <div class="d-none d-md-flex align-items-center px-sm-2">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-8 mx-auto">
+                                    <h3 class="font-weight-bold text-success mb-2">{% trans "create an account" %}
+                                    </h3>
+                                    <p class="text-muted mb-4 text-justify">
+                                        {% trans "Create your customer account in a few clicks ! You can register by using your email address." %}
+                                    </p>
+
+                                    <a href="{% url "accounts:register" %}" class="btn btn-success btn-block btn-sm text-uppercase rounded-pill shadow-sm">{% trans "sign up" %}</a>
+                                    <!-- /.login link -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section><!-- ./Grid row -->
+        </div>
+    </main><!-- ./Main product Layout View -->
+{% endblock content %}

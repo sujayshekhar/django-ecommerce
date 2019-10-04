@@ -1,0 +1,124 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}
+{% endblock extrastyle %}
+
+{% block title %}
+    Commande {{ commande.id }} {{ block.super }}
+{% endblock title %}
+
+{% block breadcrumbs %}
+    <div class="breadcrumbs">
+        <a href="{% url "admin:index" %}">Home</a>&rsaquo;
+        <a href="{% url "admin:commandes_commande_changelist" %}">Commandes</a> &rsaquo;
+        <a href="{% url "admin:commandes_commande_change" commande.id %}">
+            Commande N°{{ commande.id }}
+        </a> &rsaquo; Detail de la commande
+    </div>
+{% endblock breadcrumbs %}
+
+{% block content %}
+    <div id="content" class="flex">
+        <h1>Commande N°{{ commande.id }}</h1>
+
+        <div class="content-main">
+            <ul class="object-tools">
+                <li>
+                    <a class="addlink" href="#" onclick="window.print();">Imprimer la commande</a>
+                </li>
+            </ul>
+
+            <div id="changelist" class="module filtered">
+                <div class="results">
+                    <table id="result_list">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="sortable">
+                                    <div class="text">Date de la commande</div>
+                                    <div class="clear"></div>
+                                </th>
+
+                                <th scope="col" class="sortable">
+                                    <div class="clear">Nom & prénoms du client</div>
+                                    <div class="clear"></div>
+                                </th>
+
+                                <th scope="col" class="sortable">
+                                    <div class="text">Email</div>
+                                    <div class="clear"></div>
+                                </th>
+
+                                <th scope="col" class="sortable">
+                                    <div class="text">Status de la commande</div>
+                                    <div class="clear"></div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="row">
+                                <td class="field">{{ commande.creer }}</td>
+                                <td class="field">{{ commande.first_name }} {{ commande.last_name }}</td>
+                                <td class="field">
+                                    <a href="mailto:{{ commande.email }}">{{ commande.email }}</a>
+                                </td>
+                                <td class="field">
+                                    {% if commande.payer %}
+                                        Payer
+                                    {% else %}
+                                        Paiement en attente
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="changelist" class="module filtered">
+                <div class="results">
+                    <table id="result_list">
+                        <h2>Commande</h2>
+                        <thead>
+                            <tr>
+                                <th scope="col" class="sortable">
+                                    <div class="text">Produit</div>
+                                    <div class="clear"></div>
+                                </th>
+                                <th scope="col" class="sortable">
+                                    <div class="text">Prix</div>
+                                    <div class="clear"></div>
+                                </th>
+                                <th scope="col" class="sortable">
+                                    <div class="text">Quantite</div>
+                                    <div class="clear"></div>
+                                </th>
+                                <th scope="col" class="sortable">
+                                    <div class="text">Total</div>
+                                    <div class="clear"></div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for elt in commande.items.all %}
+                                <tr class="row{% cycle "1" "2" %}">
+                                    <td class="field">{{ elt.produit.name }}</td>
+                                    <td class="field">{{ elt.prix | floatformat:"0" }}</td>
+                                    <td class="field">{{ elt.quantite }}</td>
+                                    <td class="field">{{ elt.get_depense | floatformat:"0" }}</td>
+                                </tr>
+                            {% endfor %}
+
+                            <tr class="row2">
+                                <td colspan="3" class="field">Cout total</td>
+                                <td class="field">
+                                    {{ commande.get_depense_total | floatformat:"0" }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

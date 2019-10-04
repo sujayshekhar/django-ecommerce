@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        {% load static i18n %}
+        <!-- meta header-->
+        {% include "_includes/csslink.html" %}
+        {% block our_head %}{% endblock our_head %}
+        <!-- ./meta header-->
+
+        <!-- titre -->
+        <title>{% block head_title %}{% trans "unsta" %}{% endblock head_title %}</title>
+        <!-- ./titre -->
+    </head>
+
+
+    <body class="d-flex flex-column">
+        <div class="flex-grow-1 flex-shrink-0">
+            <!-- Start your project here-->
+            {% include "_includes/navbar.html" %}
+            {% if messages %}
+                <div class="animated fadeIn mt-5 pt-4">
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button class="close" type="button" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+
+            <!-- Caroussel -->
+            {% block carousel %}
+            {% endblock carousel %}
+
+            <!-- Contenu de la page -->
+            {% block content %}
+            {% endblock content %}
+
+        </div>
+
+        {% include "_includes/footer.html" %}
+        {% include "_includes/jscripts.html" %}
+    </body>
+</html>

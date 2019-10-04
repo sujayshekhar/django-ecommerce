@@ -1,0 +1,374 @@
+            {% load i18n static %}
+
+            <style>
+                #topbar {
+                    background: #555;
+                    font-size: 0.9rem;
+                }
+
+                #topbar .offer .btn {
+                    letter-spacing: 0.1em;
+                }
+
+                #topbar a.login-btn, #topbar a.signup-btn {
+                    letter-spacing: 0.1em;
+                    font-size: 0.75rem;
+                    margin-right: 10px;
+                }
+
+                .megamenu {
+                    position: static !important;
+                }
+
+                .megamenu .dropdown-menu {
+                    background: none;
+                    border: none;
+                    width: 100%;
+                }
+            </style>
+
+            <div id="topbar" class="bg-white p-1">
+                <div class="container">
+                    <div class="row d-flex align-items-center">
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {% get_available_languages as LANGUAGES %}
+                        {% get_language_info_list for LANGUAGES as languages %}
+                        <!-- navigation icon -->
+                        <div class="col-lg-12 text-center text-lg-right">
+                            <ul class="menu list-inline mb-0">
+                                {% for language in languages %}
+                                    <li class="list-inline-item {% if language.code == LANGUAGE_CODE %} active {% endif %}">
+                                        <a href="/{{ language.code }}{{ next }}" class="font-weight-normal">
+                                            {{ language.name_local }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- topbar-->
+            <div id="topbar" class="p-1">
+                <div class="container">
+                    <div class="row d-flex align-items-center">
+                        <div class="col-lg-6 offer mb-3 mb-lg-0 text-white">
+                            <a href="#" class="btn btn-success btn-sm text-white">Offer of the day</a>
+                            <a href="#" class="ml-1 text-white">Get flat 35% off on orders over $50!</a>
+                        </div>
+
+                        <div class="col-lg-6 text-center text-lg-right">
+                            <div class="d-flex justify-content-end justify-content-between pt-3">
+                                {% if user and not user.is_anonymous %}
+                                    <ul class="list-inline contact-info d-block d-md-none">
+                                        <a href="#" class="login-btn text-white">
+                                            {% trans "hello" %},  <b class="font-weight-bold text-capitalize">
+                                            {{ user.username }}</b>
+                                        </a>
+                                    </ul>
+
+                                    <div class="login">
+                                        <span class="login-btn text-white mr-2">
+                                            <span class="login-btn text-white d-none d-md-inline-block">
+                                                {% trans "hello" %},
+                                                <b class="font-weight-bold text-capitalize">
+                                                {{ user.username }}</b>
+                                            </span>
+                                        </span>
+
+                                        <a href="{% url "accounts:profile" %}" class="login-btn text-white mr-2">
+                                            <span class="d-none d-md-inline-block font-weight-bold text-capitalize">
+                                                <i class="fa fa-user mr-1"></i>
+                                                {% trans "your profile" %}
+                                            </span>
+                                        </a>
+
+                                        <a href="{% url "panier:detail_panier" %}" class="login-btn text-white">
+                                            <i class="fas fa fa-shopping-bag mr-1"></i>
+                                            <span class="font-weight-bold text-capitalize">
+                                                {% trans "your orders" %}
+                                            </span>
+                                        </a>
+                                    </div>
+
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item">
+                                            <a href="{% url "accounts:logout" %}" class="text-white font-weight-bold text-capitalize">
+                                                <i class="fas fa-sign-out-alt mr-1"></i>
+                                                {% trans "logout" %}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                {% else %}
+                                    <div class="login">
+                                        <a href="{% url "accounts:profile" %}" class="login-btn text-white mr-2">
+                                            <i class="fa fa-user mr-1"></i>
+                                            <span class="d-none d-sm-inline-block font-weight-bold text-capitalize">
+                                            {% trans "your profile" %}</span>
+                                        </a>
+
+                                        <a href="{% url "panier:detail_panier" %}" class="login-btn text-white">
+                                            <i class="fa fa-shopping-bag mr-1"></i>
+                                            <span class="d-none d-sm-inline-block font-weight-bold text-capitalize">
+                                            {% trans "your orders" %}</span>
+                                        </a>
+                                    </div>
+
+                                    <ul class="list-inline">
+                                        <a href="{% url "accounts:login" %}" class="login-btn text-white mr-2">
+                                            <i class="fas fa-sign-in-alt mr-1"></i>
+                                            <span class="d-none d-sm-inline-block font-weight-bold text-capitalize">
+                                                {% trans "login" %}
+                                            </span>
+                                        </a>
+
+                                        <a href="{% url "accounts:register" %}" class="login-btn text-white">
+                                            <i class="fas fa-user-plus mr-1"></i>
+                                            <span class="d-none d-sm-inline-block font-weight-bold text-capitalize">
+                                                {% trans "signup" %}
+                                            </span>
+                                        </a>
+                                    </ul>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!--./topbar-->
+
+            <!-- Navbar -->
+            <nav role="navigation" class="navbar sticky navbar-expand-lg navbar-light white scrolling-navbar shadow-sm">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="container">
+                    <!-- Navbar brand -->
+                    <a href="{% url "shop:liste_produit" %}" class="navbar-brand">
+                        <!-- Logo Image -->
+                        <img src="{% static "img/mdb.png" %}" width="45" class="d-none d-md-inline-block">
+                        <img src="{% static "img/mdb.png" %}" width="45" class="d-inline-block d-md-none">
+                        <span class="sr-only">unsta - go to homepage</span>
+                        <!-- Logo Text -->
+                    </a><!-- ./Navbar brand -->
+
+                    <div class="btn-navbar">
+                        <!-- navigation -->
+                        <button class="navbar-toggler btn btn-sm btn-outline-secondary shadow-sm border-0" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation"
+                            aria-expanded="false" aria-label="navigation">
+                            <span class="sr-only">navigation</span>
+                            <i class="fa fa-bars"></i>
+                        </button><!-- ./navigation -->
+
+
+                        <!-- search -->
+                        <button class="navbar-toggler btn btn-sm btn-outline-secondary shadow-sm border-0" type="button" data-toggle="collapse" data-target="#search" aria-controls="search"
+                            aria-expanded="false">
+                            <span class="sr-only">search</span>
+                            <i class="fa fa-search"></i>
+                        </button><!-- ./search -->
+
+                        <!-- shopping -->
+                        <a href="{% url "panier:detail_panier" %}" class="navbar-toggler btn btn-sm btn-outline-secondary shadow-sm border-0">
+                            <i class="fa fa fa-shopping-bag"></i>
+                            {% with total_items=panier|length %}
+                                {% if panier|length > 0  %}
+                                    {{ total_items }}
+                                {% else %}
+                                    0
+                                {% endif %}
+                            {% endwith %}
+                        </a><!-- shopping -->
+                    </div>
+
+                    <!-- Collapsible content -->
+                    <div class="collapse navbar-collapse" id="navigation">
+
+                        <!-- Links left-->
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item
+                                {% if request.resolver_match.url_name == "liste_produit"%}active{% endif %}">
+                                <a href="{% url "shop:liste_produit" %}" class="nav-link text-uppercase font-weight-bold">
+                                {% trans "home" %}</a>
+                            </li><!-- home-->
+
+                            <li class="nav-item dropdown megamenu">
+                                <a id="megamenu" class="nav-link dropdown-toggle font-weight-bold text-uppercase" data-toggle="dropdown" data-hover="dropdown" data-delay="200" aria-haspopup="true" role="button" aria-expanded="false" role="button" href="#">
+                                    {% trans "product" %}
+                                </a>
+                                <div aria-labelledby="megamenu" class="dropdown-menu p-0 m-0">
+                                    <div class="container">
+                                        <div class="row bg-white rounded-0 m-0 shadow-sm">
+                                            <div class="col-lg-7 col-xl-8">
+                                                <div class="p-3">
+                                                    <div class="row">
+                                                        <div class="col-lg-6 mb-3">
+                                                            <h6 class="font-weight-bold text-uppercase">
+                                                                {% trans "megamenu heading" %}
+                                                            </h6>
+                                                            <ul class="list-unstyled">
+                                                                <li class="nav-item">
+                                                                    <a href="" class="nav-link text-small pb-0">
+                                                                    Unique feature</a>
+                                                                </li>
+
+                                                                <li class="nav-item">
+                                                                    <a href="" class="nav-link text-small pb-0">
+                                                                        image responsive</a>
+                                                                </li>
+
+                                                                <li class="nav-item">
+                                                                    <a href="" class="nav-link text-small pb-0">
+                                                                        auto carousel</a>
+                                                                </li>
+
+                                                                <li class="nav-item">
+                                                                    <a href="" class="nav-link text-small pb-0">newsletter form</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+
+                                                        <div class="col-lg-6 mb-4">
+                                                            <h6 class="font-weight-bold text-uppercase">
+                                                                {% trans "megamenu heading" %}
+                                                            </h6>
+                                                            <ul class="list-unstyled">
+                                                                <li class="nav-item">
+                                                                    <a href="" class="nav-link text-small pb-0">
+                                                                    Unique feature</a>
+                                                                </li>
+
+                                                                <li class="nav-item">
+                                                                    <a href="" class="nav-link text-small pb-0">
+                                                                        image responsive</a>
+                                                                </li>
+
+                                                                <li class="nav-item">
+                                                                    <a href="" class="nav-link text-small pb-0">
+                                                                        auto carousel</a>
+                                                                </li>
+
+                                                                <li class="nav-item">
+                                                                    <a href="" class="nav-link text-small pb-0">newsletter form</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+
+                                                        <div class="col-lg-6 mb-4">
+                                                            <h6 class="font-weight-bold text-uppercase">
+                                                                {% trans "megamenu heading" %}
+                                                            </h6>
+                                                            <ul class="list-unstyled">
+                                                                <li class="nav-item">
+                                                                    <a href="" class="nav-link text-small pb-0">
+                                                                    Unique feature</a>
+                                                                </li>
+
+                                                                <li class="nav-item">
+                                                                    <a href="" class="nav-link text-small pb-0">
+                                                                        image responsive</a>
+                                                                </li>
+
+                                                                <li class="nav-item">
+                                                                    <a href="" class="nav-link text-small pb-0">
+                                                                        auto carousel</a>
+                                                                </li>
+
+                                                                <li class="nav-item">
+                                                                    <a href="" class="nav-link text-small pb-0">newsletter form</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+
+                                                        <div class="col-lg-6 mb-4">
+                                                            <h6 class="font-weight-bold text-uppercase">
+                                                                {% trans "megamenu heading" %}
+                                                            </h6>
+                                                            <ul class="list-unstyled">
+                                                                <li class="nav-item">
+                                                                    <a href="" class="nav-link text-small pb-0">
+                                                                    Unique feature</a>
+                                                                </li>
+
+                                                                <li class="nav-item">
+                                                                    <a href="" class="nav-link text-small pb-0">
+                                                                        image responsive</a>
+                                                                </li>
+
+                                                                <li class="nav-item">
+                                                                    <a href="" class="nav-link text-small pb-0">
+                                                                        auto carousel</a>
+                                                                </li>
+
+                                                                <li class="nav-item">
+                                                                    <a href="" class="nav-link text-small pb-0">newsletter form</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5 col-xl-4 px-0 d-none d-lg-block" style="background: center center url({% static "img/mega.png" %}) no-repeat; background-size: cover;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-uppercase font-weight-bold"
+                                   href="#">
+                                    {% trans "order" %}
+                                </a>
+                            </li>
+                        </ul><!-- ./Links left-->
+
+                        <!-- Links right-->
+                        <ul class="navbar-nav nav-flex-icons">
+                            <div class="collapse navbar-collapse"></div>
+                            <a data-toggle="collapse" href="#search" class="btn btn-sm navbar-btn btn-success shadow-sm border-0 d-none d-md-inline-block d-sm-inline-block">
+                                <span class="sr-only">search</span><i class="fa fa-search"></i>
+                            </a>
+                            {% if user and not user.is_anonymous %}
+                                <li class="nav-item d-none d-md-inline-block d-sm-inline-block ">
+                                    <a class="nav-link" href="{% url "panier:detail_panier" %}">
+                                        <i class="fas fa fa-shopping-cart mr-2"></i>
+                                        {% trans "cart" %}
+                                        <span class="badge badge-pill badge-success red z-depth-1">
+                                            {% with total_items=panier|length %}
+                                                {% if panier|length > 0  %}
+                                                    {{ total_items }}
+                                                {% else %}
+                                                    0
+                                                {% endif %}
+                                            {% endwith %}
+                                        </span>
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li class="nav-item d-none d-md-inline-block d-sm-inline-block">
+                                    <a class="nav-link" href="{% url "panier:detail_panier" %}">
+                                        <i class="fas fa fa-shopping-cart mr-2"></i>
+                                        {% trans "cart" %}
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul><!-- ./Links left-->
+                    </div><!-- Collapsible content -->
+                </div>
+            </nav>
+            <!--/.Navbar-->
+
+            <div id="search" class="collapse">
+                <!-- Search form -->
+                <div class="container w-75 my-3">
+                    <form role="search" class="mx-auto " action="{% url "shop:search" %}">
+                        <div class="input-group">
+                            <input class="form-control border shadow-none" type="search" placeholder="{% trans "Search for a product or category" %}" aria-label="search" name="q" autocomplete="false" value="{{ request.GET.q }}">
+                            <div class="input-group-append shadow-none">
+                                <button class="shadow-none input-group-text btn-success"
+                                type="submit"><i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- Search form -->
+            </div>

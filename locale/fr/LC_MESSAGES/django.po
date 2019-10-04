@@ -1,0 +1,719 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST flavien hugs <flavienhgs@gmail.com>, 2019.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: unsta Inc\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-09-27 13:08+0000\n"
+"PO-Revision-Date: 2019-09-27 20:19+0000\n"
+"Last-Translator: flavien <flavienhgs@gmail.com>\n"
+"Language-Team: flavien hugs\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 2.0.6\n"
+"X-Poedit-Bookmarks: 10,-1,-1,-1,-1,-1,-1,-1,-1,-1\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Translated-Using: django-rosetta 0.9.3\n"
+
+#: accounts/forms.py:25
+msgid "last name"
+msgstr "prénom"
+
+#: accounts/forms.py:28
+msgid "first name"
+msgstr "nom"
+
+#: accounts/forms.py:31
+msgid "phone number"
+msgstr "téléphone"
+
+#: accounts/forms.py:35
+msgid "email"
+msgstr "email"
+
+#: accounts/forms.py:38
+msgid "password"
+msgstr "mot de passe"
+
+#: accounts/forms.py:41
+msgid "confirm password"
+msgstr "confirmer le mot de passe"
+
+#: accounts/templates/accounts/login.html:6
+#: accounts/templates/accounts/login.html:24
+#: accounts/templates/accounts/login.html:76
+#: accounts/templates/accounts/register.html:60
+#: templates/_includes/navbar.html:122
+msgid "login"
+msgstr "connexion"
+
+#: accounts/templates/accounts/login.html:26
+msgid "Please enter your username and password to login."
+msgstr ""
+"Veuillez entrer votre nom d'utilisateur et votre mot de passe pour vous "
+"connecter."
+
+#: accounts/templates/accounts/login.html:62
+msgid "remember me"
+msgstr "se souvenir de moi"
+
+#: accounts/templates/accounts/login.html:70
+msgid "lost password ?"
+msgstr "mot de passe oublié ?"
+
+#: accounts/templates/accounts/login.html:97
+#: accounts/templates/accounts/register.html:29
+msgid "create an account"
+msgstr "créer un profile"
+
+#: accounts/templates/accounts/login.html:100
+msgid ""
+"Create your customer account in a few clicks ! You can register by using "
+"your email address."
+msgstr ""
+"Créez votre profile client en quelques clics ! Vous pouvez vous inscrire en "
+"utilisant votre adresse e-mail."
+
+#: accounts/templates/accounts/login.html:103
+#: accounts/templates/accounts/register.html:52
+msgid "sign up"
+msgstr "s'inscrire"
+
+#: accounts/templates/accounts/logout.html:6
+#: accounts/templates/accounts/profile.html:35
+#: templates/_includes/navbar.html:99
+msgid "logout"
+msgstr "deconnexion"
+
+#: accounts/templates/accounts/logout.html:19
+msgid "you have been logged out"
+msgstr "vous êtes déconnecté(e)"
+
+#: accounts/templates/accounts/password_reset.html:6
+#: accounts/templates/accounts/password_reset.html:23
+#: accounts/templates/accounts/password_reset_email.html:23
+#: accounts/templates/accounts/password_reset_email.html:30
+msgid "reset password"
+msgstr "réinitialiser le mot de passe"
+
+#: accounts/templates/accounts/password_reset.html:30
+msgid "request password reset"
+msgstr "demande de réinitialisation du mot de passe"
+
+#: accounts/templates/accounts/password_reset_complete.html:6
+msgid "password reset complete"
+msgstr "réinitialisation du mot de passe terminée"
+
+#: accounts/templates/accounts/password_reset_complete.html:20
+msgid "your password has been set."
+msgstr "votre mot de passe a été réinitialiser."
+
+#: accounts/templates/accounts/password_reset_done.html:6
+msgid "password reset done"
+msgstr "réinitialisation du mot de passe terminée"
+
+#: accounts/templates/accounts/password_reset_done.html:20
+msgid "an email has been sent with instructions to reset your password"
+msgstr ""
+"un courriel a été envoyé avec des instructions pour réinitialiser votre mot "
+"de passe"
+
+#: accounts/templates/accounts/password_reset_email.html:6
+msgid "password reset confirm"
+msgstr "confirmer la réinitialisation du mot de passe"
+
+#: accounts/templates/accounts/profile.html:6
+msgid "profile"
+msgstr "profile"
+
+#: accounts/templates/accounts/profile.html:22
+#: accounts/templates/accounts/profile.html:42
+msgid "my account"
+msgstr "mon profile"
+
+#: accounts/templates/accounts/profile.html:26
+#: templates/_includes/navbar.html:90 templates/_includes/navbar.html:114
+msgid "your orders"
+msgstr "vos commandes"
+
+#: accounts/templates/accounts/profile.html:30
+msgid "my wishlist"
+msgstr "ajouter à votre liste d'envie"
+
+#: accounts/templates/accounts/register.html:12
+msgid "register"
+msgstr "créer votre profile"
+
+#: accounts/templates/accounts/register.html:58
+msgid "already have an account ?"
+msgstr "vous avez déjà un profile ?"
+
+#: accounts/urls.py:13
+msgid "register/"
+msgstr "inscription/"
+
+#: accounts/urls.py:15
+msgid "profile/"
+msgstr "profile/"
+
+#: accounts/urls.py:17
+msgid "login/"
+msgstr "connexion/"
+
+#: accounts/urls.py:20
+msgid "logout/"
+msgstr "deconnexion/"
+
+#: accounts/urls.py:23
+msgid "password-reset/"
+msgstr ""
+
+#: accounts/urls.py:28
+msgid "password-reset/done/"
+msgstr "reinitialisation/valider/"
+
+#: accounts/urls.py:32
+msgid "password-reset-confirm/<uidb64>/<token>/"
+msgstr ""
+
+#: accounts/urls.py:37
+msgid "password-reset-complete/"
+msgstr ""
+
+#: coupons/forms.py:8
+msgid "Coupon"
+msgstr "Coupon"
+
+#: coupons/forms.py:12
+msgid "Add CODE PROMO"
+msgstr "Ajouter un CODE PROMO"
+
+#: ecommerce/settings.py:168
+msgid "English"
+msgstr "Anglais"
+
+#: ecommerce/settings.py:169
+msgid "Francais"
+msgstr "Français"
+
+#: ecommerce/urls.py:19
+msgid "cart/"
+msgstr "panier/"
+
+#: ecommerce/urls.py:20
+msgid "orders/"
+msgstr "commandes/"
+
+#: ecommerce/urls.py:21
+msgid "payment/"
+msgstr "reglement/"
+
+#: ecommerce/urls.py:22
+msgid "coupons/"
+msgstr "coupons/"
+
+#: ecommerce/urls.py:25
+msgid "admin/doc/"
+msgstr "admin/doc/"
+
+#: ecommerce/urls.py:26
+msgid "admin/"
+msgstr "admin/"
+
+#: panier/forms.py:10
+msgid "Please enter a number"
+msgstr "SVP entrer un numéro valide"
+
+#: panier/forms.py:11 panier/templates/panier/detail.html:74
+msgid "Quantity"
+msgstr "Quantite"
+
+#: panier/templates/panier/detail.html:6
+msgid "Shopping cart"
+msgstr "Panier d'achat"
+
+#: panier/templates/panier/detail.html:6
+#: shop/templates/shop/produit/cat_listing.html:7
+#: shop/templates/shop/produit/cat_listing.html:9
+#: shop/templates/shop/produit/detail.html:6
+#: shop/templates/shop/produit/detail.html:8
+#: shop/templates/shop/produit/listing.html:7
+#: shop/templates/shop/produit/listing.html:9
+#: shop/templates/shop/produit/resultat.html:6
+msgid "unsta Inc"
+msgstr "unsta Inc"
+
+#: panier/templates/panier/detail.html:60
+msgid "Your order"
+msgstr "Votre commande"
+
+#: panier/templates/panier/detail.html:72
+msgid "Product"
+msgstr "Produit"
+
+#: panier/templates/panier/detail.html:73
+msgid "Price"
+msgstr "Prix"
+
+#: panier/templates/panier/detail.html:75
+msgid "Total cost"
+msgstr "Coût total"
+
+#: panier/templates/panier/detail.html:112
+msgid "Sub total"
+msgstr "Sous total"
+
+#: panier/templates/panier/detail.html:121
+msgid "coupon"
+msgstr "coupon"
+
+#: panier/templates/panier/detail.html:131
+msgid "Total"
+msgstr "Total"
+
+#: panier/templates/panier/detail.html:149
+msgid "confirm"
+msgstr "confirmer"
+
+#: panier/templates/panier/detail.html:157
+msgid "Place the order"
+msgstr "Passez la commande"
+
+#: panier/templates/panier/detail.html:161
+msgid "Continue shopping"
+msgstr "Continuez vos achats"
+
+#: panier/templates/panier/detail.html:174
+msgid "Your cart is empty"
+msgstr "Votre panier d'achat est vide"
+
+#: panier/templates/panier/detail.html:176
+msgid "Back to"
+msgstr "Aller à"
+
+#: panier/templates/panier/detail.html:177
+#| msgid "home"
+msgid "home page"
+msgstr "page d'accueil"
+
+#: panier/templates/panier/detail.html:188
+#: shop/templates/shop/produit/detail.html:255
+msgid "People who bought this also bought"
+msgstr "Ceux qui l'ont acheté ont aussi acheté"
+
+#: payment/templates/payment/payment_cancel.html:5
+msgid "Cancel"
+msgstr "Annuler"
+
+#: payment/templates/payment/payment_cancel.html:14
+msgid "Your payment has not been successful"
+msgstr "Votre paiement a échoué. Veuillez réssayer"
+
+#: payment/templates/payment/payment_cancel.html:15
+msgid "There was a problem processing your payment."
+msgstr "Il y a eu un problème de traitement de votre paiement."
+
+#: payment/templates/payment/payment_done.html:5
+msgid "valid"
+msgstr "valider"
+
+#: payment/templates/payment/payment_done.html:15
+msgid "Your payment was successful."
+msgstr "Votre paiement a été effectué avec succès."
+
+#: payment/templates/payment/payment_done.html:17
+msgid "Your payment has been processed successfully."
+msgstr "Votre paiement a été traité avec succès."
+
+#: payment/templates/payment/process.html:5
+#: templates/_includes/carousel.html:453
+msgid "Payment"
+msgstr "Regler"
+
+#: payment/templates/payment/process.html:42
+msgid "payment"
+msgstr "reglement"
+
+#: payment/templates/payment/process.html:50
+msgid "Credit card number"
+msgstr "N° carte de crédit"
+
+#: payment/templates/payment/process.html:53
+msgid "Credit card number is required"
+msgstr "Le numéro de carte de crédit est obligatoire"
+
+#: payment/templates/payment/process.html:58
+msgid "expiration Date"
+msgstr "date d'expiration"
+
+#: payment/templates/payment/process.html:61
+msgid "expiration date required"
+msgstr "la date d'expiration de la carte est obligatoire"
+
+#: payment/templates/payment/process.html:65
+msgid "CVV"
+msgstr "CVV"
+
+#: payment/templates/payment/process.html:68
+msgid "security code required"
+msgstr "le code secret est obligatoire"
+
+#: payment/templates/payment/process.html:78
+msgid " pay with"
+msgstr "payer avec"
+
+#: payment/templates/payment/process.html:78
+msgid "card"
+msgstr "carte de crédit"
+
+#: payment/templates/payment/process.html:88
+msgid "Success"
+msgstr "Valider"
+
+#: payment/templates/payment/process.html:89
+msgid "Just now"
+msgstr "A l'instant"
+
+#: payment/templates/payment/process.html:96
+msgid "Next, submit the payment method nonce to your server."
+msgstr "Ensuite, soumettez le mode de paiment à votre fournisseur."
+
+#: payment/urls.py:8
+msgid "process/"
+msgstr "process/"
+
+#: payment/urls.py:9
+msgid "done/"
+msgstr "valider/"
+
+#: payment/urls.py:10
+msgid "canceled/"
+msgstr "annuler/"
+
+#: shop/templates/shop/produit/cat_listing.html:116
+#: shop/templates/shop/produit/listing.html:116
+msgid "New products"
+msgstr "Nouveau produit"
+
+#: shop/templates/shop/produit/cat_listing.html:119
+#: shop/templates/shop/produit/listing.html:119
+msgid "View more"
+msgstr "Voir les détails"
+
+#: shop/templates/shop/produit/detail.html:91
+msgid "bestseller"
+msgstr "bestseller"
+
+#: shop/templates/shop/produit/detail.html:152
+msgid "Add to cart"
+msgstr "Ajouter au panier"
+
+#: shop/templates/shop/produit/detail.html:187
+msgid "Description"
+msgstr "Description du produit"
+
+#: shop/templates/shop/produit/detail.html:189
+msgid "Characteristic"
+msgstr "Caractéristique du produit"
+
+#: shop/templates/shop/produit/detail.html:192
+msgid "Review"
+msgstr "Critiquer"
+
+#: shop/templates/shop/produit/detail.html:203
+msgid "Détails du produit"
+msgstr "Détails du produit"
+
+#: shop/templates/shop/produit/detail.html:226
+msgid "Your recently viewed articles"
+msgstr "Vos articles consultés récemment"
+
+#: shop/templates/shop/produit/detail.html:244
+msgid "further information"
+msgstr "plus d'informations"
+
+#: shop/templates/shop/produit/listing.html:172
+#: shop/templates/shop/produit/listing.html:379
+#: shop/templates/shop/produit/listing.html:414
+#: shop/templates/shop/produit/listing.html:439
+#: shop/templates/shop/produit/listing.html:474
+#: shop/templates/shop/produit/listing.html:499
+msgid "Quick view"
+msgstr "Voir les détails"
+
+#: shop/templates/shop/produit/listing.html:176
+#: shop/templates/shop/produit/listing.html:383
+#: shop/templates/shop/produit/listing.html:443
+#: shop/templates/shop/produit/listing.html:503
+msgid "Good item name"
+msgstr ""
+
+#: shop/templates/shop/produit/listing.html:194
+msgid "Discover our product categories"
+msgstr "Découvrez nos catégories de produits"
+
+#: shop/templates/shop/produit/listing.html:207
+msgid "Smartphone"
+msgstr "Téléphone"
+
+#: shop/templates/shop/produit/listing.html:209
+#: shop/templates/shop/produit/listing.html:224
+#: shop/templates/shop/produit/listing.html:239
+#: shop/templates/shop/produit/listing.html:254
+#: shop/templates/shop/produit/listing.html:271
+#: shop/templates/shop/produit/listing.html:285
+#: shop/templates/shop/produit/listing.html:299
+#: shop/templates/shop/produit/listing.html:313
+msgid "View all"
+msgstr "Tout afficher"
+
+#: shop/templates/shop/produit/listing.html:222
+msgid "Shoes"
+msgstr "Chaussures"
+
+#: shop/templates/shop/produit/listing.html:237
+msgid "T-shirts"
+msgstr "T-shirts"
+
+#: shop/templates/shop/produit/listing.html:252
+msgid "Utensils"
+msgstr "Ustensiles de cuisine"
+
+#: shop/templates/shop/produit/listing.html:269
+msgid "Automobile"
+msgstr "Automobile"
+
+#: shop/templates/shop/produit/listing.html:284
+msgid "Télévision"
+msgstr "Télévision"
+
+#: shop/templates/shop/produit/listing.html:298
+msgid "Laptop"
+msgstr "Ordinateur"
+
+#: shop/templates/shop/produit/listing.html:312
+#: templates/_includes/breadcrumb.html:15
+msgid "Home"
+msgstr "Accueil"
+
+#: shop/templates/shop/produit/listing.html:346
+msgid "Best deals smartphone"
+msgstr "Meilleurs offres smartphone"
+
+#: shop/templates/shop/produit/listing.html:402
+msgid "Best deals TV &amp; audio"
+msgstr "Meilleurs offres TV &amp; audio"
+
+#: shop/templates/shop/produit/listing.html:462
+msgid "Recently viewed articles"
+msgstr "Articles récemment consultés"
+
+#: shop/templates/shop/produit/resultat.html:36
+msgid "results were found for the search for"
+msgstr "ont été trouvés pour la recherche de"
+
+#: shop/templates/shop/produit/resultat.html:79
+msgid "Sort by"
+msgstr "Trier par"
+
+#: shop/templates/shop/produit/resultat.html:83
+msgid "highest rated"
+msgstr "les mieux notés"
+
+#: shop/templates/shop/produit/resultat.html:125
+msgid "new"
+msgstr "new"
+
+#: shop/templates/shop/produit/resultat.html:155
+msgid "Category"
+msgstr "Categorie"
+
+#: shop/templates/shop/produit/resultat.html:161
+#: shop/templates/shop/produit/resultat.html:169
+#: shop/templates/shop/produit/resultat.html:177
+#: shop/templates/shop/produit/resultat.html:185
+#: templates/_includes/carousel.html:141
+msgid "Home equipments"
+msgstr "Equipements pour la maison"
+
+#: shop/urls.py:18
+msgid "search/"
+msgstr "rechercher/"
+
+#: shop/urls.py:19
+msgid "shop/category/<slug:category_slug>/"
+msgstr ""
+
+#: shop/urls.py:20
+msgid "shop/product/<slug:slug>/<int:id>/"
+msgstr ""
+
+#: shop/urls.py:21
+msgid "shop/category/"
+msgstr "shop/categorie/"
+
+#: templates/_includes/carousel.html:148 templates/_includes/carousel.html:171
+#: templates/_includes/carousel.html:195 templates/_includes/carousel.html:219
+#: templates/_includes/carousel.html:251 templates/_includes/carousel.html:274
+#: templates/_includes/carousel.html:298 templates/_includes/carousel.html:322
+#: templates/_includes/navbar.html:205 templates/_includes/navbar.html:231
+#: templates/_includes/navbar.html:257 templates/_includes/navbar.html:283
+msgid "megamenu heading"
+msgstr ""
+
+#: templates/_includes/carousel.html:420
+msgid "Call us"
+msgstr "Appellez-nous"
+
+#: templates/_includes/carousel.html:431
+msgid "Free delivery"
+msgstr "Livraison gratuite"
+
+#: templates/_includes/carousel.html:432
+msgid "in less than 24H"
+msgstr "en mois de 24H"
+
+#: templates/_includes/carousel.html:442
+msgid "Availability"
+msgstr "Disponibilité"
+
+#: templates/_includes/carousel.html:443
+msgid "7 days/7"
+msgstr "7jours/7"
+
+#: templates/_includes/carousel.html:454
+msgid "in complete security"
+msgstr "en toute sécurité"
+
+#: templates/_includes/carousel.html:464
+msgid "Help"
+msgstr "Aide"
+
+#: templates/_includes/carousel.html:465
+msgid "How to buy on een?"
+msgstr "Comment acheter sur een ?"
+
+#: templates/_includes/footer.html:77
+msgid "Newsletter"
+msgstr "Newsletter"
+
+#: templates/_includes/footer.html:79
+msgid "Subscribe to our communications to receive our best offers !"
+msgstr ""
+"Abonnez-vous à nos communications pour recevoir nos meilleures offres !"
+
+#: templates/_includes/footer.html:83
+msgid "Enter your email address"
+msgstr "Entrer votre addresse email"
+
+#: templates/_includes/navbar.html:66 templates/_includes/navbar.html:74
+msgid "hello"
+msgstr "bonjour"
+
+#: templates/_includes/navbar.html:83 templates/_includes/navbar.html:108
+msgid "your profile"
+msgstr "votre compte"
+
+#: templates/_includes/navbar.html:129
+msgid "signup"
+msgstr "s'inscrire"
+
+#: templates/_includes/navbar.html:190
+msgid "home"
+msgstr "accueil"
+
+#: templates/_includes/navbar.html:195
+msgid "product"
+msgstr "produit"
+
+#: templates/_includes/navbar.html:318
+msgid "order"
+msgstr "commande"
+
+#: templates/_includes/navbar.html:333 templates/_includes/navbar.html:349
+msgid "cart"
+msgstr "panier"
+
+#: templates/_includes/navbar.html:364
+msgid "Search for a product or category"
+msgstr "Chercher un produit ou une catégorie"
+
+#: templates/_includes/submenu.html:6
+msgid "category"
+msgstr "categorie"
+
+#: templates/base.html:11
+msgid "unsta"
+msgstr "unsta"
+
+#~ msgid ""
+#~ "Explore the different categories of items and discover our best products !"
+#~ msgstr ""
+#~ "Explorez les différentes catégories d'articles et découvrez nos meilleurs "
+#~ "produits !"
+
+#~ msgid "Start shopping"
+#~ msgstr "Commencez vos achats"
+
+#~ msgid "Résultat"
+#~ msgstr "Résultat"
+
+#~ msgid "added to cart"
+#~ msgstr "ajouter au panier"
+
+#~ msgid "added to wishlist"
+#~ msgstr "ajouter à votre d'envie"
+
+#~ msgid "ecommerce"
+#~ msgstr "ecommerce"
+
+#~ msgid "Previous"
+#~ msgstr "Précédent"
+
+#~ msgid "Next"
+#~ msgstr "Suivant"
+
+#~ msgid "or"
+#~ msgstr "ou"
+
+#~ msgid "Order"
+#~ msgstr "Commande"
+
+#~ msgid "rechercher"
+#~ msgstr "rechercher"
+
+#~ msgid "Bonjour"
+#~ msgstr "Bonjour"
+
+#~ msgid "vos commandes"
+#~ msgstr "vos commandes"
+
+#~ msgid "shop/"
+#~ msgstr "boutique/"
+
+#~ msgid "Cart"
+#~ msgstr "Panier"
+
+#~ msgid "Card"
+#~ msgstr "votre carte"
+
+#~ msgid "NEW"
+#~ msgstr "NEW"
+
+#~ msgid "panier/"
+#~ msgstr "cart/"
+
+#~ msgid "valider/"
+#~ msgstr "valider/"
+
+#~ msgid "annuler/"
+#~ msgstr "annuler/"
+
+#~ msgid "frcfa"
+#~ msgstr "frcfa"

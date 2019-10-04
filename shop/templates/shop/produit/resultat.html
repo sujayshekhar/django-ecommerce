@@ -1,0 +1,275 @@
+{% extends "shop/base.html" %}
+{% load i18n static humanize %}
+
+<title>
+    {% block head_title %}
+        {{ request.GET.q }} | {% trans "unsta Inc" %}
+    {% endblock head_title %}
+</title>
+
+{% block content %}
+
+    <style type="text/css">
+        hgroup h5 { font: normal 1.125em "Roboto", Arial, Verdana, sans-serif; padding-bottom: 10px; }
+        .sort-navigation ul li { cursor: pointer; color: rgba(0, 0, 0, 0.5); }
+        .sort-navigation ul li i { font-size: 10px; color: rgba(0, 0, 0, 0.5); transform: translateY(-1px); }
+        .sort-navigation ul li ul { font-size: 10px; visibility: hidden; right: 0; opacity: 0;
+            box-shadow: 0px 10px 25px rgba(0,0,0,0.1); transition: all 200ms ease;}
+        .sort-navigation ul li ul li { white-space: nowrap;
+            padding-right: 13px; padding-left: 20px; padding-top: 5px; padding-bottom: 9px;
+            margin-bottom: 5px;  border-bottom: solid 1px #f2f2f2; }
+        .sort-navigation ul li ul li:last-child { border-bottom: none; }
+        .sort-navigation ul li:hover { color: rgba(0,0,0,0.8); }
+        .sort-navigation ul li:hover ul { visibility: visible; opacity: 1; }
+
+        .badge-new, .badge-sale {
+            position: absolute;
+            top: 0.25rem; z-index: 10;
+            width: 60px; height: 25px;
+            margin-top: 0.25rem;
+            background-color: #cf5050;
+            color: #efefef; font-size: 16px; font-weight: 500;
+        }
+
+        .badge-sale {
+            background-color: #cf5055;
+        }
+
+        .l-container .l-container-img >:first-child {
+            position: relative; display: block;
+        }
+
+        .l-container:hover {
+            outline: 1px solid #aaa;
+            -moz-outline-radius: 5px;
+            --webkit-box-shadow: 0 4px 8px rgba(0, 0, 0, .175);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, .175);
+        }
+
+        .l-container .l-container-img .l-container-tags {
+            top: 0; right: 0; vertical-align: inherit; border-width: 0; direction: rtl;
+        }
+        .l-container .l-container-img .l-container-tags > .l-container-label-tags {
+            margin: 1px 0 0 0; opacity: .92; direction: ltr;
+        }
+
+        .l-sb-heading h3:after { content: ''; display: block; width: 100px; height: 2px;
+            margin-top: .6rem; background: #4fbfa8; }
+        .l-sb-heading h3 { letter-spacing: 0.1em; line-height: 1.1; }
+        .category-menu { letter-spacing: 0.1em; font-weight: 700; }
+        .text-sm { font-size: 0.9rem; }
+        .l-sidebar-menu .l-container-body .category-listing li a { color: #6c757d !important; }
+    </style>
+
+    <!-- Main product Layout View -->
+    <main class="mt-auto pt-4">
+        <div class="container">
+            <div class="row rounded-0 shadow-none justify-content-center">
+                <!--section: sidebar categories listing -->
+                <aside class="col-md-3 col-lg-3 col-sm-12 shadow-none text-dark rounded-0">
+                    <div class="shadow-none border-0">
+                        <div class="l-sidebar-menu">
+                            <div class="l-sb-heading mb-2">
+                                <h3 class="h4 l-container-title mt-1 d-inline-block mb-0 pb-2 text-uppercase font-weight-bold">{% trans "category" %}</h3>
+                            </div>
+                            <div class="l-container-body">
+                                <ul class="nav nav-pills flex-column text-sm category-menu">
+                                    <li class="nav-item">
+                                        <ul class="nav nav-pills flex-column category-listing">
+                                            {% for cat in categories %}
+                                                <li class="nav-item">
+                                                    <a href="{{ cat.produits.get_cat_url }}" class="nav-link">
+                                                        {{ cat | truncatewords:"4" }}
+                                                        <span class="badge badge-light shadow-sm float-right">
+                                                            {{ cat.produits.count }}
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="l-sidebar-menu">
+                            <div class="l-sb-heading mb-2">
+                                <h3 class="h4 l-container-title mt-1 d-inline-block mb-0 pb-2 text-uppercase font-weight-bold">{% trans "marque" %}</h3>
+                            </div>
+                            <div class="l-container-body">
+                                <ul class="nav nav-pills flex-column text-sm category-menu">
+                                    <li class="nav-item">
+                                        <ul class="nav nav-pills flex-column category-listing">
+                                            {% for cat in categories %}
+                                                <li class="nav-item">
+                                                    <a href="{{ cat.produit.get_cat_url }}" class="nav-link">
+                                                        {{ cat|truncatewords:4 }}
+                                                        <span class="badge badge-light shadow-sm float-right">
+                                                            {{ cat.produits.count }}
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </aside><!-- ./section: sidebar categories listing -->
+
+                <!--section: ./categories listing -->
+                <div class="col-md-8">
+                    <div class="search-top-bar border-bottom clearfix">
+                        <hgroup class="mb-3 border-bottom text-center">
+                            <h5 class="text-muted small m-0">
+                                <strong>{{ produits.count }}</strong>
+                                {% trans "results were found for the search for" %}
+                                <strong class="text-muted">{{ request.GET.q }}</strong>
+                            </h5>
+                        </hgroup>
+                        <!-- topbar navigation -->
+                        <div class="search-navigation float-left ">
+                            <nav aria-label="Page navigation start">
+                                <ul class="pagination pagination-sm pg-teal">
+                                    {% for i in cat.pagination %}
+                                        {% if cat.number == i %}
+                                            <li class="page-item">
+                                                <a href="?page={{ i }}" class="page-link">{{ i }}</a>
+                                            </li>
+                                        {% else %}
+                                            <li class="page-item">
+                                                <a href="?page={{ i }}" class="page-link">{{ i }}</a>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                    <li class="page-item active" aria-current="page">
+                                        <a class="page-link shadow-none">1
+                                            <span class="sr-only">(current)</span>
+                                        </a>
+                                    </li>
+
+                                    <li class="page-item">
+                                        <a href="#" class="page-link">2</a>
+                                    </li>
+
+                                    <li class="page-item">
+                                        <a href="#" class="page-link">...</a>
+                                    </li>
+
+                                    <li class="page-item">
+                                        <a href="#" class="page-link">5</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a href="#" class="page-link">6</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a href="#" class="page-link" aria-label="Next">
+                                            <span aria-hidden="true">
+                                                <i class="fa fa-chevron-right"></i>
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+
+                        <!-- topbar sort navigation -->
+                        <div class="sort-navigation float-right">
+                            <span class="d-inline-block font-weight-bold">{% trans "Sort by" %}:</span>
+                            <ul class="d-inline-block position-relative ml-1 list-unstyled">
+                                <li>
+                                    <span class="d-inline-block text-muted sort-text">
+                                        {% trans "highest rated" %}
+                                        <i class="fas fa-chevron-down d-inline-block align-middle ml-1">
+                                        </i>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="row listing text-center">
+                        {% for produit in produits %}
+                            <div class="col-sm-4 col-md-3 l-container mb-3 py-2 mt-1">
+                                <div class="l-container-product">
+                                    <div class="l-container-img position-relative overflow-hidden text-center">
+                                        <a href="{{ produit.get_absolute_url }}" class="{{ produit.get_absolute_url }}">
+                                            <img src="{% if produit.image %}{{ produit.image.url }} {% else %} {% static "img/noimage.png" %}{% endif %}" alt="{{ produit.name }}"
+                                            class="img-fluid">
+                                            <a href="{{ produit.get_absolute_url }}" class="stretched-link"></a>
+                                        </a>
+                                        <div class="l-container-tags position-absolute d-inline-block visible
+                                        m-0 p-0 w-auto h-auto bg-transparent">
+                                            <div class="l-container-label-tags d-table text-left">
+                                                <span class="label label-danger bg-success text-white py-1 px-2 text-center">sale</span>
+                                            </div>
+                                        </div>
+
+                                        <a href="{{ produit.get_absolute_url }}" class="text-dark font-weight-normal text-capitalize">
+                                            {{ produit.name|truncatewords:3 }}
+                                        </a>
+                                        <span class="text-uppercase small d-inline-block">
+                                            {{ produit.prix_reduit | floatformat:"0" }} frcfa
+                                            <del class="text-muted small ml-1">
+                                                {{ produit.prix | floatformat:"0" }} frcfa
+                                            </del>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        {% empty %}
+                            <p class="lead">{% trans "Object not found is product" %}</p>
+                        {% endfor %}
+                    </div>
+
+                    <!--section: navigation -->
+                    <nav aria-label="Page navigation start">
+                        {% if cat.has_other_pages %}
+                            <ul class="pagination pagination-sm pg-teal">
+                                {% if cat.has_previous %}
+                                    <li class="page-item" aria-current="page">
+                                        <a href="{{ cat.previous_page_number }}" class="page-link shadow-none">
+                                            &laquo;
+                                            <span class="sr-only">(current)</span>
+                                        </a>
+                                    </li>
+                                {% endif %}
+
+                                {% for i in cat.paginator.num_pages %}
+                                    {% if cat.number == i %}
+                                        <li class="page-item active">
+                                            <a href="?page={{ i }}" class="page-link">{{ i }}</a>
+                                        </li>
+                                    {% else %}
+                                        <li class="page-item">
+                                            <a href="?page={{ i }}" class="page-link">{{ i }}</a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+
+                                {% if cat.has_next %}
+                                    <li class="page-item">
+                                        <a href="?page={{ cat.next_page_number }}" class="page-link" aria-label="Next">
+                                            <span aria-hidden="true">
+                                                <i class="fa fa-chevron-right"></i>
+                                            </span>
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item">
+                                        <a href="?page={{ cat.next_page_number }}" class="desabled page-link" aria-label="Next">
+                                            <span aria-hidden="true">
+                                                <i class="fa fa-chevron-right"></i>
+                                            </span>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        {% endif %}
+                    </nav>
+                </div><!--section: ./categories listing -->
+            </div>
+        </div>
+    </main><!-- ./Main product Layout View -->
+{% endblock content %}

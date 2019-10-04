@@ -1,0 +1,99 @@
+  {% load i18n static %}
+
+    <style>
+      .footer {
+        background: #e0e0e0;
+      }
+      .copyright {
+        background: #333;
+        color: #ccc;
+      }
+
+      #button-addon1 {
+        color: #ffc371;
+      }
+
+      .form-control::placeholder {
+        font-size: 0.95rem;
+        color: #aaa;
+        font-style: italic;
+      }
+    </style>
+
+
+
+    <!-- Footer -->
+    <footer class="footer flex-shrink-0">
+      <div class="container p-5">
+        <div class="row">
+          <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+            <a href="{% url "shop:liste_produit" %}" class="stretched-link">
+              <img src="{% static "img/cart.png" %}" alt="" class="w-25 d-block img-fluid mb-3">
+            </a>
+            <p class="font-italic text-muted small">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
+            </p>
+            <ul class="list-inline mt-4">
+              <li class="list-inline-item"><a href="#" target="_blank" title="twitter">
+                <i class="fab fa-twitter-square"></i></a>
+              </li>
+
+              <li class="list-inline-item">
+                <a href="#" target="_blank" title="facebook"><i class="fab fa-facebook-f"></i></a>
+              </li>
+
+              <li class="list-inline-item">
+                <a href="#" target="_blank" title="instagram"><i class="fab fa-instagram"></i></a>
+              </li>
+            </ul>
+          </div><!-- ./logo -->
+
+          <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+            <h6 class="text-uppercase font-weight-bold mb-4">Shop</h6>
+            <ul class="list-unstyled mb-0">
+              <li class="mb-2"><a href="#" class="text-muted">For Women</a></li>
+              <li class="mb-2"><a href="#" class="text-muted">For Men</a></li>
+              <li class="mb-2"><a href="#" class="text-muted">Stores</a></li>
+              <li class="mb-2"><a href="#" class="text-muted">Our Blog</a></li>
+            </ul>
+          </div><!-- ./shopping -->
+
+          <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+            <h6 class="text-uppercase font-weight-bold mb-4">Company</h6>
+            <ul class="list-unstyled mb-0">
+              <li class="mb-2"><a href="#" class="text-muted">Login</a></li>
+              <li class="mb-2"><a href="#" class="text-muted">Register</a></li>
+              <li class="mb-2"><a href="#" class="text-muted">Wishlist</a></li>
+              <li class="mb-2"><a href="#" class="text-muted">Our Products</a></li>
+            </ul>
+          </div><!-- ./company -->
+
+
+          <div class="col-lg-3 col-md-6 mb-lg-0">
+            <h6 class="text-uppercase font-weight-bold mb-4">{% trans "Newsletter" %}</h6>
+            <p class="text-muted mb-4">
+              {% trans "Subscribe to our communications to receive our best offers !" %}
+            </p>
+            <div class="rounded border">
+              <div class="input-group">
+                <input type="email" placeholder="{% trans "Enter your email address" %}"
+                aria-describedby="button-addon" class="form-control border shadow-none">
+                <div class="input-group-append">
+                  <button id="button-addon" type="submit" class="input-group-text">
+                    <i class="fa fa-paper-plane"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div><!-- ./subscribe -->
+        </div>
+      </div>
+
+      <!-- Copyrights -->
+      <div class="copyright py-4">
+        <div class="container text-center">
+          <p class="text-muted mb-0 py-2">© <script>document.write(new Date().getFullYear());</script> All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  <!-- End -->

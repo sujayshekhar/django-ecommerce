@@ -1,0 +1,154 @@
+<html >
+    {% load i18n static %}
+    <head>
+          <style type="text/css">
+            body {
+                margin-top: 120px;
+                margin-bottom: 120px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card-collection">
+                        <div class="card-body p-0">
+                            <!-- logo -->
+                            <div class="d-flex flex-row p-2">
+                                <div class="col-md-6">
+                                    <img src="http://via.placeholder.com/400x90?text=logo">
+                                </div>
+
+                                <div class="col-md-6 text-right">
+                                    <p class="font-weight-bold text-uppercase mb-2">
+                                        {% trans "order number" %} {{ commande.id }}
+                                    </p>
+                                    <p class="text-muted">{{ commande.creer|date:"M d, Y" }}</p>
+                                </div>
+                            </div><!-- logo -->
+
+                            <hr class="my-5">
+
+                            <div class="d-flex flex-row p-4">
+                                <div class="col-md-6">
+                                    <p class="font-weight-bold mb-4 text-uppercase">
+                                        {% trans "client" %}
+                                    </p>
+                                    <p class="mb-1">
+                                        <span class="text-capitalize">{% trans "name" %}</span> :
+                                        {{ commande.first_name }}
+                                        {{ commende.last_name }}
+                                    </p>
+                                    <p>
+                                        <span class="text-capitalize">
+                                            {% trans "email" %}
+                                        </span> : {{ commande.email }}
+                                    </p>
+                                    <address>
+                                        <p class="mb-1">
+                                            <span class="text-capitalize">
+                                                {% trans "contact" %}
+                                            </span> : (+225) {{ commande.telephone }}</p>
+                                        <p class="mb-1">
+                                            <span class="text-capitalize">
+                                                {% trans "adress" %}
+                                            </span> : {{ commande.adresse }}, {{ commande.ville }}
+                                        </p>
+                                    </address>
+                                </div>
+
+                                <div class="col-md-6 text-right">
+                                    <p class="font-weight-bold text-capitalize mb-4">
+                                    {% trans "payment detail" %}</p>
+                                    <p class="text-capitalize">
+                                        <span class="text-muted">{% trans "discount" %} :
+                                        </span>{{ commande.discount }}
+                                    </p>
+                                    {% for element in commande.items.all %}
+                                        <p>
+                                            <span class="text-muted text-uppercase">
+                                                {% trans "prix" %} :
+                                                {{ element.prix|floatformat:"0" }} frcfa
+                                            </span>
+                                        </p>
+                                        <p>
+                                            <span class="text-muted">
+                                                {% trans "payment type" %}:
+                                            </span>
+                                            {% if element.payer %}
+                                                {% trans "paid" %}
+                                                    {% else %}
+                                                {% trans "unpaid" %}
+                                            {% endif %}
+                                        </p>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            <div class="row p-5">
+                                <div class="col-md-12">
+                                    <table class="table">
+                                        <thead class="text-center small">
+                                            <tr>
+                                                <th class="border-0 text-uppercase font-weight-bold">
+                                                    id
+                                                </th>
+                                                <th class="border-0 text-uppercase font-weight-bold">
+                                                    {% trans "product" %}
+                                                </th>
+                                                <th class="border-0 text-uppercase font-weight-bold">
+                                                    {% trans "quantity" %}
+                                                </th>
+                                                <th class="border-0 text-uppercase font-weight-bold">
+                                                    {% trans "unit cost" %}
+                                                </th>
+                                                <th class="border-0 text-uppercase font-weight-bold">
+                                                    {% trans "cost" %}
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="text-center small">
+                                            <tr>
+                                                {% for item in commande.items.all %}
+                                                    <td>{{ commande.id }}</td>
+                                                    <td>{{ item.produit.name }}</td>
+                                                    <td>{{ item.quantite }}</td>
+                                                    <td>{{ item.prix|floatformat:"0" }}</td>
+                                                    <td class="text-uppercase font-weight-bold">
+                                                        {{ item.get_depense | floatformat:"0" }} frcfa
+                                                    </td>
+                                                {% endfor %}
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="d-flex flex-row-reverse bg-light p-4">
+
+                                <div class="py-3 px-5 text-right">
+                                    <div class="mb-2 text-uppercase">{% trans "total grand cost" %}</div>
+                                    <div class="h2 small font-weight-bold text-uppercase">
+                                    {{ commande.get_depense_total | floatformat:"0" }} frcfa</div>
+                                </div>
+
+
+                                <div class="py-3 px-3 text-right">
+                                    <div class="mb-2 text-uppercase">{% trans "discount" %}</div>
+                                    <div class="h2 small font-weight-bold">
+                                        {{ commande.discount }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-5 mb-5 text-center small">
+                <a target="_blank" href="#" title="unsta inc">unsta technologie</a>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+<title>
+    {% block head_title %}{% trans "Cancel" %}{% endblock head_title %}
+</title>
+
+{% block carousel %}{% endblock carousel %}
+
+{% block content %}
+    <!-- Main product Layout View -->
+    <main class="mt-5 pt-4">
+        <div class="container wow fadeIn">
+            <h1 class="my-5 h2 text-center">{% trans "Your payment has not been successful" %}</h1>
+            <p class="lead text-center">{% trans "There was a problem processing your payment." %}</p>
+        </div>
+    </main>
+{% endblock content %}

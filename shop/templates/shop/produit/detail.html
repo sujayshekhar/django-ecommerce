@@ -1,0 +1,286 @@
+{% extends "shop/base.html" %}
+{% load i18n static humanize %}
+<title>
+    {% block head_title %}
+        {% if produit.categorie %}
+            {{ produit.name | truncatewords:"5" }} | {% trans "unsta Inc" %}
+        {% else %}
+            {% trans "unsta Inc" %}
+        {% endif %}
+    {% endblock head_title %}
+</title>
+
+
+{% block content %}
+<style type="text/css" media="screen">
+    .no-gutters > [class*="col-"] {
+        padding-right: 0 !important; padding-left: 0 !important;
+    }
+    .gallery-wrap .img-big-wrap {
+        margin-bottom: 5px;
+    }
+
+    .gallery-wrap .img-small-wrap .item-gallery {
+        width: 60px; height: 60px; margin: 7px 2px; display: inline-block; overflow: hidden;
+    }
+
+    .gallery-wrap .img-small-wrap img {
+        max-width: 100%; max-height: 100%; object-fit: cover;
+        border-radius: 4px; cursor: zoom-in;
+    }
+    .rating-stars { line-height: 1; clear: both; }
+    .rating-stars li.stars-active {z-index: 2; top: 0; left: 0;}
+    .rating-stars li.stars-active i { color: orange; }
+
+    .rating-stars li { display: block; text-overflow: clip;
+        white-space: nowrap; z-index: 1; }
+
+    .rating-stars i { font-size: 14px; color: #ccc; display: inline; }
+
+    .badge-sale {
+        background-color: #cf5055;
+    }
+
+</style>
+<!-- Main product Layout View -->
+    <main class="section-detail-produit">
+        <div class="container mt-2">
+            <!-- breadcrumb -->
+            {% include "_includes/breadcrumb.html" %}
+            <!-- ./breadcrumb -->
+
+            <!-- Grid row -->
+            <div class="row">
+                <div class="col-md-7 col-sm-8 col-xl-10">
+                    <div class="card shadow-none">
+                        <div class="row no-gutters">
+                            <aside class="col-sm-4">
+                                <article class="gallery-wrap">
+                                    <div class="img-big-wrap overflow-hidden bg-white">
+                                        <div class="text-center">
+                                            <a class="text-center d-block" href="{{ produit.image.url }}" title="{{ produit.name }}" data-fancybox="gallery">
+                                                <img class="imglist img-fluid" src="{% if produit.image %}{{ produit.image.url }}{% else %}{% static "img/cart.png" %}{% endif %}">
+                                            </a>
+                                        </div>
+                                    </div><!-- slider-product -->
+
+                                    <div class="img-small-wrap text-center">
+                                        <div class="item-gallery">
+                                            <img src="{% if produit.image %}{{ produit.image.url }}{% else %}{% static "img/cart.png" %}{% endif %}" class="img-thumbnail">
+                                        </div>
+
+                                        <div class="item-gallery">
+                                            <img src="{% if produit.image %}{{ produit.image.url }}{% else %}{% static "img/cart.png" %}{% endif %}" class="img-thumbnail">
+                                        </div>
+
+                                        <div class="item-gallery">
+                                            <img src="{% if produit.image %}{{ produit.image.url }}{% else %}{% static "img/cart.png" %}{% endif %}" class="img-thumbnail">
+                                        </div>
+                                    </div>
+                                </article>
+                            </aside>
+
+                            <aside class="col-sm-8">
+                                <article class="card-body">
+                                    <!-- short-info-wrap -->
+                                    <div class="mb-2">
+                                        {% if produit.label == 'N' %}
+                                            <span class="mr-1 badge red shadow-none
+                                                {% if produit.label %}
+                                                    {{ produit.get_label_display }}
+                                                {% endif %} text-center">new
+                                            </span>
+                                        {% endif %}
+
+                                        {% if produit.label == 'S' %}
+                                            <span class="mr-1 badge red shadow-none
+                                                {% if produit.label %}
+                                                    {{ produit.get_label_display }}
+                                                {% endif %} text-center">-30%
+                                            </span>
+                                        {% endif %}
+
+                                        <span class="badge blue shadow-none text-capitalize">
+                                        {% trans "bestseller" %}</span>
+                                    </div>
+
+                                    <h5 class="text-wrap mb-3">
+                                        {{ produit.name }}
+                                    </h5>
+
+                                    <hr>
+
+                                    <div class="mb-3">
+                                        <var class="price h3 text-warning">
+                                            <span class="text-uppercase font-weight-bold">
+                                                {{ produit.prix_reduit | floatformat:"0" }} frcfa
+                                            </span>
+                                        </var>
+                                    </div> <!-- price-detail-wrap -->
+
+                                    <dl>
+                                        <dt>Description</dt>
+                                        <dd>
+                                            {% lorem 1 p random %}
+                                        </dd>
+                                    </dl>
+                                    <dl class="row">
+                                        <dt class="col-sm-3">Moddel#</dt>
+                                        <dd class="col-sm-9">123456789</dd>
+
+                                        <dt class="col-sm-3">Color</dt>
+                                        <dd class="col-sm-9">Black and white </dd>
+
+                                        <dt class="col-sm-3">Delivery</dt>
+                                        <dd class="col-sm-9">Russia, USA, and Europe </dd>
+                                    </dl>
+
+                                    <div class="rating-wrap">
+                                        <ul class="rating-stars d-inline-block align-middle list-unstyled m-0 p-0 position-relative text-nowrap">
+                                            <li style="width:80%" class="stars-active position-absolute overflow-hidden">
+                                                <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                            </li>
+                                            <li>
+                                                <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                            </li>
+                                        </ul>
+                                        <div class="label-rating text-muted mr-2 d-inline-block align-middle">132 reviews</div>
+                                        <div class="label-rating text-muted mr-2 d-inline-block align-middle">154 orders </div>
+                                    </div><!-- ./rating-wrap-->
+                                    <hr>
+
+                                    <div class="mb-2">
+                                        <!-- Default input -->
+                                        <form method="post" action="{% url "panier:ajout_panier" produit.id %}" class="form-inline" novalidate>
+
+                                            {{ formulaire_panier_produit.quantite }}
+                                            {{ formulaire_panier_produit.errors }}
+
+                                            <div class="btn-group btn-sm" role=="group" aria-label="add to cart">{% csrf_token %}
+                                                <button class="btn btn-success btn-sm shadow-none rounded"
+                                                    type="submit">{% trans "Add to cart" %}
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </article>
+                            </aside>
+                        </div>
+                    </div><!-- ./Grid column -->
+                </div>
+
+                <div class="col-md-5 col-sm-4 col-xl-2">
+                    <div class="card shadow-sm">
+                        <div class="card-header">Trade assurance</div>
+                        <div class="card-body small">
+                            <span>China | Trading Company</span>
+                            <hr>
+                            Transaction Level: Good <br>
+                            Supplier Assessments: Best
+                            <hr>
+                            11 Transactions $330,000+
+                            <hr>
+                            Response Time 24h <br>
+                            Response Rate: 94%  <br>
+                            <hr>
+                        </div><!-- ./card-body -->
+                    </div><!-- ./card -->
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="container">
+                    <nav class="tab_menu mt-1">
+                        <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
+                            <a href="#nav-home" class="nav-item text-muted nav-link font-weight-bold active" id="nav-home-tab" data-toggle="tab" role="tab" aria-controls="nav-home" aria-selected="true">
+                            {% trans "Description" %}</a>
+
+                            <a class="nav-item nav-link text-muted font-weight-bold" id="nav-info-tab" data-toggle="tab" href="#nav-info" role="tab" aria-controls="nav-info" aria-selected="false">{% trans "Characteristic" %}</a>
+
+                            <a class="nav-item nav-link text-muted font-weight-bold" id="nav-avis-tab" data-toggle="tab" href="#nav-avis" role="tab"
+                            aria-controls="nav-avis" aria-selected="false">{% trans "Review" %}</a>
+                        </div>
+                    </nav>
+
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active p-4" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                            {{ produit.description | safe }}
+                        </div>
+
+                        <div class="tab-pane fade show p-3 text-center" id="nav-info" role="tabpanel" aria-labelledby="nav-info-tab">
+                            <div class="title font-weight-bolder text-uppercase text-muted">
+                                {% trans "Détails du produit" %}
+                            </div>
+                            <ul class="list-unstyled">
+                                <li>{% lorem 3 w random %}</li>
+                                <li>{% lorem 3 w random %}</li>
+                                <li>{% lorem 3 w random %}</li>
+                            </ul>
+                        </div>
+
+                        <div class="tab-pane fade show " id="nav-avis" role="tabpanel" aria-labelledby="nav-avis-tab">
+                            <p class="p-3 justify-content-center">
+
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="container">
+                    <nav class="tab_menu mt-1">
+                        <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
+                            <a href="#nav-article-view" class="nav-item text-muted nav-link font-weight-bold active" id="nav-home-tab" data-toggle="tab" role="tab" aria-controls="nav-article-view" aria-selected="true">
+                            {% trans "Your recently viewed articles" %}</a>
+                        </div>
+                    </nav>
+
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-article-view" role="tabpanel" aria-labelledby="nav-home-tab">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+            <!-- Grid row -->
+            <div class="row justify-content-center">
+                <!--Grid column-->
+                <div class="col-md-12 text-center">
+                    <h4 class="my-4 h4 text-uppercase font-weight-bold text-capitalize">
+                        {% trans "further information" %}
+                    </h4>
+                    {% lorem 1 p random %}
+                </div>
+                <!--Grid column-->
+            </div><!-- Grid row -->
+
+            <!--Grid row produit recommandé -->
+            {% if recommande_produit %}
+                <div class="row wow fadeIn">
+                    <h3 class="text-center font-weight-bold">
+                        {% trans "People who bought this also bought" %}
+                    </h3>
+
+                    {% for p in recommande_produit %}
+                        <div class="col-lg-4 col-md-6 mb-4 view zoom overlay">
+                            <a href="{{ p.get_absolute_url }}" class="stretched-link" title="">
+                                <img src="{% if p.image %}
+                                {{ p.image.url }} {% else %}
+                                {% static "img/noimage.png" %}
+                                {% endif %}" alt="" class="img-fluid">
+                                <div class="mask rgba-white-slight"></div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div><!-- ./Grid row -->
+    </main><!-- ./Main product Layout View -->
+{% endblock content %}

@@ -1,0 +1,175 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-09-27 13:08+0000\n"
+"PO-Revision-Date: 2019-09-22 13:15+0000\n"
+"Last-Translator: b'  <flavienhgs@gmail.com>'\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Translated-Using: django-rosetta 0.9.3\n"
+
+#: commandes/models.py:14
+msgid "first name"
+msgstr "first name"
+
+#: commandes/models.py:15
+msgid "last name"
+msgstr "last name"
+
+#: commandes/models.py:16 commandes/templates/commandes/commande/pdf.html:45
+msgid "email"
+msgstr "email"
+
+#: commandes/models.py:17 commandes/templates/commandes/commande/pdf.html:55
+msgid "adress"
+msgstr "adress"
+
+#: commandes/models.py:18
+msgid "phone number"
+msgstr "phone number"
+
+#: commandes/models.py:19
+msgid "city"
+msgstr "city"
+
+#: commandes/models.py:20
+msgid "created"
+msgstr "created"
+
+#: commandes/models.py:21
+msgid "updated"
+msgstr "updated"
+
+#: commandes/models.py:22 commandes/templates/commandes/commande/pdf.html:80
+msgid "paid"
+msgstr "paid"
+
+#: commandes/models.py:23 commandes/templates/commandes/commande/pdf.html:65
+#: commandes/templates/commandes/commande/pdf.html:138
+msgid "discount"
+msgstr "discount"
+
+#: commandes/models.py:26
+msgid "ID"
+msgstr "ID"
+
+#: commandes/models.py:44
+msgid "price"
+msgstr "price"
+
+#: commandes/models.py:45
+msgid "Quantity"
+msgstr "Quantity"
+
+#: commandes/templates/commandes/commande/create.html:4
+msgid "place the order"
+msgstr "place the order"
+
+#: commandes/templates/commandes/commande/create.html:12
+msgid "validation form"
+msgstr "validation form"
+
+#: commandes/templates/commandes/commande/create.html:30
+msgid "confirm"
+msgstr "comfirm"
+
+#: commandes/templates/commandes/commande/create.html:41
+msgid "your order"
+msgstr "your order"
+
+#: commandes/templates/commandes/commande/create.html:80
+msgid "total cost"
+msgstr "total cost"
+
+#: commandes/templates/commandes/commande/created.html:4
+msgid "Success"
+msgstr "Success"
+
+#: commandes/templates/commandes/commande/created.html:13
+msgid "Super !"
+msgstr "Super !"
+
+#: commandes/templates/commandes/commande/pdf.html:25
+msgid "order number"
+msgstr "order number"
+
+#: commandes/templates/commandes/commande/pdf.html:36
+msgid "client"
+msgstr "client"
+
+#: commandes/templates/commandes/commande/pdf.html:39
+msgid "name"
+msgstr "name"
+
+#: commandes/templates/commandes/commande/pdf.html:51
+msgid "contact"
+msgstr "contact"
+
+#: commandes/templates/commandes/commande/pdf.html:63
+msgid "payment detail"
+msgstr "payment detail"
+
+#: commandes/templates/commandes/commande/pdf.html:71
+msgid "prix"
+msgstr "price"
+
+#: commandes/templates/commandes/commande/pdf.html:77
+msgid "payment type"
+msgstr "payment type"
+
+#: commandes/templates/commandes/commande/pdf.html:82
+msgid "unpaid"
+msgstr "unpaid"
+
+#: commandes/templates/commandes/commande/pdf.html:98
+msgid "product"
+msgstr "product"
+
+#: commandes/templates/commandes/commande/pdf.html:101
+msgid "quantity"
+msgstr "quantity"
+
+#: commandes/templates/commandes/commande/pdf.html:104
+msgid "unit cost"
+msgstr "unit cost"
+
+#: commandes/templates/commandes/commande/pdf.html:107
+msgid "cost"
+msgstr "cost"
+
+#: commandes/templates/commandes/commande/pdf.html:131
+msgid "total grand cost"
+msgstr "total grand cost"
+
+#: commandes/urls.py:12
+msgid "create/"
+msgstr "create/"
+
+#~ msgid "Bill to"
+#~ msgstr "Bill to"
+
+#~ msgid "ordered product"
+#~ msgstr "ordered product"
+
+#~ msgid "unit per unit"
+#~ msgstr "unit per unit"
+
+#~ msgid ""
+#~ "\n"
+#~ "                                        \"%(code)s\" (%(discount)s%% "
+#~ "off)\n"
+#~ "                                    "
+#~ msgstr ""
+#~ "\n"
+#~ "\"%(code)s\" (%(discount)s%% off)"

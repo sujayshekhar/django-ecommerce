@@ -1,0 +1,29 @@
+{% extends "./register.html" %}
+{% load i18n static %}
+
+<title>
+    {% block head_title %}
+        {% trans "logout" %} | unsta inc
+    {% endblock head_title %}
+</title>
+
+{% block content %}
+   <!-- Main product Layout View -->
+    <main>
+        <div class="container dark-grey-text mt-2">
+            <!-- Grid row -->
+            <section class="content-section">
+                <h4>{% trans "you have been logged out" %}</h4>
+                <div class="border-top pt-3">
+                    <small class="text-muted">
+                       Need an account ?
+                       <a href="{% url "accounts:login" %}"
+                        class="ml-2 text-capitalize">
+                            login in again
+                        </a>
+                    </small>
+                </div>
+            </section><!-- ./Grid row -->
+        </div>
+    </main><!-- ./Main product Layout View -->
+{% endblock content %}

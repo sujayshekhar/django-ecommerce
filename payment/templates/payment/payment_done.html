@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+<title>
+    {% block head_title %}{% trans "valid" %}{% endblock head_title %}
+</title>
+
+{% block carousel %}{% endblock carousel %}
+
+{% block content %}
+    <!-- Main product Layout View -->
+    <main class="mt-5 pt-4">
+        <div class="container wow fadeIn">
+            <h1 class="my-5 h2 text-center">
+            {% trans "Your payment was successful." %}</h1>
+            <p class="lead text-center">
+            {% trans "Your payment has been processed successfully." %}</p>
+        </div>
+    </main>
+{% endblock content %}
