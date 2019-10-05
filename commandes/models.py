@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.utils.translation import gettext_lazy as _
 from decimal import Decimal
 from django.conf import settings
@@ -13,7 +15,6 @@ class Commande(models.Model):
     coupon = models.ForeignKey(Coupon, related_name="Commandes", null=True, blank=True, on_delete=models.SET_NULL)
     first_name = models.CharField(_('first name'), max_length=50)
     last_name = models.CharField(_('last name'), max_length=50)
-    email = models.EmailField(_('email'))
     adresse = models.CharField(_('adress'), max_length=250)
     telephone = models.CharField(_('phone number'), max_length=8)
     ville = models.CharField(_('city'), max_length=100)

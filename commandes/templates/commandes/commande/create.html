@@ -17,11 +17,7 @@
                             {% trans "your order" %}
                             <small class="font-weight-bold">
                                 ({% with total_items=panier|length %}
-                                    {% if panier|length > 0  %}
-                                        {{ total_items }}
-                                    {% else %}
-                                        0
-                                    {% endif %}
+                                    {% if panier|length > 0 %}{{ total_items }}{% endif %}
                                     {% trans "article" %}{{ total_items|pluralize }}
                                 {% endwith %} )
                             </small>
@@ -79,37 +75,65 @@
                 <!-- checkout form -->
                 <div class="col-md-7 order-md-1">
                     <h4 class="mb-3 text-uppercase">
-                        <span class="text-muted small">
-                        {% trans "finalization of the order" %}</span>
-                    </h5>
+                        <span class="text-muted small">{% trans "finalization of the order" %}</span>
+                    </h4>
 
                     <div class="card shadow-sm border">
                         <div class="card-header text-uppercase bg-transparent">
                             {% trans "address" %}
                         </div>
-                        <form method="post" class="card-body needs-validation" novalidate="">
+                        <form method="POST" class="card-body needs-validation">
+                            {% csrf_token %}
                             <!-- Grid row -->
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="formulaire.last_name.id_for_label">
+                            <div class="row px-3 justify-content-center">
+                                <div class="col-md-6 mb-2">
+                                    <div class="md-form form-group">
                                         {{ formulaire.last_name.label_tag }}
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                {% for champs in formulaire %}
-                                    <div class="col-md-6 mb-3">
-                                        <div class="md-form form-group">
-                                            {{ champs.errors }}
-                                            {{ champs.label_tag }}
-                                            {{ champs }}
-                                        </div>
+                                        {{ formulaire.last_name }}
+                                        {{ formulaire.last_name.errors }}
                                     </div>
-                                {% endfor %}
-                                <hr class="mb-4">
-                                <button class="btn btn-primary btn-sm btn-block" type="submit">
-                                {% trans "confirm" %}</button>
-                                {% csrf_token %}
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="md-form form-group">
+                                        {{ formulaire.first_name.label_tag }}
+                                        {{ formulaire.first_name }}
+                                        {{ formulaire.first_name.errors }}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="md-form form-group">
+                                        {{ formulaire.telephone.label_tag }}
+                                        {{ formulaire.telephone }}
+                                        {{ formulaire.telephone.errors }}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="md-form form-group">
+                                        {{ formulaire.adresse.label_tag }}
+                                        {{ formulaire.adresse }}
+                                        {{ formulaire.adresse.errors }}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 mb-4">
+                                    <div class="form-group">
+                                        <label class="text-muted" for="{{ formulaire.ville.id_for_label }}">
+                                            {{ formulaire.ville.label_tag }}
+                                        </label>
+                                        {{ formulaire.ville }}
+                                        {{ formulaire.ville.errors }}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <small class="text-muted text-success">
+                                        {% trans "*Field required" %}
+                                    </small>
+                                    <button class="my-2 btn btn-success btn-md btn-block shadow-none" type="submit">{% trans "confirm" %}</button>
+                                </div>
                             </div>
                         </form>
                     </div>

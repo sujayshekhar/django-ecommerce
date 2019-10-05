@@ -132,5 +132,5 @@ $(document).ready(function() {
             });
        });
     }
-    $grid.imagesLoaded().progress( function() {$grid.masonry();});
+    grid.imagesLoaded().progress( function() {$grid.masonry();});
 });

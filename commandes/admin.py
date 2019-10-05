@@ -60,7 +60,7 @@ class CommandeAdmin(admin.ModelAdmin):
     """
         Admin View for Commande
     """
-    list_display = ['id', 'first_name', 'last_name', 'email',
+    list_display = ['id', 'first_name', 'last_name',
                     'adresse', 'telephone', 'ville', 'payer',
                     'creer', detail_commande, pdf_commande]
     list_filter = ['payer', 'creer', 'updated']
