@@ -29,6 +29,29 @@ DEBUG = True
 DEFAULT_FROM_EMAIL = 'flavienhgs@gmail.com'
 ALLOWED_HOSTS = []
 
+SITE_NAME = 'unsta'
+META_KEYWORDS = 'Shopping, ecommerce, accessories, TV, Audio, smartphone, Mode'
+META_DESCRIPTION = 'ecommerce shopping'
+
+DEFAULT_CHARSET = 'utf-8'
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_SSL_REDIRECT = False
+USE_X_FORWARRED_HOST = True
+
+# Cookie name. This can be whatever you want.
+SESSION_COOKIE_NAME = 'sessionid'
+# The module to store sessions data.
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+# Age of cookie, in seconds (default: 2 weeks).
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 7 * 2
+# Whether a user's session cookie expires when the Web browser is closed
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+# Whether the session cookie should be secure (https:// only).
+SESSION_COOKIE_SECURE = False
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -96,11 +119,14 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.csrf',
                 'django.contrib.messages.context_processors.messages',
                 # ...
                 # Processeur de contexte du panier
                 'panier.context_processors.panier',
                 'panier.context_processors.get_client_ip',
+                'panier.context_processors.ecommerce',
             ],
         },
     },

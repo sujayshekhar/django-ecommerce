@@ -1,14 +1,5 @@
 {% extends "shop/base.html" %}
 {% load i18n static humanize %}
-<title>
-    {% block head_title %}
-        {% if produit.categorie %}
-            {{ produit.name | truncatewords:"5" }} | {% trans "unsta Inc" %}
-        {% else %}
-            {% trans "unsta Inc" %}
-        {% endif %}
-    {% endblock head_title %}
-</title>
 
 
 {% block content %}
@@ -40,13 +31,12 @@
     .badge-sale {
         background-color: #cf5055;
     }
-
 </style>
 <!-- Main product Layout View -->
     <main class="section-detail-produit">
         <div class="container mt-2">
             <!-- breadcrumb -->
-            {% include "_includes/breadcrumb.html" %}
+            {% include "_includes/tags/breadcrumb.html" %}
             <!-- ./breadcrumb -->
 
             <!-- Grid row -->
@@ -101,21 +91,36 @@
                                         {% endif %}
 
                                         <span class="badge blue shadow-none text-capitalize">
-                                        {% trans "bestseller" %}</span>
+                                            {% trans "bestseller" %}
+                                        </span>
                                     </div>
 
                                     <h5 class="text-wrap mb-3">
-                                        {{ produit.name }}
+                                        {{ produit.name }} <br>
+                                        <small>
+                                            In categor{{ categories.count|pluralize:"y,ies" }}:
+                                            {% for cat in categories %}
+                                                <a class="text-muted" href="{{ cat.get_absolute_url }}">{{ cat.name }}</a>
+                                                {% if not forloop.last %}, {% endif %}
+                                            {% endfor %}
+                                        </small>
                                     </h5>
 
                                     <hr>
 
                                     <div class="mb-3">
-                                        <var class="price h3 text-warning">
-                                            <span class="text-uppercase font-weight-bold">
-                                                {{ produit.prix_reduit | floatformat:"0" }} frcfa
-                                            </span>
-                                        </var>
+                                        <span class="text-uppercase font-weight-bold">
+                                            {% if produit.prix_reduit %}
+                                                <strong class="h4 text-success">
+                                                    {{ produit.prix_reduit | floatformat:0 }} fcfa
+                                                </strong>
+                                                <small class="text-muted h6">
+                                                    <del>{{ produit.prix | floatformat:0 }} fcfa</del>
+                                                </small>
+                                            {% else %}
+                                                {{ produit.prix_reduit | floatformat:0 }} fcfa
+                                            {% endif %}
+                                        </span>
                                     </div> <!-- price-detail-wrap -->
 
                                     <dl>

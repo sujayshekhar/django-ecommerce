@@ -15,26 +15,23 @@ LABEL_CHOICES = (
 class Categorie(models.Model):
     """ Definition du model Categorie : nom et slug de la categorie """
     name = models.CharField("Type de produit", max_length=200, db_index=True)
-    slug = models.SlugField(max_length=200, unique=True)
+    slug = models.SlugField(max_length=200, unique=True, help_text='Unique value for product page URL, created from name.')
+    meta_keywords = models.CharField('Meta Keywords', max_length=200, help_text="Comma-delimited set of SEO keywords for meta tag")
+    meta_description = models.CharField("Meta Description", max_length=255, help_text='Content for description meta tag')
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('shop:liste_produit_par_categorie', args=[self.slug])
-
-    def get_cat_url(self):
         return reverse('shop:listing_categorie', args=[self.slug])
 
     @property
-    def get_produits(self):
-        return Produit.objects.filter(categorie__name__icontains=self.name)
-
-    @property
-    def cat_count(self):
-        return Categorie.objects.filter(name=self).count()
+    def get_cat_count(self):
+        return Produit.objects.filter(categorie__name__icontains=self.name).count()
 
     class Meta:
+        db_table = 'categories'
         ordering = ('-name',)
         verbose_name = 'categorie'
         verbose_name_plural = 'categories'
@@ -44,19 +41,26 @@ class Produit(models.Model):
     """ Definition des params du produits :
     nom, description, image, prix, disponibilite """
 
-    categorie = models.ForeignKey(Categorie, related_name='produits', on_delete="models.CASCADE")
+    categorie = models.ManyToManyField(Categorie)
     name = models.CharField("Nom du produit", max_length=200, db_index=True)
-    slug = models.SlugField(max_length=200, unique=True, db_index=True)
+    slug = models.SlugField(max_length=200, unique=True, db_index=True,
+        help_text='Unique value for product page URL, created from name.')
     description = HTMLField("Description du produit", null=True, blank=True)
 
     prix = models.DecimalField("Prix de vente", max_digits=10, decimal_places=2)
-    prix_reduit = models.DecimalField("Prix promo", max_digits=10, decimal_places=2, blank=True)
+    prix_reduit = models.DecimalField("Prix promo", max_digits=10, decimal_places=2, blank=True, null=True)
 
     image = models.ImageField("Ajouter une image", upload_to='produits/img/%Y/%m/%d', blank=True)
     thumbnails = models.ImageField("Autres image", upload_to='produits/thumb/%Y/%m/%d', blank=True)
 
     disponible = models.BooleanField("Disponibilité", default=True)
     label = models.CharField(choices=LABEL_CHOICES, max_length=1, null=True, blank=True)
+    is_bestseller = models.BooleanField(default=False)
+
+    meta_keywords = models.CharField(max_length=255,
+        help_text='Comma-delimited set of SEO keywords for meta tag')
+    meta_description = models.CharField(max_length=255,
+        help_text='Content for description meta tag')
 
     creation = models.DateTimeField(auto_now_add=True, auto_now=False)
     update = models.DateTimeField("Ajouté le", auto_now_add=False, default=datetime.datetime.now)
@@ -67,6 +71,12 @@ class Produit(models.Model):
     @property
     def view_product_count(self):
         return Produit.objects.filter(name=self).count()
+
+    def sale_price(self):
+        if self.prix_reduit > self.prix:
+            return self.prix
+        else:
+            return None
 
     def get_absolute_url(self):
         return reverse('shop:detail_produit', args=[self.slug, self.id])

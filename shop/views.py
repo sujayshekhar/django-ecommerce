@@ -42,28 +42,32 @@ def search(request):
 
 
 # Vue pour lister tous les produits
-def liste_produit(request, category_slug=None):
+def all_produit(request, category_slug=None):
     next_lang = strip_language(request.path)
     categorie = None
     categories = Categorie.objects.all().order_by("-creation")
     produits = Produit.objects.filter(disponible=True)
     if category_slug:
         categorie = get_object_or_404(Categorie, slug=category_slug)
-        produits = produits.filter(categorie=categorie)
-    return render(request, 'shop/produit/listing.html',
-        {
-            'category':categorie, 'categories':categories,
-            'produits':produits, 'next':next_lang
-        })
 
-def cat_filter(request, category_slug):
+    context = {'category': categorie, 'categories': categories, 'produits': produits, 'next': next_lang}
+    template = 'shop/produit/listing.html'
+    return render(request, template, context)
+
+def liste_categorie(request, category_slug=None):
     next_lang = strip_language(request.path)
+    categorie = None
     categories = Categorie.objects.all()
     produits = Produit.objects.filter(disponible=True)
     if category_slug:
         categorie = get_object_or_404(Categorie, slug=category_slug)
-        produits = produits.filter()
-    context = {'category':categorie, 'categories':categories, 'produits':produits, 'next':next_lang}
+        produits = produits.filter(categorie=categorie)
+        page_title = categorie.name
+        meta_keywords = categorie.meta_keywords
+        meta_description = categorie.meta_description
+
+    context = {'produits': produits, 'page_title' : page_title, 'meta_keywords' : meta_keywords,
+        'meta_description' : meta_description, 'next': next_lang}
     template = 'shop/produit/cat_listing.html'
     return render(request, template, context)
 
@@ -71,32 +75,29 @@ def cat_filter(request, category_slug):
 # Vue pour les details des produits
 @require_http_methods(["GET"])
 def detail_produit(request, id, slug):
+    language = request.LANGUAGE_CODE
     next_lang = strip_language(request.path)
-    username = request.GET.get('username', None)
-    user = None
-    if username:
-        try:
-            user = User.objects.get(username=username)
-        except (User.DoesNotExist, User.MultipleObjectsReturned):
-            pass
-    if user:
-        return Produit.objects.filter(user=user)
-    else:
-        produit = get_object_or_404(Produit, id=id, slug=slug, disponible=True)
     produit = get_object_or_404(Produit, id=id, slug=slug, disponible=True)
+    categories = produit.categorie.filter(is_active=True)
+    page_title = produit.name
+    meta_keywords = produit.meta_keywords
+    meta_description = produit.meta_description
     formulaire_panier_produit = AjouterProduitPanierForm(auto_id='id_%s')
     # r = Recommender()
     # recommended_products = r.suggest_products_for([produit], 4)
     template = 'shop/produit/detail.html'
-    context = {'produit':produit, 'formulaire_panier_produit':formulaire_panier_produit, 'next':next_lang}
+    context = {'produit': produit, 'categories': categories, 'formulaire_panier_produit': formulaire_panier_produit,
+        'page_title' : page_title, 'meta_keywords' : meta_keywords, 'meta_description' : meta_description,
+        'next': next_lang, 'language':language }
     return render(request, template, context)
 
 
 # Vue pour lister les categories de produits
-def list_categorie(request):
+def all_categorie(request):
     next_lang = strip_language(request.path)
-    category = Categorie.objects.all()
-    paginator = Paginator(category, 20)
-    page = request.GET.get('page')
-    cat = paginator.get_page(page)
-    return render(request, "shop/produit/cat_listing.html", {'cat':cat, 'next':next_lang})
+    page_title = 'categorie'
+    categories = Categorie.objects.all()
+    produits = Produit.objects.filter(disponible=True)
+    context = {'categories':categories, 'produits':produits, 'page_title' : page_title, 'next': next_lang }
+    template = 'shop/produit/all_categorie.html'
+    return render(request, template, context)

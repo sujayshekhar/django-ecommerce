@@ -4,11 +4,17 @@
         {% load static i18n %}
         <!-- meta header-->
         {% include "_includes/csslink.html" %}
-        {% block our_head %}{% endblock our_head %}
         <!-- ./meta header-->
 
         <!-- titre -->
-        <title>{% block head_title %}{% trans "unsta" %}{% endblock head_title %}</title>
+        <title>
+            {% block title %}
+                {% if page_title %}
+                    {{ page_title }} |
+                {% endif %}
+                {{ site_name }}
+            {% endblock title %}
+        </title>
         <!-- ./titre -->
     </head>
 

@@ -1,16 +1,6 @@
 {% extends "shop/base.html" %}
 {% load i18n static humanize %}
 
-<title>
-    {% block head_title %}
-        {% if categorie %}
-            {{ categorie.name }} | {% trans "unsta Inc" %} %}
-        {% else %}
-            {% trans "unsta Inc" %}
-        {% endif %}
-    {% endblock head_title %}
-</title>
-
 {% block carousel %}
 {% endblock carousel %}
 
@@ -61,65 +51,16 @@
     </style>
 
     <!--section: Products -->
-    <main class="section-product-list my-4">
+    <main class="section-product-list my-5">
         <div class="container">
             <div class="row rounded-0 shadow-none justify-content-center">
                 <!--section: sidebar categories listing -->
-                <aside class="col-md-3 col-lg-3 col-sm-12 shadow-none text-dark rounded-0">
-                    <div class="shadow-none border-0">
-                        <div class="l-sidebar-menu">
-                            <div class="l-sb-heading mb-2">
-                                <h3 class="h4 l-container-title mt-1 d-inline-block mb-0 pb-2 text-uppercase font-weight-bold">{% trans "category" %}</h3>
-                            </div>
-                            <div class="l-container-body">
-                                <ul class="nav nav-pills flex-column text-sm category-menu">
-                                    <li class="nav-item">
-                                        <ul class="nav nav-pills flex-column category-listing">
-                                            {% for cat in categories %}
-                                                <li class="nav-item">
-                                                    <a href="{{ cat.produits.get_cat_url }}" class="nav-link">
-                                                        {{ cat | truncatewords:"4" }}
-                                                        <span class="badge badge-light shadow-sm float-right">
-                                                            {{ cat.produits.count }}
-                                                        </span>
-                                                    </a>
-                                                </li>
-                                            {% endfor %}
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="l-sidebar-menu">
-                            <div class="l-sb-heading mb-2">
-                                <h3 class="h4 l-container-title mt-1 d-inline-block mb-0 pb-2 text-uppercase font-weight-bold">{% trans "marque" %}</h3>
-                            </div>
-                            <div class="l-container-body">
-                                <ul class="nav nav-pills flex-column text-sm category-menu">
-                                    <li class="nav-item">
-                                        <ul class="nav nav-pills flex-column category-listing">
-                                            {% for cat in categories %}
-                                                <li class="nav-item">
-                                                    <a href="{{ cat.produit.get_cat_url }}" class="nav-link">
-                                                        {{ cat|truncatewords:4 }}
-                                                        <span class="badge badge-light shadow-sm float-right">
-                                                            {{ cat.produits.count }}
-                                                        </span>
-                                                    </a>
-                                                </li>
-                                            {% endfor %}
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </aside><!-- ./section: sidebar categories listing -->
+                {% include "./tags/sidebar.html" %}
+                <!-- ./section: sidebar categories listing -->
 
                 <!--section: ./categories listing -->
                 <div class="col-md-8">
-                    <div class="search-top-bar clearfix">
+                    <div class="search-top-bar clearfix border-bottom">
                         <!-- topbar navigation -->
                         <div class="search-navigation float-left ">
                             <nav aria-label="Page navigation start">
@@ -170,40 +111,38 @@
                         </div>
                     </div>
 
-                    {% for cat in categories %}
-                        {{ cat }}
-                        <div class="row listing border-bottom">
-                            {% for produit in cat.get_produits %}
-                                <div class="col-sm-4 col-md-3 l-container mb-3 py-2 mt-1">
-                                    <div class="l-container-product">
-                                        <div class="l-container-img position-relative overflow-hidden text-center">
-                                            <a href="{{ produit.get_absolute_url }}" class="{{ produit.get_absolute_url }}">
-                                                <img src="{% if produit.image %}{{ produit.image.url }} {% else %} {% static "img/noimage.png" %}{% endif %}" alt="{{ produit.name }}"
-                                                class="img-fluid">
-                                                <a href="{{ produit.get_absolute_url }}" class="stretched-link"></a>
-                                            </a>
-                                            <div class="l-container-tags position-absolute d-inline-block visible
-                                            m-0 p-0 w-auto h-auto bg-transparent">
-                                                <div class="l-container-label-tags d-table text-left">
-                                                    <span class="label label-danger bg-success text-white py-1 px-2 text-center">sale</span>
-                                                </div>
+                    <div class="row listing">
+                        {% for produit in produits %}
+                            <div class="col-sm-4 col-md-3 l-container mb-3 py-2 mt-1">
+                                <div class="l-container-product">
+                                    <div class="l-container-img position-relative overflow-hidden text-center">
+                                        <a href="{{ produit.get_absolute_url }}" class="{{ produit.get_absolute_url }}">
+                                            <img src="{% if produit.image %}{{ produit.image.url }} {% else %} {% static "img/noimage.png" %}{% endif %}" alt="{{ produit.name }}"
+                                            class="img-fluid">
+                                            <a href="{{ produit.get_absolute_url }}" class="stretched-link"></a>
+                                        </a>
+                                        <div class="l-container-tags position-absolute d-inline-block visible
+                                        m-0 p-0 w-auto h-auto bg-transparent">
+                                            <div class="l-container-label-tags d-table text-left">
+                                                <span class="label label-danger bg-success text-white py-1 px-2 text-center">sale</span>
                                             </div>
-
-                                            <a href="{{ produit.get_absolute_url }}" class="text-dark font-weight-normal text-capitalize">
-                                                {{ produit.name|truncatewords:3 }}
-                                            </a>
-                                            <span class="text-uppercase small d-inline-block">
-                                                {{ produit.prix_reduit | floatformat:"0" }} frcfa
-                                                <del class="text-muted small ml-1">
-                                                    {{ produit.prix | floatformat:"0" }} frcfa
-                                                </del>
-                                            </span>
                                         </div>
+
+                                        <a href="{{ produit.get_absolute_url }}" class="text-dark font-weight-normal text-capitalize">
+                                            {{ produit.name|truncatewords:3 }}
+                                        </a>
+                                        <span class="text-uppercase small d-inline-block">
+                                            {{ produit.prix_reduit | floatformat:"0" }} frcfa
+                                            <del class="text-muted small ml-1">
+                                                {{ produit.prix | floatformat:"0" }} frcfa
+                                            </del>
+                                        </span>
                                     </div>
                                 </div>
-                            {% endfor %}
-                        </div>
-                    {% endfor %}
+                            </div>
+                        {% endfor %}
+                    </div>
+
 
                     <!--section: navigation -->
                     <nav aria-label="Page navigation start">

@@ -3,7 +3,7 @@
 
 <title>
     {% block head_title %}
-        {{ request.GET.q }} | {% trans "unsta Inc" %}
+        {{ request.GET.q }} | {{ site_name }}
     {% endblock head_title %}
 </title>
 
@@ -66,57 +66,8 @@
         <div class="container">
             <div class="row rounded-0 shadow-none justify-content-center">
                 <!--section: sidebar categories listing -->
-                <aside class="col-md-3 col-lg-3 col-sm-12 shadow-none text-dark rounded-0">
-                    <div class="shadow-none border-0">
-                        <div class="l-sidebar-menu">
-                            <div class="l-sb-heading mb-2">
-                                <h3 class="h4 l-container-title mt-1 d-inline-block mb-0 pb-2 text-uppercase font-weight-bold">{% trans "category" %}</h3>
-                            </div>
-                            <div class="l-container-body">
-                                <ul class="nav nav-pills flex-column text-sm category-menu">
-                                    <li class="nav-item">
-                                        <ul class="nav nav-pills flex-column category-listing">
-                                            {% for cat in categories %}
-                                                <li class="nav-item">
-                                                    <a href="{{ cat.produits.get_cat_url }}" class="nav-link">
-                                                        {{ cat | truncatewords:"4" }}
-                                                        <span class="badge badge-light shadow-sm float-right">
-                                                            {{ cat.produits.count }}
-                                                        </span>
-                                                    </a>
-                                                </li>
-                                            {% endfor %}
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="l-sidebar-menu">
-                            <div class="l-sb-heading mb-2">
-                                <h3 class="h4 l-container-title mt-1 d-inline-block mb-0 pb-2 text-uppercase font-weight-bold">{% trans "marque" %}</h3>
-                            </div>
-                            <div class="l-container-body">
-                                <ul class="nav nav-pills flex-column text-sm category-menu">
-                                    <li class="nav-item">
-                                        <ul class="nav nav-pills flex-column category-listing">
-                                            {% for cat in categories %}
-                                                <li class="nav-item">
-                                                    <a href="{{ cat.produit.get_cat_url }}" class="nav-link">
-                                                        {{ cat|truncatewords:4 }}
-                                                        <span class="badge badge-light shadow-sm float-right">
-                                                            {{ cat.produits.count }}
-                                                        </span>
-                                                    </a>
-                                                </li>
-                                            {% endfor %}
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </aside><!-- ./section: sidebar categories listing -->
+                {% include "./tags/sidebar.html" %}
+                <!-- ./section: sidebar categories listing -->
 
                 <!--section: ./categories listing -->
                 <div class="col-md-8">

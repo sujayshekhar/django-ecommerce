@@ -142,7 +142,7 @@
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="container">
                     <!-- Navbar brand -->
-                    <a href="{% url "shop:liste_produit" %}" class="navbar-brand">
+                    <a href="{% url "shop:all_produit" %}" class="navbar-brand">
                         <!-- Logo Image -->
                         <img src="{% static "img/mdb.png" %}" width="45" class="d-none d-md-inline-block">
                         <img src="{% static "img/mdb.png" %}" width="45" class="d-inline-block d-md-none">
@@ -185,8 +185,8 @@
                         <!-- Links left-->
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item
-                                {% if request.resolver_match.url_name == "liste_produit"%}active{% endif %}">
-                                <a href="{% url "shop:liste_produit" %}" class="nav-link text-uppercase font-weight-bold">
+                                {% if request.resolver_match.url_name == "all_produit"%}active{% endif %}">
+                                <a href="{% url "shop:all_produit" %}" class="nav-link text-uppercase font-weight-bold">
                                 {% trans "home" %}</a>
                             </li><!-- home-->
 

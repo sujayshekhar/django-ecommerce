@@ -11,6 +11,5 @@ class CatSitemaps(Sitemap):
 	changefreq = 'always'
 	priority = 0.5
 	i18n = True
-	
 	def items(self):
 		return Categorie.objects.all()
