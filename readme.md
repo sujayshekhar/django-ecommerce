@@ -40,12 +40,12 @@ Exécutez les commandes suivantes :
 Puis naviguer jusqu'à <http://localhost:8000>
 
 
-Contributing
-------------
+Comment contribuer
+------------------
 
 Faites un Fork et travaillez sur votre propre branche, soumettez des pull requests.
 
-La principale branche de travail est[django-ecommerce/master](https://github.com/flavien-hugs/django-ecommerce/tree/master). La branche de production est[resrc/prod](https://github.com/flavien-hugs/django-ecommerce/tree/prod).
+La principale branche de travail est [django-ecommerce/master](https://github.com/flavien-hugs/django-ecommerce/tree/master). La branche de production est[django-ecommerce/master](https://github.com/flavien-hugs/django-ecommerce/tree/prod).
 
 
 Auteur
