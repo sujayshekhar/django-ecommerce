@@ -6,6 +6,8 @@
                 margin-top: 120px;
                 margin-bottom: 120px;
             }
+
+            .bg-footer { background-color: #f5F5f5; }
         </style>
     </head>
     <body>
@@ -24,7 +26,7 @@
                                     <p class="font-weight-bold text-uppercase mb-2">
                                         {% trans "order number" %} {{ commande.id }}
                                     </p>
-                                    <p class="text-muted">{{ commande.creer|date:"M d, Y" }}</p>
+                                    <p class="text-muted">{{ commande.creer|date:"l d F Y" }}</p>
                                 </div>
                             </div><!-- logo -->
 
@@ -37,8 +39,7 @@
                                     </p>
                                     <p class="mb-1">
                                         <span class="text-capitalize">{% trans "name" %}</span> :
-                                        {{ commande.first_name }}
-                                        {{ commende.last_name }}
+                                        {{ commande.last_name }} {{ commande.first_name }}
                                     </p>
                                     <address>
                                         <p class="mb-1">
@@ -54,28 +55,33 @@
                                 </div>
 
                                 <div class="col-md-6 text-right">
-                                    <p class="font-weight-bold text-capitalize mb-4">
+                                    <p class="font-weight-bold text-uppercase mb-4">
                                     {% trans "payment detail" %}</p>
-                                    <p class="text-capitalize">
-                                        <span class="text-muted">{% trans "discount" %} :
-                                        </span>{{ commande.discount }}
+                                    <p class="mb-1">
+                                        <span class="text-capitalize">
+                                            {% trans "discount" %} :
+                                        </span>
+                                        {{ commande.discount }}
                                     </p>
                                     {% for element in commande.items.all %}
-                                        <p>
-                                            <span class="text-muted text-uppercase">
+                                        <p class="mb-1">
+                                            <span class="text-capitalize">
                                                 {% trans "prix" %} :
-                                                {{ element.prix|floatformat:"0" }} frcfa
                                             </span>
+                                            {{ element.prix|floatformat:0 }}
                                         </p>
+
                                         <p>
-                                            <span class="text-muted">
-                                                {% trans "payment type" %}:
+                                            <span class="text-capitalize">
+                                               {% trans "payment type" %}:
                                             </span>
-                                            {% if element.payer %}
-                                                {% trans "paid" %}
-                                                    {% else %}
-                                                {% trans "unpaid" %}
-                                            {% endif %}
+                                            <span class="text-uppercase">
+                                                {% if element.payer %}
+                                                    {% trans "paid" %}
+                                                        {% else %}
+                                                    {% trans "unpaid" %}
+                                                {% endif %}
+                                            </span>
                                         </p>
                                     {% endfor %}
                                 </div>
@@ -107,11 +113,11 @@
                                             <tr>
                                                 {% for item in commande.items.all %}
                                                     <td>{{ commande.id }}</td>
-                                                    <td>{{ item.produit.name }}</td>
-                                                    <td>{{ item.quantite }}</td>
-                                                    <td>{{ item.prix|floatformat:"0" }}</td>
+                                                    <td>{{ item.produit.name|safe|truncatewords:4 }}</td>
+                                                    <td>{{ item.quantite|safe }}</td>
+                                                    <td>{{ item.prix|floatformat:0 }}</td>
                                                     <td class="text-uppercase font-weight-bold">
-                                                        {{ item.get_depense | floatformat:"0" }} frcfa
+                                                        {{ item.get_depense|safe|floatformat:0 }}
                                                     </td>
                                                 {% endfor %}
                                             </tr>
@@ -120,12 +126,12 @@
                                 </div>
                             </div>
 
-                            <div class="d-flex flex-row-reverse bg-light p-4">
+                            <div class="d-flex flex-row-reverse bg-footer p-4">
 
                                 <div class="py-3 px-5 text-right">
                                     <div class="mb-2 text-uppercase">{% trans "total grand cost" %}</div>
                                     <div class="h2 small font-weight-bold text-uppercase">
-                                    {{ commande.get_depense_total | floatformat:"0" }} frcfa</div>
+                                    {{ commande.get_depense_total | floatformat:0 }} fcfa</div>
                                 </div>
 
 

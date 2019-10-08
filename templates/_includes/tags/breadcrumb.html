@@ -19,7 +19,7 @@
             {% trans "categor" %}{{ categories.count|pluralize:"y,ies" }}:
               {% for cat in categories %}
                 <a class="text-muted" href="{{ cat.get_absolute_url }}">{{ cat.name }}</a>
-                {% if not forloop.last %},{% endif %}
+                {% if not forloop.last %}, {% endif %}
               {% endfor %}
           </li>
           <li aria-current="page" class="breadcrumb-item active">

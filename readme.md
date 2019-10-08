@@ -5,13 +5,51 @@
 
 [django-ecommerce](https://github.com/flavien-hugs/django-ecommerce/) un site ecommerce inspiré de quelque peu du design de jumia, basé sur le framework django et bootstrap.
 
-### Prise en main
+### Fonctionalité et prise en main
 La plateforme fournit les fonctionnalité comme :
 
     - le multilangue.
     - l'authentification
     - la géolocalisation du client
 
-### Auteur
+Installation et exécution du projet
+-----------------------------------
+
+### Dépendances
+* [pip](https://github.com/pypa/pip/)
+* [virtualenv](https://pypi.python.org/pypi/virtualenv/)
+* [Python](https://www.python.org/) >=2.6
+* [Django](https://docs.djangoproject.com/) >=2
+* [Bootstrap4](https://getbootstrap.com/)
+
+
+### 1. Installation
+Exécutez les commandes suivantes :
+
+    - git clone https://github.com/flavien-hugs/django-ecommerce/
+    - cd django-ecommerce
+    - source venv/bin/activate ou . ven/bin/activate
+    - pip install -r requirements.txt
+    - python manage.py makemigrations ou ./manage.py makemigrations
+    - python manage.py migrate ou ./manage.py migrate
+
+### 2. Démarrer le serveur
+
+    - python manage.py runserver ou ./manage.py runserver
+
+Puis naviguer jusqu'à <http://localhost:8000>
+
+
+Contributing
+------------
+
+Faites un Fork et travaillez sur votre propre branche, soumettez des pull requests.
+
+La principale branche de travail est[django-ecommerce/master](https://github.com/flavien-hugs/django-ecommerce/tree/master). La branche de production est[resrc/prod](https://github.com/flavien-hugs/django-ecommerce/tree/prod).
+
+
+Auteur
+------------
+
 [flavien-hugs](https://twitter.com/flavien_hugs) (Pythonist et Developpeur Web et Mobile)
 **Twitter : [flavien-hugs](https://twitter.com/flavien_hugs)**

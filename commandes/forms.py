@@ -5,7 +5,7 @@ from django import forms
 from django.forms import TextInput, EmailInput
 from .models import Commande
 
-CHOICES_VILLE=[("0", _("Choose...")), ("1", "Bouaké"), ("2", "Beoumi"), ("3", "Botro")]
+CHOICES_VILLE = [("choose", _("Choose...")), ("Bouaké", "Bouaké"), ("Beoumi", "Beoumi"), ("Botro", "Botro")]
 
 
 class FormCreationCommande(forms.ModelForm):

@@ -18,7 +18,7 @@ urlpatterns = (
     path(_('search/'), views.search, name='search'),
     path(_('shop/category/'), views.all_categorie, name='all_categorie'),
     path(_('shop/category/<slug:category_slug>/'), views.liste_categorie, name='listing_categorie'),
-    path(_('shop/category/<slug:category_slug>/'), views.all_produit, name='all_produit_par_categorie'),
+    path(_('shop/category/<slug:category_slug>/'), views.all_produit, name='all_produit'),
     path(_('shop/product/<slug:slug>/<int:id>/'), views.detail_produit, name='detail_produit'),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap')
 )

@@ -34,6 +34,7 @@ def pdf_commande_admin(request, id_commande):
 def creer_commande(request):
     next_lang = strip_language(request.path)
     panier = Panier(request)
+    page_title = 'finish your order'
     if request.method == 'POST':
         formulaire = FormCreationCommande(request.POST)
         if formulaire.is_valid():
@@ -56,13 +57,15 @@ def creer_commande(request):
             return redirect(reverse("payment:process"))
     else:
         formulaire = FormCreationCommande()
-    return render(request, 'commandes/commande/create.html',
-        {'panier': panier, 'formulaire': formulaire, 'next': next_lang })
+
+    context = {'page_title':page_title, 'panier': panier, 'formulaire': formulaire, 'next': next_lang }
+    template = 'commandes/commande/create.html'
+    return render(request, template, context)
 
 
 @staff_member_required
 def detail_commande_admin(request, id_commande):
     commande = get_object_or_404(Commande, id=id_commande)
-    return render(request,
-        'admin/commandes/commande/detail_commande.html',
-        {'commande': commande})
+    context = {'commande': commande}
+    template = 'admin/commandes/commande/detail_commande.html'
+    return render(request, template, context)

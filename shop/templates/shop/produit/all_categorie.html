@@ -130,12 +130,12 @@
                                         </div>
 
                                         <a href="{{ produit.get_absolute_url }}" class="text-dark font-weight-normal text-capitalize">
-                                            {{ produit.name|truncatewords:3 }}
+                                            {{ produit.name|truncatewords:6 }}
                                         </a>
                                         <span class="text-uppercase small d-inline-block">
-                                            {{ produit.prix_reduit | floatformat:"0" }} frcfa
+                                            {{ produit.prix_reduit | floatformat:0 }} frcfa
                                             <del class="text-muted small ml-1">
-                                                {{ produit.prix | floatformat:"0" }} frcfa
+                                                {{ produit.prix | floatformat:0 }} frcfa
                                             </del>
                                         </span>
                                     </div>

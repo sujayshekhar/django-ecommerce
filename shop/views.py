@@ -86,7 +86,7 @@ def detail_produit(request, id, slug):
     # r = Recommender()
     # recommended_products = r.suggest_products_for([produit], 4)
     template = 'shop/produit/detail.html'
-    context = {'produit': produit, 'categories': categories, 'formulaire_panier_produit': formulaire_panier_produit,
+    context = {'produit': produit, 'formulaire_panier_produit': formulaire_panier_produit,
         'page_title' : page_title, 'meta_keywords' : meta_keywords, 'meta_description' : meta_description,
         'next': next_lang, 'language':language }
     return render(request, template, context)

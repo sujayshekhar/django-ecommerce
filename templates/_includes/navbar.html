@@ -6,6 +6,8 @@
                     font-size: 0.9rem;
                 }
 
+                #lang { background-color: #f5F5f5; }
+
                 #topbar .offer .btn {
                     letter-spacing: 0.1em;
                 }
@@ -13,7 +15,6 @@
                 #topbar a.login-btn, #topbar a.signup-btn {
                     letter-spacing: 0.1em;
                     font-size: 0.75rem;
-                    margin-right: 10px;
                 }
 
                 .megamenu {
@@ -27,7 +28,7 @@
                 }
             </style>
 
-            <div id="topbar" class="bg-white p-1">
+            <div id="topbar lang" class="p-1">
                 <div class="container">
                     <div class="row d-flex align-items-center">
                         {% get_current_language as LANGUAGE_CODE %}
@@ -53,16 +54,16 @@
             <div id="topbar" class="p-1">
                 <div class="container">
                     <div class="row d-flex align-items-center">
-                        <div class="col-lg-6 offer mb-3 mb-lg-0 text-white">
+                        <div class="col-lg-6 text-center offer mb-2 mb-lg-0 text-white">
                             <a href="#" class="btn btn-success btn-sm text-white">Offer of the day</a>
                             <a href="#" class="ml-1 text-white">Get flat 35% off on orders over $50!</a>
                         </div>
 
-                        <div class="col-lg-6 text-center text-lg-right">
+                        <div class="col-lg-6 text-center offer mb-lg-0">
                             <div class="d-flex justify-content-end justify-content-between pt-3">
                                 {% if user and not user.is_anonymous %}
-                                    <ul class="list-inline contact-info d-block d-md-none">
-                                        <a href="#" class="login-btn text-white">
+                                    <ul class="list-inline d-block d-md-none">
+                                        <a class="login-btn text-white">
                                             {% trans "hello" %},  <b class="font-weight-bold text-capitalize">
                                             {{ user.username }}</b>
                                         </a>
@@ -84,11 +85,9 @@
                                             </span>
                                         </a>
 
-                                        <a href="{% url "panier:detail_panier" %}" class="login-btn text-white">
-                                            <i class="fas fa fa-shopping-bag mr-1"></i>
-                                            <span class="font-weight-bold text-capitalize">
-                                                {% trans "your orders" %}
-                                            </span>
+                                        <a href="{% url "panier:detail_panier" %}" class="login-btn text-white font-weight-bold">
+                                            <i class="fa fa-shopping-bag mr-1"></i>
+                                            {% trans "your orders" %}
                                         </a>
                                     </div>
 
@@ -96,7 +95,9 @@
                                         <li class="list-inline-item">
                                             <a href="{% url "accounts:logout" %}" class="text-white font-weight-bold text-capitalize">
                                                 <i class="fas fa-sign-out-alt mr-1"></i>
-                                                {% trans "logout" %}
+                                                <span class="d-none d-xl-inline-block">
+                                                    {% trans "logout" %}
+                                                </span>
                                             </a>
                                         </li>
                                     </ul>
@@ -104,34 +105,93 @@
                                     <div class="login">
                                         <a href="{% url "accounts:profile" %}" class="login-btn text-white mr-2">
                                             <i class="fa fa-user mr-1"></i>
-                                            <span class="d-none d-sm-inline-block font-weight-bold text-capitalize">
-                                            {% trans "your profile" %}</span>
+                                            {% trans "your profile" %}
                                         </a>
 
                                         <a href="{% url "panier:detail_panier" %}" class="login-btn text-white">
                                             <i class="fa fa-shopping-bag mr-1"></i>
-                                            <span class="d-none d-sm-inline-block font-weight-bold text-capitalize">
-                                            {% trans "your orders" %}</span>
+                                            {% trans "your orders" %}
                                         </a>
                                     </div>
 
                                     <ul class="list-inline">
                                         <a href="{% url "accounts:login" %}" class="login-btn text-white mr-2">
                                             <i class="fas fa-sign-in-alt mr-1"></i>
-                                            <span class="d-none d-sm-inline-block font-weight-bold text-capitalize">
-                                                {% trans "login" %}
-                                            </span>
+                                            {% trans "login" %}
                                         </a>
 
                                         <a href="{% url "accounts:register" %}" class="login-btn text-white">
                                             <i class="fas fa-user-plus mr-1"></i>
-                                            <span class="d-none d-sm-inline-block font-weight-bold text-capitalize">
-                                                {% trans "signup" %}
-                                            </span>
+                                            {% trans "signup" %}
                                         </a>
                                     </ul>
                                 {% endif %}
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!--./topbar-->
+
+            <!-- topbar-->
+            <div id="lang">
+                <div class="container-fluid">
+                    <div class="row d-flex align-items-center text-md-center">
+                        <div class="col-12">
+                            <!-- section service content -->
+                            <div class="btn btn-sm shadow-none icon d-inline-flex align-items-center text-left">
+                                <div class="text-center icon-wrap icon-sm rounded-circle border-success border text-success d-inline-block position-relative">
+                                    <i class="ps-icon-customer-service"></i>
+                                </div>
+
+                                <div class="text-wrap d-none d-md-inline-block">
+                                    <div class="font-weight-bolder">{% trans "Call us" %}</div>
+                                    <small class="d-block">00 000 000 / 00 000 000</small>
+                                </div>
+                            </div>
+
+                            <div class="btn btn-sm shadow-none icon d-inline-flex align-items-center text-left">
+                                <div class="text-center icon-wrap icon-sm rounded-circle border-success border text-success d-inline-block position-relative">
+                                    <i class="ps-icon-delivery"></i>
+                                </div>
+
+                                <div class="text-wrap d-none d-md-inline-block">
+                                    <div class="font-weight-bolder">{% trans "Free delivery" %}</div>
+                                    <small class="d-block">{% trans "in less than 24H" %}</small>
+                                </div>
+                            </div>
+
+                            <div class="btn btn-sm shadow-none icon d-inline-flex align-items-center text-left">
+                                <div class="text-center icon-wrap icon-sm rounded-circle border-success border text-success d-inline-block position-relative">
+                                    <i class="icon-clock"></i>
+                                </div>
+
+                                <div class="text-wrap d-none d-md-inline-block">
+                                    <div class="font-weight-bolder">{% trans "Availability" %}</div>
+                                    <small class="d-block">{% trans "7 days/7" %}</small>
+                                </div>
+                            </div>
+
+                            <div class="btn btn-sm shadow-none icon d-inline-flex align-items-center text-left">
+                                <div class="text-center icon-wrap icon-sm rounded-circle border-success border text-success d-inline-block position-relative">
+                                    <i class="ps-icon-money"></i>
+                                </div>
+
+                                <div class="text-wrap d-none d-md-inline-block">
+                                    <div class="font-weight-bolder">{% trans "Payment" %}</div>
+                                    <small class="d-block">{% trans "in complete security" %}</small>
+                                </div>
+                            </div>
+
+                            <div class="btn btn-sm shadow-none icon d-inline-flex align-items-center text-left">
+                                <div class="text-center icon-wrap icon-sm rounded-circle border-success border text-success d-inline-block position-relative">
+                                    <i class="icon-support"></i>
+                                </div>
+
+                                <div class="text-wrap d-none d-md-inline-block">
+                                    <div class="font-weight-bolder">{% trans "Help" %}</div>
+                                    <small class="d-block">{% trans "How to buy ?" %}</small>
+                                </div>
+                            </div><!-- ./section service content -->
                         </div>
                     </div>
                 </div>
@@ -144,180 +204,42 @@
                     <!-- Navbar brand -->
                     <a href="{% url "shop:all_produit" %}" class="navbar-brand">
                         <!-- Logo Image -->
-                        <img src="{% static "img/mdb.png" %}" width="45" class="d-none d-md-inline-block">
-                        <img src="{% static "img/mdb.png" %}" width="45" class="d-inline-block d-md-none">
-                        <span class="sr-only">unsta - go to homepage</span>
+                        <i class="fa fa-shopping-cart text-primary fa-1x" class="d-none d-xl-inline-block"></i>
+                        <span class="sr-only">{{ site_name }}</span>
                         <!-- Logo Text -->
                     </a><!-- ./Navbar brand -->
 
                     <div class="btn-navbar">
-                        <!-- navigation -->
-                        <button class="navbar-toggler btn btn-sm btn-outline-secondary shadow-sm border-0" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation"
-                            aria-expanded="false" aria-label="navigation">
-                            <span class="sr-only">navigation</span>
-                            <i class="fa fa-bars"></i>
-                        </button><!-- ./navigation -->
-
-
                         <!-- search -->
-                        <button class="navbar-toggler btn btn-sm btn-outline-secondary shadow-sm border-0" type="button" data-toggle="collapse" data-target="#search" aria-controls="search"
+                        <button class="navbar-toggler btn btn-sm btn-outline-secondary shadow-none border-0" type="button" data-toggle="collapse" data-target="#search" aria-controls="search"
                             aria-expanded="false">
-                            <span class="sr-only">search</span>
+                            <span class="sr-only">{% trans "search" %}</span>
                             <i class="fa fa-search"></i>
                         </button><!-- ./search -->
 
                         <!-- shopping -->
-                        <a href="{% url "panier:detail_panier" %}" class="navbar-toggler btn btn-sm btn-outline-secondary shadow-sm border-0">
-                            <i class="fa fa fa-shopping-bag"></i>
-                            {% with total_items=panier|length %}
-                                {% if panier|length > 0  %}
-                                    {{ total_items }}
-                                {% else %}
-                                    0
-                                {% endif %}
-                            {% endwith %}
+                        <a href="{% url "panier:detail_panier" %}" class="navbar-toggler btn btn-sm btn-outline-secondary shadow-none">
+                            <i class="icon-bag"></i>
+                            <span>
+                                {% with total_items=panier|length %}
+                                    {% if panier|length > 0  %}
+                                        {{ total_items }}
+                                    {% else %}
+                                        0
+                                    {% endif %}
+                                {% endwith %}
+                            </span>
                         </a><!-- shopping -->
                     </div>
 
                     <!-- Collapsible content -->
-                    <div class="collapse navbar-collapse" id="navigation">
-
+                    <div class="collapse navbar-collapse">
                         <!-- Links left-->
                         <ul class="navbar-nav mr-auto">
-                            <li class="nav-item
-                                {% if request.resolver_match.url_name == "all_produit"%}active{% endif %}">
+                            <li class="nav-item">
                                 <a href="{% url "shop:all_produit" %}" class="nav-link text-uppercase font-weight-bold">
                                 {% trans "home" %}</a>
                             </li><!-- home-->
-
-                            <li class="nav-item dropdown megamenu">
-                                <a id="megamenu" class="nav-link dropdown-toggle font-weight-bold text-uppercase" data-toggle="dropdown" data-hover="dropdown" data-delay="200" aria-haspopup="true" role="button" aria-expanded="false" role="button" href="#">
-                                    {% trans "product" %}
-                                </a>
-                                <div aria-labelledby="megamenu" class="dropdown-menu p-0 m-0">
-                                    <div class="container">
-                                        <div class="row bg-white rounded-0 m-0 shadow-sm">
-                                            <div class="col-lg-7 col-xl-8">
-                                                <div class="p-3">
-                                                    <div class="row">
-                                                        <div class="col-lg-6 mb-3">
-                                                            <h6 class="font-weight-bold text-uppercase">
-                                                                {% trans "megamenu heading" %}
-                                                            </h6>
-                                                            <ul class="list-unstyled">
-                                                                <li class="nav-item">
-                                                                    <a href="" class="nav-link text-small pb-0">
-                                                                    Unique feature</a>
-                                                                </li>
-
-                                                                <li class="nav-item">
-                                                                    <a href="" class="nav-link text-small pb-0">
-                                                                        image responsive</a>
-                                                                </li>
-
-                                                                <li class="nav-item">
-                                                                    <a href="" class="nav-link text-small pb-0">
-                                                                        auto carousel</a>
-                                                                </li>
-
-                                                                <li class="nav-item">
-                                                                    <a href="" class="nav-link text-small pb-0">newsletter form</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-
-                                                        <div class="col-lg-6 mb-4">
-                                                            <h6 class="font-weight-bold text-uppercase">
-                                                                {% trans "megamenu heading" %}
-                                                            </h6>
-                                                            <ul class="list-unstyled">
-                                                                <li class="nav-item">
-                                                                    <a href="" class="nav-link text-small pb-0">
-                                                                    Unique feature</a>
-                                                                </li>
-
-                                                                <li class="nav-item">
-                                                                    <a href="" class="nav-link text-small pb-0">
-                                                                        image responsive</a>
-                                                                </li>
-
-                                                                <li class="nav-item">
-                                                                    <a href="" class="nav-link text-small pb-0">
-                                                                        auto carousel</a>
-                                                                </li>
-
-                                                                <li class="nav-item">
-                                                                    <a href="" class="nav-link text-small pb-0">newsletter form</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-
-                                                        <div class="col-lg-6 mb-4">
-                                                            <h6 class="font-weight-bold text-uppercase">
-                                                                {% trans "megamenu heading" %}
-                                                            </h6>
-                                                            <ul class="list-unstyled">
-                                                                <li class="nav-item">
-                                                                    <a href="" class="nav-link text-small pb-0">
-                                                                    Unique feature</a>
-                                                                </li>
-
-                                                                <li class="nav-item">
-                                                                    <a href="" class="nav-link text-small pb-0">
-                                                                        image responsive</a>
-                                                                </li>
-
-                                                                <li class="nav-item">
-                                                                    <a href="" class="nav-link text-small pb-0">
-                                                                        auto carousel</a>
-                                                                </li>
-
-                                                                <li class="nav-item">
-                                                                    <a href="" class="nav-link text-small pb-0">newsletter form</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-
-                                                        <div class="col-lg-6 mb-4">
-                                                            <h6 class="font-weight-bold text-uppercase">
-                                                                {% trans "megamenu heading" %}
-                                                            </h6>
-                                                            <ul class="list-unstyled">
-                                                                <li class="nav-item">
-                                                                    <a href="" class="nav-link text-small pb-0">
-                                                                    Unique feature</a>
-                                                                </li>
-
-                                                                <li class="nav-item">
-                                                                    <a href="" class="nav-link text-small pb-0">
-                                                                        image responsive</a>
-                                                                </li>
-
-                                                                <li class="nav-item">
-                                                                    <a href="" class="nav-link text-small pb-0">
-                                                                        auto carousel</a>
-                                                                </li>
-
-                                                                <li class="nav-item">
-                                                                    <a href="" class="nav-link text-small pb-0">newsletter form</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-5 col-xl-4 px-0 d-none d-lg-block" style="background: center center url({% static "img/mega.png" %}) no-repeat; background-size: cover;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link text-uppercase font-weight-bold"
-                                   href="#">
-                                    {% trans "order" %}
-                                </a>
-                            </li>
                         </ul><!-- ./Links left-->
 
                         <!-- Links right-->
@@ -329,9 +251,9 @@
                             {% if user and not user.is_anonymous %}
                                 <li class="nav-item d-none d-md-inline-block d-sm-inline-block ">
                                     <a class="nav-link" href="{% url "panier:detail_panier" %}">
-                                        <i class="fas fa fa-shopping-cart mr-2"></i>
+                                        <i class="icon-bag"></i>
                                         {% trans "cart" %}
-                                        <span class="badge badge-pill badge-success red z-depth-1">
+                                        <span class="badge badge-pill badge-success shadow-none">
                                             {% with total_items=panier|length %}
                                                 {% if panier|length > 0  %}
                                                     {{ total_items }}
@@ -345,7 +267,7 @@
                             {% else %}
                                 <li class="nav-item d-none d-md-inline-block d-sm-inline-block">
                                     <a class="nav-link" href="{% url "panier:detail_panier" %}">
-                                        <i class="fas fa fa-shopping-cart mr-2"></i>
+                                        <i class="icon-bag"></i>
                                         {% trans "cart" %}
                                     </a>
                                 </li>

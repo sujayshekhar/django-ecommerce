@@ -8,7 +8,6 @@ from django.db import models
 from coupons.models import Coupon
 from shop.models import Produit
 
-
 # Medeles pour l'enregistrement des commandes des clients
 
 class Commande(models.Model):

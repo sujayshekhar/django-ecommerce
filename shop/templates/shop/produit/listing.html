@@ -50,7 +50,6 @@
             -o-object-fit: cover;
                 object-fit: cover;
         }
-        .img-wrap { display: block; }
 
         .badge-new, .badge-sale {
             position: absolute;
@@ -73,18 +72,8 @@
             width: 100%;
         }
 
-        .itemside .text-wrap { padding-left: 15px; padding-right: 7px; }
         .itemside .img-wrap { position: relative; border-radius: 0.25rem 0 0 0.25rem; }
         .itemside img { -o-object-fit: contain; object-fit: contain; }
-        .itemside .img-bg {
-            -o-object-fit: contain;
-            object-fit: contain;
-            position: absolute;
-            right: 0;
-            bottom: 0;
-            max-height: 100px;
-            z-index: 0;
-        }
 
         .img-sm { -o-object-fit: cover; object-fit: cover; width: 80px; height: 80px; }
         .center-xy {
@@ -123,32 +112,33 @@
                             <figure class="card-product shadow-none">
                                 {% if produit.label == 'N' %}
                                     <span class="
-                                        {% if produit.label %}
-                                            {{ produit.get_label_display }}
-                                        {% endif %} text-center">new
+                                    {% if produit.label %}
+                                    {{ produit.get_label_display }}
+                                    {% endif %} text-center">new
                                     </span>
                                 {% endif %}
 
                                 {% if produit.label == 'S' %}
                                     <span class="
-                                        {% if produit.label %}
-                                            {{ produit.get_label_display }}
-                                        {% endif %} text-center">
-                                        -30%
+                                    {% if produit.label %}
+                                    {{ produit.get_label_display }}
+                                    {% endif %} text-center">
+                                    -30%
                                     </span>
                                 {% endif %}
 
-                                <div class="img-wrap text-center">
+                                <div class="img-wrap text-center d-block">
                                     <img class="d-inline-block w-auto img-fluid" src="{% if produit.image %}{{ produit.image.url }} {% else %} {% static "img/noimage.png" %}{% endif %}" alt="{{ produit.name }}">
                                     <a href="{{ produit.get_absolute_url }}" class="stretched-link"></a>
                                 </div>
+
                                 <figcaption class="info-wrap">
                                     <a href="{{ produit.get_absolute_url }}" class="title">
-                                    {{ produit.name | truncatewords:3 }}</a>
+                                    {{ produit.name | truncatewords:6 }}</a>
                                     <span class="text-uppercase d-inline-block">
-                                        {{ produit.prix_reduit | floatformat:"0" }} frcfa
+                                        {{ produit.prix_reduit | floatformat:0 }} frcfa
                                         <del class="text-muted small ml-1">
-                                            {{ produit.prix | floatformat:"0" }} frcfa
+                                            {{ produit.prix | floatformat:0 }} frcfa
                                         </del>
                                     </span>
                                 </figcaption>
@@ -170,29 +160,33 @@
 
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-3">
-                            <figure class="itemside">
+                        <div class="col-3 col-sm">
+                            <figure class="itemside mr-sm-1">
                                 <div class="aside">
                                     <div class="img-wrap img-sm rounded-circle blue-gradient">
                                         <i class="center-xy fa fa-mobile-alt fa-3x text-white"></i>
                                     </div>
+                                    <a class="stretched-link" href="" title="{% trans "Smartphone" %}"></a>
                                 </div>
-                                <figcaption class="text-wrap">
-                                    <h6 class="title mt-3">{% trans "Smartphone" %}</h6>
+                                <figcaption class="text-wrap d-none d-md-block mx-2">
+                                    <h6 class="title mt-3">
+                                        {% trans "Smartphone" %}
+                                    </h6>
                                     <a class="stretched-link" href="#">
-                                    {% trans "View all" %}</a>
+                                        {% trans "View all" %}
+                                    </a>
                                 </figcaption>
                             </figure>
                         </div><!-- ./col -->
 
-                        <div class="col-md-3">
+                        <div class="col-3 col-sm">
                             <figure class="itemside">
                                 <div class="aside">
                                     <div class="img-wrap img-sm rounded-circle night-fade-gradient">
                                         <i class="center-xy fas fa-shoe-prints fa-2x text-white"></i>
                                     </div>
                                 </div>
-                                <figcaption class="text-wrap">
+                                <figcaption class="text-wrap d-none d-md-inline-block mx-2">
                                     <h6 class="title mt-3">{% trans "Shoes" %}</h6>
                                     <a class="stretched-link" href="#">
                                     {% trans "View all" %}</a>
@@ -200,14 +194,14 @@
                             </figure>
                         </div><!-- ./col -->
 
-                        <div class="col-md-3">
+                        <div class="col-3 col-sm">
                             <figure class="itemside">
                                 <div class="aside">
                                     <div class="img-wrap img-sm rounded-circle rainy-ashville-gradient">
                                         <i class="center-xy fas fa-tshirt fa-2x text-white"></i>
                                     </div>
                                 </div>
-                                <figcaption class="text-wrap">
+                                <figcaption class="text-wrap d-none d-md-inline-block mx-2">
                                     <h6 class="title mt-3">{% trans "T-shirts" %}</h6>
                                     <a class="stretched-link" href="#">
                                     {% trans "View all" %}</a>
@@ -215,14 +209,15 @@
                             </figure>
                         </div><!-- ./col -->
 
-                        <div class="col-md-3">
+                        <div class="col-3 col-sm">
                             <figure class="itemside">
                                 <div class="aside">
                                     <div class="img-wrap img-sm rounded-circle winter-neva-gradient">
                                         <i class="center-xy fas fa-utensils fa-2x text-white"></i>
                                     </div>
+                                    <a class="stretched-link" href="" title="{% trans "Utensils" %}"></a>
                                 </div>
-                                <figcaption class="text-wrap">
+                                <figcaption class="text-wrap d-none d-md-inline-block mx-2">
                                     <h6 class="title mt-3">{% trans "Utensils" %}</h6>
                                     <a class="stretched-link" href="#">
                                     {% trans "View all" %}</a>
@@ -232,14 +227,14 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-3 col-sm">
                             <figure class="itemside">
                                 <div class="aside">
                                     <div class="img-wrap img-sm rounded-circle near-moon-gradient">
                                         <i class="center-xy fa fa-car fa-mobile-phone fa-3x text-white"></i>
                                     </div>
                                 </div>
-                                <figcaption class="text-wrap">
+                                <figcaption class="text-wrap d-none d-md-inline-block mx-2">
                                     <h6 class="title mt-3">{% trans "Automobile" %}</h6>
                                     <a class="stretched-link" href="#">
                                     {% trans "View all" %}</a>
@@ -247,42 +242,42 @@
                             </figure>
                         </div><!-- ./col -->
 
-                        <div class="col-md-3">
+                        <div class="col-3 col-sm">
                             <figure class="itemside">
                                 <div class="aside">
                                     <div class="img-wrap img-sm rounded-circle deep-blue-gradient">
                                         <i class="center-xy fas fa-tv fa-2x text-white"></i>
                                     </div>
                                 </div>
-                                <figcaption class="text-wrap">
+                                <figcaption class="text-wrap d-none d-md-inline-block mx-2">
                                     <h6 class="title mt-3">{% trans "Télévision" %}</h6>
                                     <a class="stretched-link" href="#">{% trans "View all" %}</a>
                                 </figcaption>
                             </figure>
                         </div><!-- ./col -->
 
-                        <div class="col-md-3">
+                        <div class="col-3 col-sm">
                             <figure class="itemside">
                                 <div class="aside">
                                     <div class="img-wrap img-sm rounded-circle near-moon-gradient">
                                         <i class="center-xy fa fa-laptop fa-2x text-white"></i>
                                     </div>
                                 </div>
-                                <figcaption class="text-wrap">
+                                <figcaption class="text-wrap d-none d-md-inline-block mx-2">
                                     <h6 class="title mt-3">{% trans "Laptop" %}</h6>
                                     <a class="stretched-link" href="#">{% trans "View all" %}</a>
                                 </figcaption>
                             </figure>
                         </div><!-- ./col -->
 
-                        <div class="col-md-3">
+                        <div class="col-3 col-sm">
                             <figure class="itemside">
                                 <div class="aside">
                                     <div class="img-wrap img-sm rounded-circle aqua-gradient">
                                         <i class="center-xy fas fa-home fa-2x text-white"></i>
                                     </div>
                                 </div>
-                                <figcaption class="text-wrap">
+                                <figcaption class="text-wrap d-none d-md-inline-block mx-2">
                                     <h6 class="title mt-3">{% trans "Home" %}</h6>
                                     <a class="stretched-link" href="#">{% trans "View all" %}</a>
                                 </figcaption>
@@ -300,11 +295,11 @@
             <div class="card shadow-none border rounded-0">
                 <div class="card-body p-1">
                     <div class="row no-gutters">
-                        <div class="col-md-6">
+                        <div class="col-6 col-lg-6">
                             <img class="img-fluid" src="{% static "img/jumia.jpg" %}">
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-6 col-lg-6">
                             <img class="img-fluid" src="{% static "img/jumia-ordi.jpg" %}">
                         </div>
                     </div>
@@ -323,18 +318,18 @@
                     {% for produit in produits %}
                         <div class="item-slide p-2">
                             <figure class="card-product shadow-none">
-                                <div class="img-wrap text-center">
+                                <div class="img-wrap d-block text-center">
                                     <img src="{% if produit.image %}{{ produit.image.url }} {% else %} {% static "img/noimage.png" %}{% endif %}" alt="{{ produit.name }}" class="d-inline-block w-auto img-fluid">
                                     <a href="{{ produit.get_absolute_url }}" class="stretched-link"></a>
                                 </div>
 
                                 <figcaption class="info-wrap">
                                     <a href="{{ produit.get_absolute_url }}" class="title">
-                                    {{ produit.name | truncatewords:3 }}</a>
+                                    {{ produit.name | truncatewords:6 }}</a>
                                     <span class="text-uppercase d-inline-block">
-                                        {{ produit.prix_reduit | floatformat:"0" }} frcfa
+                                        {{ produit.prix_reduit | floatformat:0 }} frcfa
                                         <del class="text-muted small ml-1">
-                                            {{ produit.prix | floatformat:"0" }} frcfa
+                                            {{ produit.prix | floatformat:0 }} frcfa
                                         </del>
                                     </span>
                                 </figcaption>
@@ -348,7 +343,7 @@
 
     <section class="section-pub my-2">
         <div class="container">
-            <div class="shadow-none border rounded-0">
+            <div class="card shadow-none border rounded-0">
                 <h5 class="card-header peach-gradient text-white font-family font-weight-bolder">
                     {% trans "Best deals TV &amp; audio" %}
                 </h5>
@@ -356,7 +351,7 @@
                     {% for produit in produits %}
                         <div class="item-slide p-2">
                             <figure class="card-product shadow-none">
-                                <div class="img-wrap">
+                                <div class="img-wrap d-block text-center">
                                     <img src="{% if produit.image %}
                                     {{ produit.image.url }} {% else %} {% static "img/noimage.png" %}
                                     {% endif %}" alt="{{ produit.name }}">
@@ -364,11 +359,11 @@
                                 </div>
                                 <figcaption class="info-wrap">
                                     <a href="{{ produit.get_absolute_url }}" class="title">
-                                    {{ produit.name | truncatewords:3 }}</a>
+                                    {{ produit.name | truncatewords:6 }}</a>
                                     <span class="text-uppercase d-inline-block">
-                                        {{ produit.prix_reduit | floatformat:"0" }} frcfa
+                                        {{ produit.prix_reduit | floatformat:0 }} frcfa
                                         <del class="text-muted small ml-1">
-                                            {{ produit.prix | floatformat:"0" }} frcfa
+                                            {{ produit.prix | floatformat:0 }} frcfa
                                         </del>
                                     </span>
                                 </figcaption>
@@ -390,7 +385,7 @@
                     {% for produit in produits %}
                         <div class="item-slide p-2">
                             <figure class="card-product shadow-none">
-                                <div class="img-wrap">
+                                <div class="img-wrap d-block text-center">
                                     <img src="{% if produit.image %}
                                     {{ produit.image.url }} {% else %} {% static "img/noimage.png" %}
                                     {% endif %}" alt="{{ produit.name }}">
@@ -400,34 +395,15 @@
                                     <a href="{{ produit.get_absolute_url }}" class="title">
                                     {{ produit.name | truncatewords:3 }}</a>
                                     <span class="text-uppercase d-inline-block">
-                                        {{ produit.prix_reduit | floatformat:"0" }} frcfa
+                                        {{ produit.prix_reduit | floatformat:0 }} frcfa
                                         <del class="text-muted small ml-1">
-                                            {{ produit.prix | floatformat:"0" }} frcfa
+                                            {{ produit.prix | floatformat:0 }} frcfa
                                         </del>
                                     </span>
                                 </figcaption>
                             </figure>
                         </div>
                     {% endfor %}
-
-                    <div class="item-slide p-2">
-                        <figure class="card card-product border">
-                            <span class="badge-new d-block text-white bg-danger">new</span>
-                            <div class="img-wrap">
-                                <img src="{% static "img/items/3.jpg" %}" alt="">
-                                <a href="#" class="stretched-link"></a>
-                            </div>
-                            <figcaption class="info-wrap">
-                                <a href="#" class="title">{% trans "Good item name" %}</a>
-                                <div class="pt-1 mt-2">
-                                    <div class="mr-5">
-                                        <span>$1280</span><br>
-                                        <del class="text-muted">$1980</del>
-                                    </div>
-                                </div>
-                            </figcaption>
-                        </figure>
-                    </div>
                 </div>
             </div>
         </div>

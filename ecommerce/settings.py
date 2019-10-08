@@ -87,8 +87,6 @@ INSTALLED_APPS = [
     # ajout tinymce
     'tinymce',
 
-    # ajout xadmin et crispy_forms
-
     # ajout application de rosetta translate interface
     'rosetta',
 ]

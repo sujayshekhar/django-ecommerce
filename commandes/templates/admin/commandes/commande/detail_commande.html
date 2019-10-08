@@ -45,7 +45,7 @@
                                 </th>
 
                                 <th scope="col" class="sortable">
-                                    <div class="text">Email</div>
+                                    <div class="text">Téléphone</div>
                                     <div class="clear"></div>
                                 </th>
 
@@ -59,7 +59,7 @@
                             <tr class="row">
                                 <td class="field">{{ commande.creer }}</td>
                                 <td class="field">{{ commande.first_name }} {{ commande.last_name }}</td>
-                                <td class="field">
+                                <td class="field">{{ commande.ville }}</td>
                                 <td class="field">
                                     {% if commande.payer %}
                                         Payer
