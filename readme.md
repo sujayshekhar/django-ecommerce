@@ -1,8 +1,8 @@
 # [django-ecommerce](https://github.com/flavien-hugs/django-ecommerce/)&nbsp;
 
-![django-ecommerce](https://github.com/flavien-hugs/django-ecommerce/blob/master/screenshot.png "screenshot")
+![django-ecommerce](https://github.com/flavien-hugs/django-ecommerce/blob/master/screenshot.png "screenshot description")
 
-![[django-ecommerce](https://github.com/flavien-hugs/django-ecommerce/)](https://img.shields.io/badge/unsta-live--demo-orange.svg?style=flat)
+![[django-ecommerce](https://img.shields.io/badge/unsta-live--demo-orange.svg?style=flat)](https://github.com/flavien-hugs/django-ecommerce/)
 ![The MIT License](http://img.shields.io/badge/License-MIT-green.svg?style=flat)
 
 [django-ecommerce](https://github.com/flavien-hugs/django-ecommerce/) un site ecommerce inspiré de quelque peu du design de jumia, basé sur le framework django et bootstrap.
