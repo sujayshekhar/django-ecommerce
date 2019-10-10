@@ -78,7 +78,7 @@ def detail_produit(request, id, slug):
     language = request.LANGUAGE_CODE
     next_lang = strip_language(request.path)
     produit = get_object_or_404(Produit, id=id, slug=slug, disponible=True)
-    categories = produit.categorie.filter(is_active=True)
+    categories = produit.categorie.filter()
     page_title = produit.name
     meta_keywords = produit.meta_keywords
     meta_description = produit.meta_description
@@ -86,7 +86,7 @@ def detail_produit(request, id, slug):
     # r = Recommender()
     # recommended_products = r.suggest_products_for([produit], 4)
     template = 'shop/produit/detail.html'
-    context = {'produit': produit, 'formulaire_panier_produit': formulaire_panier_produit,
+    context = {'produit': produit, 'categories':categories, 'formulaire_panier_produit': formulaire_panier_produit,
         'page_title' : page_title, 'meta_keywords' : meta_keywords, 'meta_description' : meta_description,
         'next': next_lang, 'language':language }
     return render(request, template, context)

@@ -34,10 +34,13 @@ META_KEYWORDS = 'Shopping, ecommerce, accessories, TV, Audio, smartphone, Mode'
 META_DESCRIPTION = 'ecommerce shopping'
 
 DEFAULT_CHARSET = 'utf-8'
+CORS_REPLACE_HTTPS_REFERER= False
+HOST_SCHEME= "http://"
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 SECURE_BROWSER_XSS_FILTER = True
+SECURE_PROXY_SSL_HEADER= None
 SECURE_SSL_REDIRECT = False
 USE_X_FORWARRED_HOST = True
 
@@ -86,6 +89,9 @@ INSTALLED_APPS = [
 
     # ajout tinymce
     'tinymce',
+
+    # ajout tinymce
+    'compressor',
 
     # ajout application de rosetta translate interface
     'rosetta',
@@ -212,12 +218,32 @@ USE_THOUSAND_SEPARATOR = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
+COMPRESS_ROOT = os.path.join(BASE_DIR, 'stcompress/')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static/"),
-    'static/'
+    'static/',
 ]
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # other finders..
+    'compressor.finders.CompressorFinder',
+)
+
+COMPRESS_PRECOMPILERS = (
+    ('text/coffeescript', 'coffee --compile --stdio'),
+    ('text/less', 'lessc {infile} {outfile}'),
+    ('text/x-sass', 'sass {infile} {outfile}'),
+    ('text/x-scss', 'sass --scss {infile} {outfile}'),
+    ('text/stylus', 'stylus < {infile} > {outfile}'),
+    ('text/foobar', 'path.to.MyPrecompilerFilter'),
+)
+
+COMPRESS_ENABLED = True
 
 LOGIN_URL = _('/accounts/login/')
 LOGIN_REDIRECT_URL = _('/profile/')
@@ -237,3 +263,6 @@ gateway = braintree.BraintreeGateway(
         private_key='c70db4ac0b03d4df804b676ba19807a9'
     )
 )
+
+STRIPE_SECRET_KEY = 'sk_test_DbwZ3lr8iGvOkl3Qd07h0CVP00megoFfg'
+STRIPE_PUBLISHABLE_KEY = 'pk_test_MM8om54M1hyKMVHpU1pFojFd00lIvQEoUV'

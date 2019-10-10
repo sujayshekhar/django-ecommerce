@@ -1,164 +1,185 @@
-{% extends "base.html" %}
+{% extends "shop/base.html" %}
 {% load i18n static %}
 
-{% block our_heard %}
-    <style>
-        .toast {
-          position: fixed;
-          top: 15px;
-          right: 15px;
-          z-index: 9999;
-        }
-
-        .bootstrap-basic {
-          background: white;
-        }
-
-        /* Braintree Hosted Fields styling classes*/
-        .braintree-hosted-fields-focused {
-          color: #495057;
-          background-color: #fff;
-          border-color: #80bdff;
-          outline: 0;
-          box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-        }
-
-        .braintree-hosted-fields-focused.is-invalid {
-          border-color: #dc3545;
-          box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
-        }
-    </style>
-{% endblock our_heard %}
 {% block carousel %}{% endblock carousel %}
 
 {% block content %}
+    <style>
+        /**
+         * The CSS shown here will not be introduced in the Quickstart guide, but shows
+         * how you can use CSS to style your Element's container.
+         */
+
+        .StripeElement {
+            box-sizing: border-box;
+            height: 40px;
+            padding: 10px 12px;
+
+            color: #32325d;
+            background-color: white;
+            border: 1px solid transparent;
+            border-radius: 4px;
+
+            box-shadow: 0 1px 3px 0 #e6ebf1;
+            -webkit-transition: box-shadow 150ms ease;
+            transition: box-shadow 150ms ease;
+        }
+
+        .StripeElement--focus {
+            box-shadow: 0 1px 3px 0 #cfd7df;
+        }
+
+        .StripeElement--invalid {
+            border-color: #fa755a;
+        }
+
+        .StripeElement--webkit-autofill {
+            background-color: #fefde5 !important;
+        }
+    </style>
     <!-- Main product Layout View -->
-    <main class="mt-5 pt-4">
-        <div class="container wow fadeIn">
+    <main>
+        <div class="container">
+            <script src="https://js.stripe.com/v3/"></script>
             <!-- Bootstrap inspired Braintree Hosted Fields example -->
-            <h2 class="my-5 h2 text-center text-uppercase">{% trans "payment" %}</h2>
-            <div class="row">
-                <div class="col-md-12 mb-4">
-                    <div class="">
-                        <form action="." id="payment" method="post">
-                            <div class="row">
-                                <div class="col-sm-6 mb-3">
-                                    <label for="cc-number">
-                                    {% trans "Credit card number" %}</label>
-                                    <div class="form-control" id="cc-number"></div>
-                                    <div class="invalid-feedback">
-                                      {% trans "Credit card number is required" %}
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-3 mb-3">
-                                    <label for="cc-expiration">{% trans "expiration Date" %}</label>
-                                    <div class="form-control" id="cc-expiration"></div>
-                                    <div class="invalid-feedback">
-                                      {% trans "expiration date required" %}
-                                    </div>
-                                </div>
-                                <div class="col-sm-3 mb-3">
-                                    <label for="cc-expiration">{% trans "CVV" %}</label>
-                                    <div class="form-control" id="cc-cvv"></div>
-                                    <div class="invalid-feedback">
-                                      {% trans "security code required" %}
-                                    </div>
-                                </div>
+            <h2 class="mt-4 h4 text-center text-uppercase">{% trans "payment information" %}</h2>
+            <div class="row justify-content-center">
+                <div class="col-10 mb-4 justify-content-center">
+                    <hr class="mb-4">
+                    <form action="/charge" method="post" id="payment-form">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-6 col-sm-6 mb-3">
+                                <label for="name">{% trans "Credit card name" %}</label>
+                                <input type="text" name="name" class="form-control shadow-none" id="name"
+                                required>
+                                <small class="text-muted">
+                                {% trans "Full name as displayed on card" %}</small>
                             </div>
 
-                            <hr class="mb-4">
-                            <input type="hidden" name="payment_method_nonce" id="nonce" value="">
-                            {% csrf_token %}
-                            <div class="text-center">
-                                <button class="btn btn-primary btn-lg" type="submit">
-                                   {% trans " pay with" %} <span id="card-brand">{% trans "card" %}</span>
-                                </button>
+                            <div class="col-6 col-sm-6 mb-3">
+                                <label for="email">{% trans "Email" %}</label>
+                                <input type="email" name="email" class="form-control shadow-none" id="email"
+                                    placeholder="you@example.com" required>
                             </div>
-                        </form>
-                    </div>
-                </div>
+                        </div>
 
-                <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
-                    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false">
-                        <div class="toast-header">
-                            <strong class="mr-auto">{% trans "Success" %} !</strong>
-                            <small>{% trans "Just now" %}</small>
-                            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+                        <div class="row">
+                            <div class="col-12 col-sm-12">
+                                <label for="card-element">{% trans "Credit or debit card" %}</label>
+                                <div id="card-element" class="form-control border shadow-none">
+                                    <!-- A Stripe Element will be inserted here. -->
+                                </div>
+                                <!-- Used to display form errors. -->
+                                <small id="card-errors" class="my-2 text-danger" role="alert"></small>
+                            </div>
+                        </div>
+
+                        <div class="text-center my-3">
+                            <button class="btn btn-md btn-primary shadow-sm border-0" type="submit">
+                                {% trans " pay with" %}
+                                <span id="card-brand">{% trans "card" %}</span>
                             </button>
                         </div>
-
-                        <div class="toast-body">
-                            {% trans "Next, submit the payment method nonce to your server." %}
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </main>
-    <!-- Load the required client component. -->
-    <script src="https://js.braintreegateway.com/web/3.50.0/js/client.min.js"></script>
 
-    <!-- Load Hosted Fields component. -->
-    <script src="https://js.braintreegateway.com/web/3.50.0/js/hosted-fields.min.js"></script>
+        <script type="text/javascript">
+            // Create a Stripe client.
+            var stripe = Stripe('pk_test_MM8om54M1hyKMVHpU1pFojFd00lIvQEoUV');
 
-    <script>
-        var form = document.querySelector('#payment');
-        var submit = document.querySelector('input[type="submit"]');
+            // Create an instance of Elements.
+            var elements = stripe.elements();
 
-        braintree.client.create({
-            authorization: '{{ client_token }}'
-        }, function(err, clientInstance) {
-            if (err) {
-                console.error(err);
-                return;
+            // Custom styling can be passed to options when creating an Element.
+            // (Note that this demo uses a wider set of styles than the guide below.)
+            var style = {
+                base: {
+                    color: '#32325d',
+                    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+                    fontSmoothing: 'antialiased',
+                    fontSize: '1rem',
+                    '::placeholder': {
+                      color: '#aab7c4'
+                    },
+                },
+                invalid: {
+                    color: '#fa755a',
+                    iconColor: '#fa755a'
+                }
+            };
+
+            // Create an instance of the iban Element.
+            var card = elements.create('card', {
+                style: style
+            });
+
+            // Add an instance of the iban Element into the `iban-element` <div>.
+            card.mount('#card-element');
+
+            card.addEventListener('change', function(event) {
+                // Handle real-time validation errors from the iban Element.
+                var displayError = document.getElementById('card-errors');
+                if (event.error) {
+                    displayError.textContent = event.error.message;
+                } else {
+                    displayError.textContent = '';
+                }
+            });
+
+
+            var myPostalCodeField = document.querySelector('input[name="my-postal-code"]');
+            myPostalCodeField.addEventListener('change', function(event) {
+                card.update({value: {postalCode: event.target.value}});
+            });
+
+            // Handle form submission.
+            var form = document.getElementById('payment-form');
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                stripe.createToken(card).then(function(result) {
+                    if (result.error) {
+                        // Inform the customer that there was an error.
+                        var errorElement = document.getElementById('card-errors');
+                        errorElement.textContent = result.error.message;
+                    } else {
+                        // Send the token to your server
+                        stripeTokenHandler(result.source);
+                    }
+                });
+            });
+
+            // Submit the form with the token ID.
+            function stripeTokenHandler(token) {
+                // Insert the token ID into the form so it gets submitted to the server
+                var form = document.getElementById('payment-form');
+                var hiddenInput = document.createElement('input');
+                hiddenInput.setAttribute('type', 'hidden');
+                hiddenInput.setAttribute('name', 'stripeToken');
+                hiddenInput.setAttribute('value', token.id);
+                form.appendChild(hiddenInput);
+
+                // Submit the form
+                form.submit();
             }
 
-            braintree.hostedFields.create({
-                client: clientInstance,
-                styles: {
-                    'input': {'font-size': '13px'},
-                    'input.invalid': {'color': 'red'},
-                    'input.valid': {'color': 'green'}
-                },
-
-                fields: {
-                    number: {
-                        selector: '#cc-number',
-                        placeholder: '4111 1111 1111 1111'
-                    },
-                    cvv: {
-                        selector: '#cc-cvv',
-                        placeholder: '123'
-                    },
-                    expirationDate: {
-                        selector: '#cc-expiration',
-                        placeholder: 'MM / YY'
-                    }
+            window.addEventListener('resize', function(event) {
+                if (window.innerWidth <= 320)  {
+                    card.update({ style: {base: {fontSize: '1rem'}}});
+                } else {
+                    card.update({style: { base: {fontSize: '16px'}}});
                 }
-            }, function(err, hostedFieldsInstance) {
-                if (err) {
-                  console.error(err);
-                  return;
-                }
-
-                submit.removeAttribute('disabled');
-
-                form.addEventListener('submit', function(event) {
-                    event.preventDefault();
-
-                    hostedFieldsInstance.tokenize(function (tokenizeErr, payload) {
-                        if (tokenizeErr) {
-                            console.error(tokenizeErr);
-                            return;
-                        }
-
-                        document.getElementById('nonce').value = payload.nonce;
-                        document.getElementById('payment').submit();
-                    });
-                }, false);
             });
-        });
-    </script>
+
+            var previousBrand;
+            card.on('change', function(event) {
+                if (event.brand !== previousBrand && event.brand === 'mastercard') {
+                    card.update({style: {base: {color: 'orange'}}});
+                    previousBrand = event.brand;
+                }
+            });
+        </script>
+    </main>
 {% endblock content %}

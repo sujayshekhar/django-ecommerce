@@ -48,8 +48,7 @@ Faites un Fork et travaillez sur votre propre branche, soumettez des pull reques
 La principale branche de travail est [django-ecommerce/master](https://github.com/flavien-hugs/django-ecommerce/tree/master). La branche de production est [django-ecommerce/master](https://github.com/flavien-hugs/django-ecommerce/tree/prod).
 
 
-Auteur
+Credits
 ------------
 
-[flavien-hugs](https://twitter.com/flavien_hugs) (Pythonist et Developpeur Web et Mobile)
-**Twitter : [flavien-hugs](https://twitter.com/flavien_hugs)**
+    Code and Design: [flavien-hugs](https://twitter.com/flavien_hugs)

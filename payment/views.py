@@ -1,3 +1,4 @@
+
 from email.message import EmailMessage
 from io import BytesIO
 import weasyprint
@@ -21,6 +22,7 @@ def payment_process(request):
     if request.method == 'POST':
         # recuperation de la variable nonce : nombre arbitraire en cryptographie
         nonce = request.POST.get('payment_method_nonce', None)
+
         # On créer et on soumet la transaction
         result = gateway.transaction.sale({
             'amount': '{:.2f}'.format(commande.get_depense_total()),
@@ -29,6 +31,7 @@ def payment_process(request):
                 'submit_for_settlement': True
             }
         })
+
         if result.is_success:
             # Si le resultat est valide, on marque
             # la commande comme payée
@@ -57,9 +60,9 @@ def payment_process(request):
     else:
         # On genere un token
         client_token = gateway.client_token.generate()
-
+        stripekey = settings.STRIPE_PUBLISHABLE_KEY
         context = { 'commande': commande, 'client_token': client_token,
-            'page_title': page_title_succes, 'next': next_lang }
+            'page_title': page_title_succes, 'key':stripekey, 'next': next_lang }
         template = 'payment/process.html'
         return render(request, template, context)
 

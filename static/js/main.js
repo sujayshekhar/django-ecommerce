@@ -131,6 +131,6 @@ $(document).ready(function() {
                 gutter: 20
             });
        });
+       $('.grid').imagesLoaded().progress( function() {$grid.masonry()});
     }
-    grid.imagesLoaded().progress( function() {$grid.masonry();});
 });

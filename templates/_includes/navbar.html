@@ -135,7 +135,7 @@
             <!-- topbar-->
             <div id="lang">
                 <div class="container-fluid">
-                    <div class="row d-flex align-items-center text-md-center">
+                    <div class="row d-flex align-items-center text-center">
                         <div class="col-12">
                             <!-- section service content -->
                             <div class="btn btn-sm shadow-none icon d-inline-flex align-items-center text-left">
@@ -183,7 +183,7 @@
                             </div>
 
                             <div class="btn btn-sm shadow-none icon d-inline-flex align-items-center text-left">
-                                <div class="text-center icon-wrap icon-sm rounded-circle border-success border text-success d-inline-block position-relative">
+                                <div class="d-none d-md-inline-block text-center icon-wrap icon-sm rounded-circle border-success border text-success d-inline-block position-relative">
                                     <i class="icon-support"></i>
                                 </div>
 
@@ -204,7 +204,7 @@
                     <!-- Navbar brand -->
                     <a href="{% url "shop:all_produit" %}" class="navbar-brand">
                         <!-- Logo Image -->
-                        <i class="fa fa-shopping-cart text-primary fa-1x" class="d-none d-xl-inline-block"></i>
+                        <img class="d-lg-none d-inline-block" src="{% static "img/logo.png" %}" alt="{{ site_name }}" height="30" width="30">
                         <span class="sr-only">{{ site_name }}</span>
                         <!-- Logo Text -->
                     </a><!-- ./Navbar brand -->
@@ -238,7 +238,8 @@
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item">
                                 <a href="{% url "shop:all_produit" %}" class="nav-link text-uppercase font-weight-bold">
-                                {% trans "home" %}</a>
+                                    {% trans "e-market" %}
+                                </a>
                             </li><!-- home-->
                         </ul><!-- ./Links left-->
 
