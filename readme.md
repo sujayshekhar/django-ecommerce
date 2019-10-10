@@ -51,4 +51,4 @@ La principale branche de travail est [django-ecommerce/master](https://github.co
 Credits
 ------------
 
-    Code and Design: [flavien-hugs](https://twitter.com/flavien_hugs)
+Code and Design: [flavien-hugs](https://twitter.com/flavien_hugs)
