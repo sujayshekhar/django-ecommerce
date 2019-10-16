@@ -71,6 +71,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.humanize',
     'django.contrib.redirects',
+    'django.contrib.flatpages',
 
     # ajout application shop
     'shop.apps.ShopConfig',
@@ -102,12 +103,12 @@ SITE_ID = 1
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 ]
 
 ROOT_URLCONF = 'ecommerce.urls'
@@ -142,10 +143,10 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'flavienhgs@gmail.com'
+EMAIL_HOST_PASSWORD = '58fl02ghs@!?'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 
@@ -245,8 +246,8 @@ COMPRESS_PRECOMPILERS = (
 
 COMPRESS_ENABLED = True
 
-LOGIN_URL = _('/accounts/login/')
-LOGIN_REDIRECT_URL = _('/profile/')
+LOGIN_URL = _('accounts/login/')
+# LOGIN_REDIRECT_URL = _('profile/')
 
 # Configuration des sessions
 PANIER_SESSION_ID = 'cart'

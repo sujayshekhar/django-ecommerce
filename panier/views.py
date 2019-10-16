@@ -49,4 +49,4 @@ def detail_panier(request):
     # panier_pruduit = [item['produit'] for item in panier]
     # recommande_produit = r.suggest_products_for(panier_pruduit, max_results=4)
     context = {'panier': panier, 'appliquer_le_coupon':appliquer_le_coupon, 'next': next_lang}
-    return render(request, 'panier/detail.html', context)
+    return render(request, 'panier/panier_detail.html', context)

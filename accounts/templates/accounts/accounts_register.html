@@ -37,11 +37,11 @@
                                     {{ field }}
 
                                     {% if field.help_text %}
-                                        <small>{{ field.help_text|safe }}</small>
+                                        <small>{{ field.help_text }}</small>
                                     {% endif %}
 
                                     {% for error in field.errors %}
-                                        <small>{{ error|escape }}</small>
+                                        <small>{{ error }}</small>
                                     {% endfor %}
                                 </div>
                             </div>

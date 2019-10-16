@@ -1,0 +1,32 @@
+{% load i18n static shop_tags humanize %}
+
+<!-- section: recent products list -->
+<div class="row">
+    {% for cat in categories reversed %}
+        <div class="col-sm-3 col-md-6 col-lg-3">
+            <figure class="itemside">
+                <div class="aside">
+                    <div class="img-wrap img-sm rounded-circle blue-gradient">
+                        <i class="center-xy fa-2x text-white {% ifchanged cat.name %}
+                           {% autoescape off %}{% cycle 'fa fa-car' 'fas fa-shoe-prints' 'fas fa-home' 'fa fa-laptop' 'fa fa-mobile-alt' 'fa fa-book-reader' 'fa fa-tv' 'fa fa-gamepad' %}{% endautoescape %}
+                            {% endifchanged %}">
+                        </i>
+                    </div>
+                    <a class="stretched-link" href="{{ cat.get_absolute_url }}"
+                        title="{{ cat.get_absolute_url }}">
+                    </a>
+                </div>
+                <figcaption class="text-wrap d-none d-md-inline-block mx-2">
+                    <h6 class="title mt-3">
+                        {{ cat.name|truncatewords:4 }}
+                    </h6>
+                    <a class="stretched-link" href="{{ cat.get_absolute_url }}">
+                        {% trans "View all category" %}
+                    </a>
+                </figcaption>
+            </figure>
+        </div>
+    {% endfor %}
+</div>
+
+

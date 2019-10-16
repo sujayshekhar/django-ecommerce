@@ -1,5 +1,5 @@
 {% extends "shop/base.html" %}
-{% load i18n static humanize %}
+{% load i18n static shop_tags humanize %}
 
 
 {% block content %}
@@ -8,7 +8,7 @@
             padding-right: 0 !important; padding-left: 0 !important;
         }
         .gallery-wrap .img-big-wrap {
-            margin-bottom: 5px;
+            margin-bottom: 3px;
         }
 
         .gallery-wrap .img-small-wrap .item-gallery {
@@ -49,7 +49,7 @@
                                     <div class="img-big-wrap overflow-hidden bg-white">
                                         <div class="text-center">
                                             <a class="text-center d-block" href="{{ produit.image.url }}" title="{{ produit.name }}" data-fancybox="gallery">
-                                                <img class="imglist img-fluid" src="{% if produit.image %}{{ produit.image.url }}{% else %}{% static "img/cart.png" %}{% endif %}">
+                                                <img class="img-fluid" src="{% if produit.image %}{{ produit.image.url }}{% else %}{% static "img/cart.png" %}{% endif %}">
                                             </a>
                                         </div>
                                     </div><!-- slider-product -->
@@ -131,7 +131,7 @@
                                     </dl>
                                     <dl class="row">
                                         <dt class="col-sm-3">Moddel#</dt>
-                                        <dd class="col-sm-9">123456789</dd>
+                                        <dd class="col-sm-9">{{ price }}</dd>
 
                                         <dt class="col-sm-3">Color</dt>
                                         <dd class="col-sm-9">Black and white </dd>
@@ -199,24 +199,26 @@
 
             <div class="row">
                 <div class="container">
-                    <nav class="tab_menu mt-1">
-                        <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
-                            <a href="#nav-home" class="nav-item text-muted nav-link font-weight-bold active" id="nav-home-tab" data-toggle="tab" role="tab" aria-controls="nav-home" aria-selected="true">
-                            {% trans "Description" %}</a>
+                    <nav class="mt-1">
+                        <div class="nav nav-tabs flex-column flex-sm-row justify-content-center" id="nav-tab" role="pills-tabs">
+                            <a href="#nav-home" class="text-muted flex-sm-fill text-sm-center nav-link font-weight-bold active" id="nav-home-tab" data-toggle="pill" role="tab" aria-controls="nav-home" aria-selected="true">{% trans "Description" %}</a>
 
-                            <a class="nav-item nav-link text-muted font-weight-bold" id="nav-info-tab" data-toggle="tab" href="#nav-info" role="tab" aria-controls="nav-info" aria-selected="false">{% trans "Characteristic" %}</a>
+                            <a class="text-muted flex-sm-fill text-sm-center nav-link font-weight-bold" id="nav-info-tab" data-toggle="pill" href="#nav-info" role="tab" aria-controls="nav-info" aria-selected="false">{% trans "Characteristic" %}</a>
 
-                            <a class="nav-item nav-link text-muted font-weight-bold" id="nav-avis-tab" data-toggle="tab" href="#nav-avis" role="tab"
+                            <a class="text-muted flex-sm-fill text-sm-center nav-link font-weight-bold" id="nav-desc-tab" data-toggle="pill" href="#nav-desc" role="tab"
+                            aria-controls="nav-desc" aria-selected="false">{% trans "further information" %}</a>
+
+                            <a class="text-muted flex-sm-fill text-sm-center nav-link font-weight-bold" id="nav-avis-tab" data-toggle="pill" href="#nav-avis" role="tab"
                             aria-controls="nav-avis" aria-selected="false">{% trans "Review" %}</a>
                         </div>
                     </nav>
 
                     <div class="tab-content" id="nav-tabContent">
-                        <div class="tab-pane fade show active p-4" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <div class="tab-pane fade show active p-4 text-center" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                             {{ produit.description | safe }}
                         </div>
 
-                        <div class="tab-pane fade show p-3 text-center" id="nav-info" role="tabpanel" aria-labelledby="nav-info-tab">
+                        <div class="tab-pane fade show p-4 text-center" id="nav-info" role="tabpanel" aria-labelledby="nav-info-tab">
                             <div class="title font-weight-bolder text-uppercase text-muted">
                                 {% trans "Détails du produit" %}
                             </div>
@@ -225,6 +227,10 @@
                                 <li>{% lorem 3 w random %}</li>
                                 <li>{% lorem 3 w random %}</li>
                             </ul>
+                        </div>
+
+                        <div class="tab-pane fade show p-4 text-center" id="nav-desc" role="tabpanel" aria-labelledby="nav-desc-tab">
+                            {% lorem 1 p random %}
                         </div>
 
                         <div class="tab-pane fade show " id="nav-avis" role="tabpanel" aria-labelledby="nav-avis-tab">
@@ -236,7 +242,7 @@
                 </div>
             </div>
 
-            <div class="row">
+            <!--<div class="row">
                 <div class="container">
                     <nav class="tab_menu mt-1">
                         <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
@@ -251,20 +257,28 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>-->
 
-            <hr>
-            <!-- Grid row -->
-            <div class="row justify-content-center">
-                <!--Grid column-->
-                <div class="col-md-12 text-center">
-                    <h4 class="my-4 h4 text-uppercase font-weight-bold text-capitalize">
-                        {% trans "further information" %}
-                    </h4>
-                    {% lorem 1 p random %}
+            {% if similar_products %}
+                <div class="row">
+                    <div class="container">
+                        <nav class="mt-1">
+                            <div class="nav nav-tabs flex-column flex-sm-row justify-content-center" id="nav-tab" role="pills-tabs">
+                                <a href="#description-plus" class="text-muted nav-link font-weight-bold active" id="nav-similar-tab" data-toggle="pill" role="tab" aria-controls="nav-similar-view" aria-selected="true">
+                                    {% trans "Product similar" %}
+                                </a>
+                            </div>
+                        </nav>
+
+                        <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-pane fade show p-3 active" id="nav-similar-view" role="tabpanel" aria-labelledby="nav-similar-tab">
+                                {% include "shop/produit/shop_similar_product.html" %}
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <!--Grid column-->
-            </div><!-- Grid row -->
+            {% endif %}
+
 
             <!--Grid row produit recommandé -->
             {% if recommande_produit %}

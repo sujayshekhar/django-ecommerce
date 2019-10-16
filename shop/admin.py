@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Categorie, Produit
+from .models import Categorie, Pub, Produit
 
 # Enregistrement du modele de Catalogue sur la page d'administration
 @admin.register(Categorie)
@@ -12,12 +12,20 @@ class CategorieAdmin(admin.ModelAdmin):
     search_fields = ['name', 'description', 'meta_description', 'meta_keywords']
     prepopulated_fields = {'slug': ('name',)}
 
+@admin.register(Pub)
+class PubAdmin(admin.ModelAdmin):
+    # sets up values for how admin site lists categories
+    list_display = ['name', 'pub']
+
+    class Meta:
+        model = Pub
+
 
 @admin.register(Produit)
 class ProduitAdmin(admin.ModelAdmin):
     # sets values for how the admin site lists your products
     date_hierarchy = 'update'
-    list_display = ['name', 'prix_reduit', 'prix', 'disponible', 'creation', 'update']
+    list_display = ['name', 'prix_reduit', 'prix', 'disponible', 'creation']
     list_display_links = ('name',)
     list_per_page = 50
     list_filter = ['disponible', 'creation', 'update']

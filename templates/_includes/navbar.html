@@ -173,7 +173,7 @@
 
                             <div class="btn btn-sm shadow-none icon d-inline-flex align-items-center text-left">
                                 <div class="text-center icon-wrap icon-sm rounded-circle border-success border text-success d-inline-block position-relative">
-                                    <i class="ps-icon-money"></i>
+                                    <i class="icon-credit-card"></i>
                                 </div>
 
                                 <div class="text-wrap d-none d-md-inline-block">
@@ -282,9 +282,9 @@
             <div id="search" class="collapse">
                 <!-- Search form -->
                 <div class="container w-75 my-3">
-                    <form role="search" class="mx-auto " action="{% url "shop:search" %}">
+                    <form role="search" class="mx-auto" action="{% url "shop:search" %}">
                         <div class="input-group">
-                            <input class="form-control border shadow-none" type="search" placeholder="{% trans "Search for a product or category" %}" aria-label="search" name="q" autocomplete="false" value="{{ request.GET.q }}">
+                            <input class="form-control border shadow-none" type="search" placeholder="{% trans "Search for a product or category" %}" aria-label="search" name="q" autocomplete="false">
                             <div class="input-group-append shadow-none">
                                 <button class="shadow-none input-group-text btn-success"
                                 type="submit"><i class="fa fa-search"></i>

@@ -1,39 +1,73 @@
+# -*- coding: utf-8 -*-
+
 from django.conf import settings
-from django.contrib.auth import login, authenticate
-from django.http import HttpResponseRedirect
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.shortcuts import render, redirect
 from django.utils.translation import gettext_lazy as _
 from django.contrib import messages
+
 from accounts.forms import RegisterForm
 from shop.setlang import strip_language
 
 
 # Create your views here.
 
-def register(request):
+def register_request(request):
     next_lang = strip_language(request.path)
     if request.user.is_authenticated:
-        return redirect('accounts:logout')
+        return redirect('accounts:profile')
     else:
         if request.method == 'POST':
             form = RegisterForm(request.POST)
             if form.is_valid():
-                form.save()
+                user = form.save()
                 username = form.cleaned_data.get('username')
-                raw_password = form.cleaned_data.get('password')
-                user = authenticate(username=username, password=raw_password)
-                if user is not None and user.is_active:
-                    login(request, user)
-                return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
-        else:
-            form = RegisterForm()
+                messages.success(request, f"New account created: {username}")
+                login(request, user)
+                return redirect('accounts:profile')
+            else:
+                for msg in form.error_messages:
+                    messages.error(request, f"{msg}: {form.error_messages[msg]}")
 
-        return render(request, 'accounts/register.html', {'form': form, 'next': next_lang})
+                context = { 'form':form }
+                template = 'accounts/accounts_register.html'
+                return render(request, template, context)
+
+        form = RegisterForm()
+
+        context = {'form': form, 'next': next_lang}
+        template = 'accounts/accounts_register.html'
+        return render(request, template, context)
+
+
+def login_request(request):
+    next_lang = strip_language(request.path)
+    if request.method == 'POST':
+        form = AuthenticationForm(request=request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                messages.info(request, f"You are now logged in as {username}")
+                return redirect('accounts:profile')
+            else:
+                messages.error(request, "Invalid username or password.")
+        else:
+            messages.error(request, "Invalid username or password.")
+    form = AuthenticationForm()
+
+    context = { 'form': form, 'next_lang': next_lang }
+    template = 'accounts/accounts_login.html'
+
+    return render(request, template, context)
+
 
 def profile(request):
     next_lang = strip_language(request.path)
     if not request.user.is_authenticated:
-        return redirect('accounts:login')
+        return redirect('accounts:login_request')
 
-    return render(request, 'accounts/profile.html', { 'next': next_lang })
+    return render(request, 'accounts/accounts_profile.html', { 'next': next_lang })

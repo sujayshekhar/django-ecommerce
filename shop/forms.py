@@ -8,6 +8,10 @@ class ProduitAdminForm(forms.ModelForm):
         model = Produit
 
     def clean_price(self):
-        if self.cleaned_data['prix'] <= 0:
-            raise forms.ValidationError('Price must be greater than zero.')
-        return self.cleaned_data['prix']
+        cleaned_data = super(ProduitAdminForm, self).clean()
+        prix = cleaned_data.get("prix")
+        prix_reduit = cleaned_data.get("prix_reduit")
+
+        if prix_reduit > prix:
+            raise forms.ValidationError('Erreur le prix marchant ne peut être supérieur au prix réduit')
+        return cleaned_data

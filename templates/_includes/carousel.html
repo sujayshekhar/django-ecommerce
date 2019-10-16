@@ -134,48 +134,22 @@
                         <aside class="col-3 d-none d-md-inline-block">
                             <div class="d-flex card shadow-sm text-dark rounded-0 pb-1">
                                 <ul class="menu-category text-muted m-0 p-0">
+                                    {% for cat in categories reversed %}
+                                        <li>
+                                            {% if not forloop.last %}
+                                                <a href="{{ cat.get_absolute_url }}" title="{{ cat.name }}">
+                                                    <i class="fa-1x mr-1 {% ifchanged cat.name %}
+                                                    {% autoescape off %}{% cycle 'fa fa-car' 'fas fa-shoe-prints' 'fas fa-home' 'fa fa-laptop' 'fa fa-mobile-alt' 'fa fa-book-reader' 'fa fa-tv' %}{% endautoescape %}
+                                                    {% endifchanged %}"></i>
+                                                    {{ cat.name }}
+                                                </a>
+                                            {% endif %}
+                                        </li>
+                                    {% endfor %}
 
-                                    <li><a href="{% url "shop:all_categorie" %}">
-                                        <i class="fa fa-home fa-1x mr-1"></i>
-                                        {% trans "House equipements &amp; office" %}
-                                        </a>
-                                    </li>
-
-                                    <li><a href="{% url "shop:all_categorie" %}">
-                                        <i class="fa fa-car fa-1x mr-1"></i>
-                                            {% trans "Cars &amp; Motorcyles" %}
-                                        </a>
-                                    </li>
-
-                                    <li><a href="{% url "shop:all_categorie" %}">
-                                        <i class="icon-screen-desktop mr-0"></i>
-                                            {% trans "Television &amp; Audio" %}</a>
-                                    </li>
-
-                                    <li><a href="{% url "shop:all_categorie" %}">
-                                        <i class="fa fa-laptop fa-1x mr-1"></i>
-                                            {% trans "IT &amp; Electronics" %}</a>
-                                    </li>
-
-                                    <li><a href="{% url "shop:all_categorie" %}">
-                                        <i class="icon-screen-smartphone"></i>
-                                            {% trans "Phone &amp; tablet" %}</a>
-                                    </li>
-
-                                    <li><a href="{% url "shop:all_categorie" %}">
-                                        <i class="fa fa-book-reader fa-1x mr-1"></i>
-                                            {% trans "School materials" %}</a>
-                                    </li>
-
-                                    <li><a href="{% url "shop:all_categorie" %}">
-                                        <i class="fa fa-gamepad fa-1x mr-1"></i>
-                                            {% trans "Toys &amp; Hobbies" %}</a>
-                                    </li>
-
-                                    <li><a href="#">
-                                        <i class="fa fa-plus-circle fa-x mr-1"></i>
+                                    <li><a>
+                                        <i class="fa fa-plus-circle mr-1"></i>
                                             {% trans "More category" %}</a>
-
                                         <div class="category-menu-dropdown3 text-left p-3">
                                             <div class="category-part-1 category-common">
                                                 <div class="">

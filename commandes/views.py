@@ -59,7 +59,7 @@ def creer_commande(request):
         formulaire = FormCreationCommande()
 
     context = {'page_title':page_title, 'panier': panier, 'formulaire': formulaire, 'next': next_lang }
-    template = 'commandes/commande/create.html'
+    template = 'commandes/commande/commandes_create.html'
     return render(request, template, context)
 
 

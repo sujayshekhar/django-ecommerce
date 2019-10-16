@@ -1,10 +1,8 @@
 {% extends "shop/base.html" %}
-{% load i18n static humanize %}
+{% load i18n static shop_tags humanize %}
 
 <title>
-    {% block head_title %}
-        {{ request.GET.q }} | {{ site_name }}
-    {% endblock head_title %}
+    {% block title %}{{ query }} | {{ site_name }}{% endblock title %}
 </title>
 
 {% block content %}
@@ -76,7 +74,7 @@
                             <h5 class="text-muted small m-0">
                                 <strong>{{ produits.count }}</strong>
                                 {% trans "results were found for the search for" %}
-                                <strong class="text-muted">{{ request.GET.q }}</strong>
+                                <strong class="text-muted">{{ query }}</strong>
                             </h5>
                         </hgroup>
                         <!-- topbar navigation -->
