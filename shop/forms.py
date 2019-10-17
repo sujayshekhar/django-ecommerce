@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.utils.translation import gettext_lazy as _
 from django import forms
-from django.forms import Textarea
 
 from .models import Produit, Review
 
@@ -24,6 +23,3 @@ class ReviewAdminForm(forms.ModelForm):
     class Meta:
         model = Review
         fields = ['user_name', 'rating', 'comment']
-        widgets = {
-            'comment': Textarea(attrs={'cols': 40, 'rows': 15}),
-        }

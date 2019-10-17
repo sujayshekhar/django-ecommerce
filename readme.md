@@ -5,7 +5,7 @@
 ![[django-ecommerce](https://github.com/flavien-hugs/django-ecommerce/)](https://img.shields.io/badge/unsta-live--demo-orange.svg?style=flat)
 ![The MIT License](http://img.shields.io/badge/License-MIT-green.svg?style=flat)
 
-[django-ecommerce](https://github.com/flavien-hugs/django-ecommerce/) un site ecommerce inspiré de quelque peu du design de jumia, basé sur le framework django et bootstrap.
+[django-ecommerce](https://github.com/flavien-hugs/django-ecommerce/) une application web de vente en ligne (ecommerce) inspiré de quelque peu du design de jumia et basé sur les framework [Django](https://docs.djangoproject.com/) et [Bootstrap](https://getbootstrap.com/).
 
 ### Fonctionalité et prise en main
 La plateforme fournit les fonctionnalité comme :
@@ -13,17 +13,10 @@ La plateforme fournit les fonctionnalité comme :
     - le multilangue.
     - l'authentification
     - la géolocalisation du client
+    - l'apprentissage automatique basé sur k-mean clustering
 
 Installation et exécution du projet
 -----------------------------------
-
-### Dépendances
-* [pip](https://github.com/pypa/pip/)
-* [virtualenv](https://pypi.python.org/pypi/virtualenv/)
-* [Python](https://www.python.org/) >=2.6
-* [Django](https://docs.djangoproject.com/) >=2
-* [Bootstrap4](https://getbootstrap.com/)
-
 
 ### 1. Installation
 Exécutez les commandes suivantes :
@@ -47,7 +40,7 @@ Comment contribuer
 
 Faites un Fork et travaillez sur votre propre branche, soumettez des pull requests.
 
-La principale branche de travail est [django-ecommerce/master](https://github.com/flavien-hugs/django-ecommerce/tree/master). La branche de production est [django-ecommerce/master](https://github.com/flavien-hugs/django-ecommerce/tree/prod).
+La principale branche de travail est [django-ecommerce/master](https://github.com/flavien-hugs/django-ecommerce/tree/master).
 
 
 Credits

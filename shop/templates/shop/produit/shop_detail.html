@@ -247,22 +247,19 @@
                             <a class="text-muted flex-sm-fill text-sm-center nav-link font-weight-bold active" id="nav-info-tab" data-toggle="pill" href="#nav-info" role="tab" aria-controls="nav-info" aria-selected="false">{% trans "Characteristic" %}</a>
 
                             <a class="text-muted flex-sm-fill text-sm-center nav-link font-weight-bold" id="nav-desc-tab" data-toggle="pill" href="#nav-desc" role="tab"
-                            aria-controls="nav-desc" aria-selected="false">{% trans "further information" %}</a>
+                            aria-controls="nav-desc" aria-selected="false">{% trans "Further information" %}</a>
 
                             <a class="text-muted flex-sm-fill text-sm-center nav-link font-weight-bold" id="nav-avis-tab" data-toggle="pill" href="#nav-avis" role="tab"
-                            aria-controls="nav-avis" aria-selected="false">{% trans "Review" %}</a>
+                            aria-controls="nav-avis" aria-selected="false">{% trans "Avis des utilisateurs sur le produit" %}</a>
                         </div>
                     </nav>
 
                     <div class="tab-content" id="nav-tabContent">
-
                         <div class="tab-pane fade show p-4 text-center" id="nav-info" role="tabpanel" aria-labelledby="nav-info-tab">
                             <div class="title font-weight-bolder text-uppercase text-muted">
                                 {% trans "Détails du produit" %}
                             </div>
                             <ul class="list-unstyled">
-                                <li>{% lorem 3 w random %}</li>
-                                <li>{% lorem 3 w random %}</li>
                                 <li>{% lorem 3 w random %}</li>
                             </ul>
                         </div>
@@ -271,45 +268,69 @@
                             {% lorem 1 p random %}
                         </div>
 
-                        <div class="tab-pane fade show " id="nav-avis" role="tabpanel" aria-labelledby="nav-avis-tab">
-                            <p class="p-3 justify-content-center">
-                                {% if produit.review.all %}
-                                    {% for review in produit.review.all %}
-                                        <li class="list-unstyled">
-                                            <em>{{ review.comment|truncatewords:10 }}</em>
-                                            <h6>
-                                                Rated {{ review.rating }} of 5 by
-                                                <a href="{% url 'shop:user_review_list' review.user_name %}">
-                                                {{ review.user_name }}</a>
-                                                <span>
-                                                    <a href="{% url 'shop:review_detail' review.id %}">Read more</a>
-                                                </span>
-                                            </h6>
-                                        </li>
-                                    {% endfor %}
-                                {% else %}
-                                <div class="text-center">
-                                    <div class="icon-wrap icon-sm rounded-circle border-success border text-success d-inline-block align-middle position-relative">
-                                        <i class="icon-bubbles"></i>
-                                    </div>
+                        <div class="tab-pane fade show p-4" id="nav-avis" role="tabpanel" aria-labelledby="nav-avis-tab">
+                            <div class="row">
+                                <div class="col-6 p-3 justify-content-center">
+                                    {% if produit.review.all %}
+                                        {% for review in produit.review.all %}
+                                            <li class="list-unstyled">
+                                                <em>{{ review.comment|truncatewords:10 }}</em>
+                                                <h6>
+                                                    Rated {{ review.rating }} of 5 by
+                                                    <a href="{% url 'shop:user_review_list' review.user_name %}">
+                                                    {{ review.user_name }}</a>
+                                                    <span>
+                                                        <a href="{% url 'shop:review_detail' review.id %}">Read more</a>
+                                                    </span>
+                                                </h6>
+                                            </li>
+                                        {% endfor %}
+                                    {% else %}
+
+                                        <div class="text-center">
+                                            <div class="icon-wrap icon-sm rounded-circle border-success border text-success d-inline-block align-middle position-relative">
+                                                <i class="icon-bubbles"></i>
+                                            </div>
+                                        </div>
+                                        <div class="text-center my-2">
+                                            No reviews for this wine yet
+                                        </div>
+                                    {% endif %}
                                 </div>
-                                <div class="text-center my-2">
-                                    No reviews for this wine yet
+
+                                <div class="col-6">
+                                    <form action="{% url 'shop:add_review' produit.id %}" method="post">
+                                        <h3 class=" text-justify text-monospace">Add your review</h3>
+                                        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+                                        {% csrf_token %}
+                                        <div class="d-inline-flex mb-3">
+                                            <div class="col">
+                                                {{ form.rating }}
+                                                {{ form.rating.errors }}
+                                            </div>
+
+                                            <div class="col col-lg-12">
+                                                <input type="text" name="{{ form.user_name.name }}" class="form-control shadow-none" id="{{ form.user_name.id_for_label }}" placeholder="{{ form.user_name.label }}*">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <textarea name="{{ form.comment.name }}" class="form-control form-control-sm shadow-none" id="{{ form.comment.id_for_label }}" cols="10" rows="10" placeholder="Laisser votre avis sur le produit ..."></textarea>
+
+                                            {{ form.honeypot }}{{ form.content_type }}{{ form.object_pk }}{{ form.timestamp }}{{ form.security_hash }}
+                                        </div>
+
+                                        <div class="col-12 text-center">
+                                            <input class="btn btn-sm btn-success shadow-none" type="submit" name="" value="add">
+                                        </div>
+                                    </form>
+
+                                    <li class="list-unstyled">
+                                        <a href="{% url 'shop:user_recommendation_list' %}">
+                                        product suggestions</a>
+                                    </li>
                                 </div>
-                                {% endif %}
-
-                                <h3>Add your review</h3>
-                                {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-
-                                <form action="{% url 'shop:add_review' produit.id %}" method="post" class="form">
-                                    {% csrf_token %}
-                                    {{ form }}
-                                    <input type="submit" name="" value="add">
-                                </form>
-
-                                <li><a href="{% url 'shop:user_recommendation_list' %}">
-                                product suggestions</a></li>
-                            </p>
+                            </div>
                         </div>
                     </div>
                 </div>
