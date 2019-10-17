@@ -1,0 +1,24 @@
+{% load i18n static shop_tags humanize %}
+
+<h2>Latest reviews</h2>
+
+{% if latest_review_list %}
+<div>
+    {% for review in latest_review_list %}
+    <div>
+        <h4>
+            <a href="{% url 'shop:review_detail' review.id %}">{{ review.produit.name }}</a>
+        </h4>
+
+        <h4>
+            Rated {{ review.rating }} of 5 by
+            <a>{{ review.user_name }}</a>
+        </h4>
+        <p>{{ review.pub_date }}</p>
+        <p>{{ review.comment }}</p>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p>No reviews are available.</p>
+{% endif %}

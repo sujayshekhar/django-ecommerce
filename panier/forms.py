@@ -14,7 +14,7 @@ class AjouterProduitPanierForm(forms.Form):
         widget=forms.HiddenInput)
 
     # Modification de l'affichage des variables
-    quantite.widget.attrs.update({'class': 'custom-select custom-select-sm border-0'})
+    quantite.widget.attrs.update({'class': 'custom-select custom-select-sm shadow-none border-0'})
 
     def clean(self):
         cleaned_data = super(AjouterProduitPanierForm, self).clean()

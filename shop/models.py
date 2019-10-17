@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
 import datetime
 from django.db import models
+from django.contrib.auth.models import User
+from django.utils.encoding import python_2_unicode_compatible
 from django.urls import reverse
 from tinymce.models import HTMLField
+
+import numpy as np
 
 # Definition du model Categorie
 
@@ -28,7 +32,7 @@ class Categorie(models.Model):
 
     @property
     def get_cat_count(self):
-        return Produit.objects.filter(categorie__name__icontains=self.name).count()
+        return Produit.objects.filter(categorie__name=self.name).count()
 
     class Meta:
         db_table = 'categories'
@@ -48,15 +52,13 @@ class Pub(models.Model):
     class Meta:
         verbose_name = 'Publicité'
 
-
+@python_2_unicode_compatible
 class Produit(models.Model):
-    """ Definition des params du produits :
-    nom, description, image, prix, disponibilite """
+    """ Definition des params du produits : nom, description, image, prix, disponibilite """
 
     categorie = models.ManyToManyField(Categorie)
-    name = models.CharField("Nom du produit", max_length=200, db_index=True)
-    slug = models.SlugField(max_length=200, unique=True, db_index=True,
-        help_text='Unique value for product page URL, created from name.')
+    name = models.CharField("Nom du produit", max_length=200)
+    slug = models.SlugField(max_length=200, unique=True, help_text='Unique value for product page URL, created from name.')
     description = HTMLField("Description du produit", null=True, blank=True)
 
     prix = models.DecimalField("Prix de vente", max_digits=10, decimal_places=2)
@@ -77,18 +79,55 @@ class Produit(models.Model):
     update = models.DateTimeField("Ajouté le", auto_now_add=False, default=datetime.datetime.now)
 
     def __str__(self):
-        return self.name
+        return "%s (%s)" % (self.name, ", ".join(categorie.name for categorie in self.categorie.all()),)
+
+    def average_rating(self):
+        all_ratings = list(map(lambda x: x.rating, self.review.all()))
+        return np.mean(all_ratings)
 
     @property
     def view_product_count(self):
         return Produit.objects.filter(name=self.name).count()
 
-
     def get_absolute_url(self):
         return reverse('shop:detail_produit', args=[self.slug, self.id])
+
+    def save(self):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        return super(Produit, self).save()
 
     class Meta:
         ordering = ['-name', '-creation']
         verbose_name = 'produit'
         verbose_name_plural = 'produits'
         index_together = (('id', 'slug'),)
+
+
+class Review(models.Model):
+    """docstring for Review"""
+    RATING_CHOICES = (
+        (1, '1'),
+        (2, '2'),
+        (3, '3'),
+        (4, '4'),
+        (5, '5'),
+    )
+
+    produit = models.ForeignKey(Produit, null=True, blank=True, related_name="review", on_delete=models.SET_NULL)
+    pub_date = models.DateTimeField('date published')
+    user_name = models.CharField(max_length=100)
+    comment = models.CharField(max_length=200)
+    rating = models.IntegerField(choices=RATING_CHOICES)
+
+
+class Cluster(models.Model):
+    name = models.CharField(max_length=100)
+    users = models.ManyToManyField(User, related_name="cluster")
+
+    def get_members(self):
+        return "\n".join([u.username for u in self.users.all()])
+
+    class Meta:
+        verbose_name = "Cluster"
+        verbose_name_plural = "Clusters"

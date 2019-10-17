@@ -166,6 +166,10 @@
                                 <figcaption class="info-wrap">
                                     <a href="{{ produit.get_absolute_url }}" class="title">
                                     {{ produit.name | truncatewords:5 }}</a>
+                                    <span>{{ produit.review.count }} reviews</span>
+                                    <span>
+                                        {{ produit.average_rating|floatformat }} average rating
+                                    </span>
                                     <span class="text-uppercase d-inline-block">
                                         {% if produit.prix_reduit > produit.prix %}
                                             {{ produit.prix|floatformat:0 }}

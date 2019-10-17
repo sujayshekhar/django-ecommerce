@@ -1,4 +1,4 @@
-			{% load i18n static %}
+			{% load i18n static shop_tags humanize %}
             <style>
                 .row-sm {
                     margin-right: -7px;
@@ -134,7 +134,7 @@
                         <aside class="col-3 d-none d-md-inline-block">
                             <div class="d-flex card shadow-sm text-dark rounded-0 pb-1">
                                 <ul class="menu-category text-muted m-0 p-0">
-                                    {% for cat in categories reversed %}
+                                    {% for cat in active_categories reversed %}
                                         <li>
                                             {% if not forloop.last %}
                                                 <a href="{{ cat.get_absolute_url }}" title="{{ cat.name }}">

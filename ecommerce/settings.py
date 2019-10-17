@@ -59,6 +59,8 @@ SESSION_COOKIE_SECURE = False
 
 INSTALLED_APPS = [
     # ajout application de coupons
+
+    'suit',
     'accounts.apps.AccountsConfig',
     'django.contrib.sitemaps',
     'django.contrib.admindocs',
@@ -87,6 +89,9 @@ INSTALLED_APPS = [
 
     # ajout application de coupons
     'coupons.apps.CouponsConfig',
+
+    # ajout de hitcoun : compteur de vues
+    # 'hitcount',
 
     # ajout tinymce
     'tinymce',
@@ -251,6 +256,18 @@ LOGIN_URL = _('accounts/login/')
 
 # Configuration des sessions
 PANIER_SESSION_ID = 'cart'
+
+# # default value
+# HITCOUNT_KEEP_HIT_ACTIVE = { 'days': 7 }
+
+# # default value
+# HITCOUNT_KEEP_HIT_IN_DATABASE = { 'days': 30 }
+
+# # default value
+# HITCOUNT_HITS_PER_IP_LIMIT = 0
+
+# # example value, default is empty tuple
+# HITCOUNT_EXCLUDE_USER_GROUP = ( 'Editor', )
 
 # Configuration de l'API braintree
 # https://www.braintreepayments.com/sandbox

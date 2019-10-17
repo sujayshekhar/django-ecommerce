@@ -1,11 +1,15 @@
-from django import forms
+# -*- coding: utf-8 -*-
 from django.utils.translation import gettext_lazy as _
-from .models import Produit
+from django import forms
+from django.forms import Textarea
+
+from .models import Produit, Review
 
 
 class ProduitAdminForm(forms.ModelForm):
     class Meta:
         model = Produit
+        fields = ['name']
 
     def clean_price(self):
         cleaned_data = super(ProduitAdminForm, self).clean()
@@ -15,3 +19,11 @@ class ProduitAdminForm(forms.ModelForm):
         if prix_reduit > prix:
             raise forms.ValidationError('Erreur le prix marchant ne peut être supérieur au prix réduit')
         return cleaned_data
+
+class ReviewAdminForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['user_name', 'rating', 'comment']
+        widgets = {
+            'comment': Textarea(attrs={'cols': 40, 'rows': 15}),
+        }
