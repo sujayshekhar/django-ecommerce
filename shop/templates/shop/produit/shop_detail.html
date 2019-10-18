@@ -224,14 +224,14 @@
                                     {% if not forloop.last %} <hr> {% endif %}
                                 {% endfor %}
                             {% else %}
-                            <div>
-                                <div class="text-center icon-wrap icon-sm rounded-circle border-success border text-success d-inline-block align-middle position-relative">
-                                    <i class="icon-bubbles"></i>
+                                <div>
+                                    <div class="text-center icon-wrap icon-sm rounded-circle border-success border text-success d-inline-block align-middle position-relative">
+                                        <i class="icon-bubbles"></i>
+                                    </div>
+                                    <div class="d-inline-block align-middle">
+                                        <strong>Reviews</strong> <br> No reviews for this wine yet
+                                    </div>
                                 </div>
-                                <div class="d-inline-block align-middle">
-                                    <strong>Reviews</strong> <br> No reviews for this wine yet
-                                </div>
-                            </div>
                             {% endif %}
                         </div><!-- ./card-body -->
                     </div><!-- ./card -->
@@ -274,33 +274,48 @@
                                     {% if produit.review.all %}
                                         {% for review in produit.review.all %}
                                             <li class="list-unstyled">
-                                                <em>{{ review.comment|truncatewords:10 }}</em>
-                                                <h6>
-                                                    Rated {{ review.rating }} of 5 by
-                                                    <a href="{% url 'shop:user_review_list' review.user_name %}">
-                                                    {{ review.user_name }}</a>
                                                     <span>
-                                                        <a href="{% url 'shop:review_detail' review.id %}">Read more</a>
+                                                        <i class="icon-user mr-1"></i>
+                                                        <a href="{% url 'shop:user_review_list' review.user_name %}">
+                                                        {{ review.user_name }}</a>
+
+                                                        {% if review.rating == 1 %}
+                                                            <i class="icon-star text-success ml-1"></i>
+                                                        {% elif review.rating == 2 %}
+                                                            <i class="icon-star text-success"></i>
+                                                            <i class="icon-star text-success"></i>
+                                                        {% elif review.rating == 3 %}
+                                                            <i class="icon-star text-success"></i>
+                                                            <i class="icon-star text-success"></i>
+                                                            <i class="icon-star text-success"></i>
+                                                        {% elif review.rating == 4 %}
+                                                            <i class="icon-star text-success"></i>
+                                                            <i class="icon-star text-success"></i>
+                                                            <i class="icon-star text-success"></i>
+                                                        {% endif %}
+
+                                                        <i class="icon-bubbles mx-1"></i>
+                                                        {{ review.comment|truncatewords:10 }} <a href="{% url 'shop:review_detail' review.id %}">read</a>
                                                     </span>
-                                                </h6>
                                             </li>
+                                            {% if not forloop.last %} <hr> {% endif %}
                                         {% endfor %}
                                     {% else %}
-
-                                        <div class="text-center">
-                                            <div class="icon-wrap icon-sm rounded-circle border-success border text-success d-inline-block align-middle position-relative">
-                                                <i class="icon-bubbles"></i>
+                                            <div>
+                                                <div class="text-center icon-wrap icon-sm rounded-circle border-success border text-success d-inline-block align-middle position-relative">
+                                                    <i class="icon-bubbles"></i>
+                                                </div>
+                                                <div class="d-inline-block align-middle">
+                                                    <strong>Reviews</strong> <br> No reviews for this wine yet
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="text-center my-2">
-                                            No reviews for this wine yet
-                                        </div>
                                     {% endif %}
                                 </div>
 
                                 <div class="col-6">
                                     <form action="{% url 'shop:add_review' produit.id %}" method="post">
-                                        <h3 class=" text-justify text-monospace">Add your review</h3>
+                                        <h3 class=" text-justify text-monospace">
+                                        Add your review</h3>
                                         {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
                                         {% csrf_token %}
                                         <div class="d-inline-flex mb-3">
