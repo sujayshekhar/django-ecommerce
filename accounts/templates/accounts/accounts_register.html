@@ -1,23 +1,11 @@
 {% extends "shop/base.html" %}
-{% load i18n static %}
+{% load i18n static shop_tags humanize %}
 
-{% block our_head %}
-    <style>
-        .asteriskField {display: none;}
-    </style>
-{% endblock our_head %}
+{% block title %} {% trans "register" %} | {{ site_name }} {% endblock title %}
 
-<title>
-    {% block head_title %}
-        {% trans "register" %} | unsta inc
-    {% endblock head_title %}
-</title>
-
-
-{% block carousel %}
-{% endblock carousel %}
 
 {% block content %}
+    <style>.asteriskField {display: none;}</style>
    <!-- Main product Layout View -->
     <main>
         <div class="container wow fadeIn mt-5 w-75">

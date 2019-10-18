@@ -1,5 +1,5 @@
 {% extends "./accounts_register.html" %}
-{% load i18n static %}
+{% load i18n static shop_tags humanize %}
 
 {% block title %} {% trans "profile" %} | {{ site_name }} {% endblock title %}
 
@@ -9,14 +9,23 @@
         .list-group-item.active { background-color: #f8f9fa !important;border-color: #fff !important; }
     </style>
    <!-- Main product Layout View -->
-    <main class="mt-2 pb-5">
+    <main class="my-4">
         <div class="container">
-            <div class="row py-5 p-4 justify-content-center">
+            <div class="row justify-content-center">
                 {% if messages %}
-                    {% for message in messages %}
-                      <script>M.toast({html: "{{message}}", classes: 'blue rounded', displayLength:2000});</script>
-                    {% endfor %}
+                    <div class="col-6 animated fadeIn">
+                        {% for message in messages %}
+                            <div class="alert {% if message.tags %} alert-{{ message.tags }} {% endif %} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button class="close" type="button" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        {% endfor %}
+                    </div>
                 {% endif %}
+            </div>
+            <div class="row justify-content-center">
                 <div class="col-lg-3">
                     <nav class="nav list-group rounded shadow-sm" id="list-tab" role="tablist">
                         <a href="#account" class="list-group-item list-group-item-action text-dark text-capitalize px-3 active" id="account-content" data-toggle="list" role="tab" aria-controls="account-content">

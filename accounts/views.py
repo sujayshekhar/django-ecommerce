@@ -22,6 +22,7 @@ def register_request(request):
             username = form.cleaned_data.get('username')
             messages.success(request, f"New account created: {username}")
             login(request, user)
+            # redirect to profile compte:
             return redirect('accounts:profile')
         else:
             for msg in form.error_messages:
@@ -42,19 +43,21 @@ def register_request(request):
 def login_request(request):
     next_lang = strip_language(request.path)
     if request.method == 'POST':
-        form = AuthenticationForm(request=request, data=request.POST)
+        form = AuthenticationForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                messages.info(request, f"You are now logged in as {username}")
+                messages.success(request, f"You are now logged in as { username }")
+                # redirect to profile compte:
                 return redirect('accounts:profile')
             else:
-                messages.error(request, "Invalid username or password.")
+                return redirect('accounts:login')
         else:
-            messages.error(request, "Invalid username or password.")
+            return redirect('accounts:login')
+
     form = AuthenticationForm()
 
     context = { 'form': form, 'next_lang': next_lang }

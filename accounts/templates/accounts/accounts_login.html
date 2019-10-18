@@ -1,106 +1,90 @@
 {% extends "./accounts_register.html" %}
-{% load i18n static %}
+{% load i18n static shop_tags humanize %}
 
-<title>
-    {% block head_title %}
-        {% trans "login" %} | unsta inc
-    {% endblock head_title %}
-</title>
+{% block title %}{% trans "login" %} | {{ site_name }}{% endblock title %}
 
 {% block content %}
    <!-- Main product Layout View -->
-    <main class="wrapper p-5">
-        <div class="container justify-content-center">
+    <main class="p-5">
+        <div class="container">
             <!-- Grid row -->
-            <section class="row no-gutters">
-                <div class="col-md-6 mr-auto">
-                    <div class="d-flex align-items-md-center px-5">
-                        <div class="container">
-                            <div class="row">
-                                <div class="mx-auto">
-                                    <h3 class="font-weight-bold text-success">{% trans "login" %}</h3>
-                                    <p class="text-muted mb-4 text-justify">
-                                        {% trans "Please enter your username and password to login." %}
-                                    </p>
+            <section class="row justify-content-center p-3">
+                <div class="col-md-5 col-sm-10">
+                    <div class="d-flex align-items-md-center">
+                        <div class="col">
+                            <h3 class="font-weight-bold text-success text-capitalize">
+                                {% trans "login" %}
+                            </h3>
+                            <p class="text-muted mb-4 text-justify">
+                                {% trans "Please enter your username and password to login." %}
+                            </p>
 
-                                    <form method="POST">
-                                        {% csrf_token %}
+                            <form method="POST">
+                                <div class="md-form form-group mb-3">
+                                    <input id="{{ form.username.id_for_label }}"
+                                    type="text" name="username" class="form-control"
+                                    placeholder="{{ form.username.label }}">
+                                    {% if form.username.errors %}
+                                        <ol>
+                                            {% for error in form.username.errors %}
+                                                <li><strong>{{ error|escape }}</strong></li>
+                                            {% endfor %}
+                                        </ol>
+                                    {% endif %}
+                                </div> <!-- /.username input -->
 
-                                        <small class="text-muted text-danger">
-                                            {% if errors %}
-                                                {% for error in errors %}
-                                                    {% autoescape off %}
-                                                        {{ error }}
-                                                    {% endautoescape %}
-                                                {% endfor %}
-                                            {% endif %}
-                                        </small>
+                                <div class="md-form form-group mb-3">
+                                    <input id="{{ form.password.id_for_label }}" type="password"
+                                    name="password" class="form-control"
+                                    placeholder="{{ form.password.label }}">
+                                    {% if form.password.errors %}
+                                        <ol>
+                                            {% for error in form.password.errors %}
+                                                <li><strong>{{ error|escape }}</strong></li>
+                                            {% endfor %}
+                                        </ol>
+                                    {% endif %}
+                                </div> <!-- /.password input -->
 
-                                        <div class="md-form form-group mb-3">
-                                            <input id="{{ form.username.id_for_label }}"
-                                            type="text" name="username" class="form-control"
-                                            placeholder="{{ form.username.label }}">
-                                            {{ form.username.errors}}
-                                        </div> <!-- /.username input -->
-
-                                        <div class="md-form form-group mb-3">
-                                            <input id="{{ form.password.id_for_label }}" type="password"
-                                            name="password" class="form-control"
-                                            placeholder="{{ form.password.label }}">
-                                            {{ form.password.errors}}
-                                        </div> <!-- /.password input -->
-
-                                        <div class="d-flex justify-content-around pt-2 mb-3">
-                                            <div>
-                                                <div class="custom-control custom-switch">
-                                                    <input type="checkbox" class="custom-control-input"
-                                                    id="customSwitch">
-                                                    <label for="customSwitch" class="custom-control-label">
-                                                        {% trans "remember me" %}
-                                                    </label>
-                                                </div>
-                                            </div><!-- /.checkbox -->
-
-                                            <div>
-                                                <a href=""
-                                                    class="font-small ml-5 text-danger">
-                                                    <u>{% trans "lost password ?" %}</u>
-                                                </a>
-                                            </div><!-- /.lost password -->
+                                <div class="d-flex justify-content-between pt-2 mb-3">
+                                    <div>
+                                        <div class="custom-control custom-switch">
+                                            <input type="checkbox" class="custom-control-input"
+                                                id="customSwitch">
+                                            <label for="customSwitch" class="custom-control-label">
+                                                {% trans "remember me" %}
+                                            </label>
                                         </div>
+                                    </div><!-- /.checkbox -->
 
-                                        <button type="submit" class="btn btn-success btn-block btn-sm text-uppercase mb-3 rounded-pill shadow-sm">
-                                            {% trans "login" %}
-                                        </button><!-- /.button login -->
-
-                                        <div class="pt-2">
-                                            <small class="font-small grey-text text-right">
-                                               <a href=""
-                                               class="text-muted"></a>
-                                            </small>
-                                        </div>
-                                    </form>
+                                    <div>
+                                        <a href="#" class="text-danger text-nowrap">
+                                            {% trans "lost password ?" %}
+                                        </a>
+                                    </div><!-- /.lost password -->
                                 </div>
-                            </div>
+
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-success btn-block btn-sm text-uppercase mb-3 rounded-pill shadow-sm">
+                                    {% trans "login" %}
+                                </button><!-- /.button login -->
+                            </form>
                         </div>
                     </div>
                 </div><!-- content -->
 
-                <div class="col-md-6 border-left">
-                    <div class="d-none d-md-flex align-items-center px-sm-2">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-8 mx-auto">
-                                    <h3 class="font-weight-bold text-success mb-2">{% trans "create an account" %}
-                                    </h3>
-                                    <p class="text-muted mb-4 text-justify">
-                                        {% trans "Create your customer account in a few clicks ! You can register by using your email address." %}
-                                    </p>
+                <div class="border d-none d-md-block m-3"></div>
 
-                                    <a href="{% url "accounts:register" %}" class="btn btn-success btn-block btn-sm text-uppercase rounded-pill shadow-sm">{% trans "sign up" %}</a>
-                                    <!-- /.login link -->
-                                </div>
-                            </div>
+                <div class="col-md-5">
+                    <div class="d-none d-md-flex align-items-md-center">
+                        <div class="col">
+                            <h3 class="font-weight-bold text-capitalize text-success">
+                                {% trans "create an account" %}
+                            </h3>
+                            <p class="text-muted my-4 text-justify">
+                                {% trans "Create your customer account in a few clicks ! You can register by using your email address." %}
+                            </p>
+                            <a href="{% url "accounts:register" %}" class="btn btn-success btn-block btn-sm text-uppercase rounded-pill shadow-sm">{% trans "sign up" %}</a><!-- /.login link -->
                         </div>
                     </div>
                 </div>

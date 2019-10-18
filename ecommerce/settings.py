@@ -29,7 +29,7 @@ DEBUG = True
 DEFAULT_FROM_EMAIL = 'flavienhgs@gmail.com'
 ALLOWED_HOSTS = []
 
-SITE_NAME = 'unsta'
+SITE_NAME = 'e-market'
 META_KEYWORDS = 'Shopping, ecommerce, accessories, TV, Audio, smartphone, Mode'
 META_DESCRIPTION = 'ecommerce shopping'
 
@@ -149,7 +149,7 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'flavienhgs@gmail.com'
-EMAIL_HOST_PASSWORD = '58fl02ghs@!?'
+EMAIL_HOST_PASSWORD = ''
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
