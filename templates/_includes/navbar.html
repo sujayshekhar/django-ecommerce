@@ -61,11 +61,11 @@
 
                         <div class="col-lg-6 text-center offer mb-lg-0">
                             <div class="d-flex justify-content-end justify-content-between pt-3">
-                                {% if request.user.is_authenticated %}
+                                {% if user.is_authenticated %}
                                     <ul class="list-inline d-block d-md-none">
                                         <a class="login-btn text-white">
                                             {% trans "hello" %},  <b class="font-weight-bold text-capitalize">
-                                            {{ user.username }}</b>
+                                            {{ user.pseudo }}</b>
                                         </a>
                                     </ul>
 
@@ -74,7 +74,7 @@
                                             <span class="login-btn text-white d-none d-md-inline-block">
                                                 {% trans "hello" %},
                                                 <b class="font-weight-bold text-capitalize">
-                                                {{ user.username }}</b>
+                                                {{ user.pseudo }}</b>
                                             </span>
                                         </span>
 
@@ -249,7 +249,7 @@
                             <a data-toggle="collapse" href="#search" class="btn btn-sm navbar-btn btn-success shadow-sm border-0 d-none d-md-inline-block d-sm-inline-block">
                                 <span class="sr-only">search</span><i class="fa fa-search"></i>
                             </a>
-                            {% if request.user.is_authenticated %}
+                            {% if user.is_authenticated %}
                                 <li class="nav-item d-none d-md-inline-block d-sm-inline-block ">
                                     <a class="nav-link" href="{% url "panier:detail_panier" %}">
                                         <i class="icon-bag"></i>

@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
+
 import datetime
 from django.db import models
+from django.urls import reverse
+from django.conf import settings
+from tinymce.models import HTMLField
 from django.contrib.auth.models import User
 from django.utils.encoding import python_2_unicode_compatible
-from django.urls import reverse
-from tinymce.models import HTMLField
 
 import numpy as np
 
@@ -123,7 +125,7 @@ class Review(models.Model):
 
 class Cluster(models.Model):
     name = models.CharField(max_length=100)
-    users = models.ManyToManyField(User, related_name="cluster")
+    users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="cluster")
 
     def get_members(self):
         return "\n".join([u.username for u in self.users.all()])

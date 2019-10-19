@@ -1,6 +1,7 @@
+# -*- coding: utf-8 -*-
+
 from django.contrib import admin
 from .models import Categorie, Pub, Produit, Review, Cluster
-
 
 @admin.register(Categorie)
 class CategorieAdmin(admin.ModelAdmin):

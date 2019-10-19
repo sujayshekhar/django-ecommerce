@@ -29,6 +29,11 @@ DEBUG = True
 DEFAULT_FROM_EMAIL = 'flavienhgs@gmail.com'
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = 'accounts.User'
+AUTHENTICATION_BACKENDS = (
+    'accounts.backends.MyAuthBackend', 'django.contrib.auth.backends.ModelBackend',
+)
+
 SITE_NAME = 'e-market'
 META_KEYWORDS = 'Shopping, ecommerce, accessories, TV, Audio, smartphone, Mode'
 META_DESCRIPTION = 'ecommerce shopping'
@@ -104,6 +109,8 @@ INSTALLED_APPS = [
 ]
 
 SITE_ID = 1
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -251,8 +258,8 @@ COMPRESS_PRECOMPILERS = (
 
 COMPRESS_ENABLED = True
 
-LOGIN_URL = _('accounts/login/')
-# LOGIN_REDIRECT_URL = _('profile/')
+LOGIN_REDIRECT_URL = 'accounts:profile'
+LOGIN_URL = 'accounts:login'
 
 # Configuration des sessions
 PANIER_SESSION_ID = 'cart'

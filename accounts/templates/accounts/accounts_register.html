@@ -1,5 +1,5 @@
 {% extends "shop/base.html" %}
-{% load i18n static shop_tags humanize %}
+{% load i18n static shop_tags accounts_tags humanize %}
 
 {% block title %} {% trans "register" %} | {{ site_name }} {% endblock title %}
 
@@ -7,45 +7,57 @@
 {% block content %}
     <style>.asteriskField {display: none;}</style>
    <!-- Main product Layout View -->
-    <main>
-        <div class="container wow fadeIn mt-5 w-75">
+    <main class="p-5">
+        <div class="container">
             <!-- Grid row -->
-            <section class="contact-section">
-                <form method="POST">
-                    <div class="text-left mx-2">
-                        <h3 class="dark-grey-text">{% trans "create an account" %}</h3>
-                    </div>
-                    <div class="form-row">
-                        {% for field in form %}
-                            <div class="col-md-6 mb-2">
-                                <div class="md-form form-group mx-2">
-                                    <label for="{{ field.id_for_label }}">
-                                        {{ field.label }}
-                                    </label>
-                                    {{ field }}
+            <section class="contact-section row justify-content-center">
+                <div class="col-lg-8 col-md-10 col-sm-12">
+                    <div class="d-flex align-items-md-center">
+                        <div class="col">
+                            <h3 class="font-weight-bold text-center text-success text-capitalize">
+                                {% trans "create an account" %}
+                            </h3>
+                            <p class="text-muted text-justify text-center">
+                                {% trans "Create your customer account in a few clicks !" %}
+                            </p>
 
-                                    {% if field.help_text %}
-                                        <small>{{ field.help_text }}</small>
-                                    {% endif %}
-
-                                    {% for error in field.errors %}
-                                        <small>{{ error }}</small>
+                            {% if form.non_field_errors %}
+                                <div class="alert alert-danger" role="alert">
+                                    {% for error in form.non_field_errors %}
+                                        <p {% if forloop.last %} class="mb-0"{% endif %}>
+                                            {{ error }}</p>
                                     {% endfor %}
                                 </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                    {% csrf_token %}
-                    <button class="btn btn-success btn-block text-uppercase mb-3 rounded-pill shadow-sm" type="submit">{% trans "sign up" %}
-                    </button>
-                </form>
+                            {% endif %}
 
-                <div class="pt-3 mb-1 mx-2">
-                    <p class="font-small grey-text">
-                        {% trans "already have an account ?" %}
-                        <a href="{% url "accounts:login" %}" class="dark-grey-text font-weight-bold ml-1">
-                        {% trans "login" %}</a>
-                    </p>
+
+                            <form method="POST" novalidate>
+                                {% csrf_token %}
+
+                                <div class="md-form form-group mb-3">
+                                    {% for field in form %}
+                                        <input name="{{ field.name }}" placeholder="{{ field.label }}"
+                                        class="form-control shadow-none px-2">
+
+                                        {% for error in field.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </div>
+
+                                <button type="submit" class="btn btn-success btn-block text-uppercase rounded-pill shadow-sm">
+                                    {% trans "sign up" %}
+                                </button><!-- /.button submit register -->
+                            </form>
+
+                            <div class="pt-3 mb-1 mx-2">
+                                <p class="font-small grey-text">
+                                    {% trans "already have an account ?" %}
+                                    <a href="{% url "accounts:login" %}" class="dark-grey-text font-weight-bold ml-1">{% trans "login" %}</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section><!-- ./Grid row -->
         </div>

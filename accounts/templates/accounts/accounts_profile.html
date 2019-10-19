@@ -1,5 +1,5 @@
 {% extends "./accounts_register.html" %}
-{% load i18n static shop_tags humanize %}
+{% load i18n static shop_tags accounts_tags humanize %}
 
 {% block title %} {% trans "profile" %} | {{ site_name }} {% endblock title %}
 
@@ -71,7 +71,7 @@
                                         </div>
                                         <div class="card-body">
                                             <p class="card-subtitle text-capitalize">
-                                                {{ user.get_full_name }}
+                                                {{ user.pseudo }}
                                             </p>
                                             <p class="text-muted small">{{ user.email }}</p>
 
@@ -91,7 +91,7 @@
                                             <p class="card-subtitle h5 text-capitalize">
                                             {% trans "default address" %} :</p>
                                             <p class="text-muted text-capitalize">
-                                                {{ user.get_full_name }}
+                                                {{ user.pseudo }}
                                             </p>
 
                                             <p class="text-muted text-capitalize">
