@@ -31,6 +31,7 @@
         .badge-sale {
             background-color: #cf5055;
         }
+
     </style>
     <!-- Main product Layout View -->
     <main class="section-detail-produit">
@@ -53,20 +54,6 @@
                                             </a>
                                         </div>
                                     </div><!-- slider-product -->
-
-                                    <div class="img-small-wrap text-center d-none d-lg-block">
-                                        <div class="item-gallery">
-                                            <img src="{% if produit.image %}{{ produit.image.url }}{% else %}{% static "img/cart.png" %}{% endif %}" class="img-thumbnail">
-                                        </div>
-
-                                        <div class="item-gallery">
-                                            <img src="{% if produit.image %}{{ produit.image.url }}{% else %}{% static "img/cart.png" %}{% endif %}" class="img-thumbnail">
-                                        </div>
-
-                                        <div class="item-gallery">
-                                            <img src="{% if produit.image %}{{ produit.image.url }}{% else %}{% static "img/cart.png" %}{% endif %}" class="img-thumbnail">
-                                        </div>
-                                    </div>
                                 </article>
                             </aside>
 
@@ -74,19 +61,10 @@
                                 <article class="card-body">
                                     <!-- short-info-wrap -->
                                     <div class="mb-2">
-                                        {% if produit.label == 'N' %}
+                                        {% if produit.label %}
                                             <span class="mr-1 badge red shadow-none
-                                                {% if produit.label %}
-                                                    {{ produit.get_label_display }}
-                                                {% endif %} text-center">new
-                                            </span>
-                                        {% endif %}
-
-                                        {% if produit.label == 'S' %}
-                                            <span class="mr-1 badge red shadow-none
-                                                {% if produit.label %}
-                                                    {{ produit.get_label_display }}
-                                                {% endif %} text-center">-30%
+                                                text-center px-2 py-1 text-capitalize">
+                                                {% if produit.label == 'N' %} new {% elif produit.label == 'S' %} -30% {% endif %}
                                             </span>
                                         {% endif %}
 
@@ -110,7 +88,7 @@
                                     <div class="rating-wrap">
                                         {% if not produit.review.count %}
                                             <div class="label-rating text-muted mr-2 d-inline-block align-middle">
-                                            <i class="icon-bubbles mr-1"></i>( Il n'y a pas d'avis disponible ) </div>
+                                            <i class="icon-bubbles mr-1"></i>( Il n'y a pas d'avis disponible. ) </div>
                                         {% else %}
                                             <div class="label-rating text-muted mr-2 d-inline-block align-middle">
                                                 <i class="icon-bubbles mr-1"></i> {{ produit.review.count }} reviews
@@ -270,80 +248,45 @@
 
                         <div class="tab-pane fade show p-4" id="nav-avis" role="tabpanel" aria-labelledby="nav-avis-tab">
                             <div class="row">
-                                <div class="col-6 p-3 justify-content-center">
+                                <div class="p-3 col-12 text-center justify-content-center">
                                     {% if produit.review.all %}
                                         {% for review in produit.review.all %}
                                             <li class="list-unstyled">
-                                                    <span>
-                                                        <i class="icon-user mr-1"></i>
-                                                        <a href="{% url 'shop:user_review_list' review.user_name %}">
-                                                        {{ review.user_name }}</a>
+                                                <span>
+                                                    <i class="icon-user mr-1"></i>
+                                                    <a href="{% url 'shop:user_review_list' review.user_name %}">
+                                                    {{ review.user_name }}</a>
 
-                                                        {% if review.rating == 1 %}
-                                                            <i class="icon-star text-success ml-1"></i>
-                                                        {% elif review.rating == 2 %}
-                                                            <i class="icon-star text-success"></i>
-                                                            <i class="icon-star text-success"></i>
-                                                        {% elif review.rating == 3 %}
-                                                            <i class="icon-star text-success"></i>
-                                                            <i class="icon-star text-success"></i>
-                                                            <i class="icon-star text-success"></i>
-                                                        {% elif review.rating == 4 %}
-                                                            <i class="icon-star text-success"></i>
-                                                            <i class="icon-star text-success"></i>
-                                                            <i class="icon-star text-success"></i>
-                                                        {% endif %}
+                                                    {% if review.rating == 1 %}
+                                                    <i class="icon-star text-success ml-1"></i>
+                                                    {% elif review.rating == 2 %}
+                                                    <i class="icon-star text-success"></i>
+                                                    <i class="icon-star text-success"></i>
+                                                    {% elif review.rating == 3 %}
+                                                    <i class="icon-star text-success"></i>
+                                                    <i class="icon-star text-success"></i>
+                                                    <i class="icon-star text-success"></i>
+                                                    {% elif review.rating == 4 %}
+                                                    <i class="icon-star text-success"></i>
+                                                    <i class="icon-star text-success"></i>
+                                                    <i class="icon-star text-success"></i>
+                                                    {% endif %}
 
-                                                        <i class="icon-bubbles mx-1"></i>
-                                                        {{ review.comment|truncatewords:10 }} <a href="{% url 'shop:review_detail' review.id %}">read</a>
-                                                    </span>
+                                                    <i class="icon-bubbles mx-1"></i>
+                                                    {{ review.comment|truncatewords:10 }} <a href="{% url 'shop:review_detail' review.id %}">read</a>
+                                                </span>
                                             </li>
                                             {% if not forloop.last %} <hr> {% endif %}
                                         {% endfor %}
                                     {% else %}
-                                            <div>
-                                                <div class="text-center icon-wrap icon-sm rounded-circle border-success border text-success d-inline-block align-middle position-relative">
-                                                    <i class="icon-bubbles"></i>
-                                                </div>
-                                                <div class="d-inline-block align-middle">
-                                                    <strong>Reviews</strong> <br> No reviews for this wine yet
-                                                </div>
-                                            </div>
+                                        <div class="mb-2">
+                                            <span class="icon-bubbles border-success border text-success icon-sm rounded-circle p-2"></span>
+                                        </div>
+
+                                        <div class="d-inline-block align-middle">
+                                            <strong>Reviews</strong> <br> Il n'y a pas d'avis disponible
+                                        </div>
                                     {% endif %}
-                                </div>
-
-                                <div class="col-6">
-                                    <form action="{% url 'shop:add_review' produit.id %}" method="post">
-                                        <h3 class=" text-justify text-monospace">
-                                        Add your review</h3>
-                                        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-                                        {% csrf_token %}
-                                        <div class="d-inline-flex mb-3">
-                                            <div class="col">
-                                                {{ form.rating }}
-                                                {{ form.rating.errors }}
-                                            </div>
-
-                                            <div class="col col-lg-12">
-                                                <input type="text" name="{{ form.user_name.name }}" class="form-control shadow-none" id="{{ form.user_name.id_for_label }}" placeholder="{{ form.user_name.label }}*">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-12">
-                                            <textarea name="{{ form.comment.name }}" class="form-control form-control-sm shadow-none" id="{{ form.comment.id_for_label }}" cols="10" rows="10" placeholder="Laisser votre avis sur le produit ..."></textarea>
-
-                                            {{ form.honeypot }}{{ form.content_type }}{{ form.object_pk }}{{ form.timestamp }}{{ form.security_hash }}
-                                        </div>
-
-                                        <div class="col-12 text-center">
-                                            <input class="btn btn-sm btn-success shadow-none" type="submit" name="" value="add">
-                                        </div>
-                                    </form>
-
-                                    <li class="list-unstyled">
-                                        <a href="{% url 'shop:user_recommendation_list' %}">
-                                        product suggestions</a>
-                                    </li>
                                 </div>
                             </div>
                         </div>
@@ -369,7 +312,7 @@
             </div>-->
 
             {% if similar_products %}
-                <div class="row justify-content-center mb-4">
+                <div class="row justify-content-center my-3">
                     <div class="container">
                         <nav class="mt-1">
                             <div class="nav nav-tabs flex-column flex-sm-row justify-content-center" id="nav-tab" role="pills-tabs">
@@ -388,27 +331,51 @@
                 </div>
             {% endif %}
 
+            <!-- Grid row produit recommandé -->
+            {% if recommended_produits %}
+                <div class="row justify-content-center my-3">
+                    <div class="container">
+                        <nav class="mt-1">
+                            <div class="nav nav-tabs flex-column flex-sm-row justify-content-center" id="nav-tab" role="pills-tabs">
+                                <a id="nav-recommended-tab"  href="#recommended" class="text-muted nav-link font-weight-bold active" data-toggle="pill" role="tab" aria-controls="nav-recommended-view" aria-selected="true">
+                                    {% trans "People who bought this also bought" %}
+                                </a>
+                            </div>
+                        </nav>
 
-            <!--Grid row produit recommandé -->
-            {% if recommande_produit %}
-                <div class="row wow fadeIn">
-                    <h3 class="text-center font-weight-bold">
-                        {% trans "People who bought this also bought" %}
-                    </h3>
+                        <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-pane fade show p-3 active" id="recommended" role="tabpanel" aria-labelledby="nav-recommended-tab">
+                                <div class="row justify-content-center">
+                                    {% for produit in recommended_produits %}
+                                        <div class="col-3 col-sm-4 l-container mb-3 mt-1">
+                                            <div class="l-container-product p-2">
+                                                <div class="l-container-img position-relative overflow-hidden text-center">
+                                                    <a href="{{ produit.get_absolute_url }}" class="{{ produit.get_absolute_url }}">
+                                                        <img src="{% if produit.image %}{{ produit.image.url }} {% else %} {% static "img/noimage.png" %}{% endif %}" alt="{{ produit.name }}"
+                                                        class="card-img-top img-fluid">
+                                                        <a href="{{ produit.get_absolute_url }}" class="stretched-link"></a>
+                                                    </a>
 
-                    {% for p in recommande_produit %}
-                        <div class="col-lg-4 col-md-6 mb-4 view zoom overlay">
-                            <a href="{{ p.get_absolute_url }}" class="stretched-link" title="">
-                                <img src="{% if p.image %}
-                                {{ p.image.url }} {% else %}
-                                {% static "img/noimage.png" %}
-                                {% endif %}" alt="" class="img-fluid">
-                                <div class="mask rgba-white-slight"></div>
-                            </a>
+                                                    <a href="{{ produit.get_absolute_url }}" class="text-dark small font-weight-normal">
+                                                        {{ produit.name|safe|truncatewords:6 }}
+                                                    </a>
+                                                    <span class="text-uppercase small d-inline-block">
+                                                        {{ produit.prix_reduit|floatformat:0|upper }} fcfa
+                                                        <del class="text-muted small ml-1">
+                                                            {{ produit.prix|floatformat:0 |upper}} fcfa
+                                                        </del>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
                         </div>
-                    {% endfor %}
+                    </div>
                 </div>
             {% endif %}
+
         </div><!-- ./Grid row -->
     </main><!-- ./Main product Layout View -->
 {% endblock content %}

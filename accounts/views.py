@@ -48,11 +48,6 @@ def login_request(request):
                 messages.success(request, f"You are now logged in as { user.pseudo }")
                 # redirect to profile compte:
                 return redirect('accounts:profile')
-            else:
-                messages.error(request, "Invalid username or password.")
-        else:
-            messages.error(request, "Invalid username or password.")
-
     else:
         form = AuthenticationForm()
 

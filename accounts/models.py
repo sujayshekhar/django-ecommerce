@@ -44,7 +44,7 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     """docstring for User"""
 
-    email = models.EmailField(verbose_name='email address', max_length=225, unique=True)
+    email = models.EmailField(verbose_name='email', max_length=225, unique=True)
     pseudo = models.CharField(verbose_name='pseudo', max_length=30, blank=True)
     date_joined = models.DateTimeField(verbose_name='date joined', auto_now_add=True)
     phone_number = models.CharField(verbose_name='phone number', max_length=8, default='+225 00 000 000')

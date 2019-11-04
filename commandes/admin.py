@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 import csv
 import datetime
 from django.contrib import admin
@@ -60,10 +61,10 @@ class CommandeAdmin(admin.ModelAdmin):
     """
         Admin View for Commande
     """
-    list_display = ['id', 'first_name', 'last_name',
-                    'adresse', 'telephone', 'ville', 'payer',
-                    'creer', detail_commande, pdf_commande]
-    list_filter = ['payer', 'creer', 'updated']
+    date_hierarchy = 'creer'
+    list_display = ['id', 'email', 'adresse', 'telephone', 'ville', 'creer', 'discount', 'payer',
+        detail_commande, pdf_commande]
+    list_filter = ['payer', 'creer']
     inlines = [ItemCommandeInline]
     search_fields = ['payer', 'creer']
     actions = [export_to_csv]

@@ -5,13 +5,22 @@ body,
   height: 100%; }
 
 /* Half Page Carousel itself*/
-.carousel {
-  height: 50%; }
-  .carousel .carousel-inner {
-    height: 100%; }
-    .carousel .carousel-inner .carousel-item,
-    .carousel .carousel-inner .active {
-      height: 100%; }
+.carousel { height: 50%; }
+.carousel .carousel-inner { height: 100%; }
+.carousel .carousel-inner .carousel-item,
+.carousel .carousel-inner .active { height: 100%; }
+
+.icon-sm {
+  width: 42px;
+  height: 42px;
+  line-height: 42px;
+  font-size: 22px;
+}
+
+.icon .text-wrap {
+  line-height: 1.2;
+  padding-left: 10px;
+}
 
 /* Adjustment for mobile devices*/
 @media (max-width: 776px) {
@@ -63,6 +72,7 @@ body,
     width: 25%;
   }
 }
+
 @media (min-width: 1200px) {
   .grid-sizer,
   .grid-item {

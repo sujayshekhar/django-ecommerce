@@ -1,7 +1,5 @@
 {% extends "shop/base.html" %}
-{% load i18n static %}
-
-{% block carousel %}{% endblock carousel %}
+{% load i18n static shop_tags humanize %}
 
 {% block content %}
     <main class="py-4">
@@ -16,7 +14,7 @@
                             <small class="font-weight-bold">
                                 ({% with total_items=panier|length %}
                                     {% if panier|length > 0 %}{{ total_items }}{% endif %}
-                                    {% trans "article" %}{{ total_items|pluralize }}
+                                    {% trans "article" %}{{ total_items|pluralize:"s" }}
                                 {% endwith %} )
                             </small>
                         </span>
@@ -25,13 +23,13 @@
                     <!-- Cart -->
                     <ul class="list-group rounded-sm mb-3">
                         {% for item in panier %}
-                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                            <li class="list-group-item d-flex justify-content-between lh-condensed {% if forloop.last  %}border-bottom{% endif %}">
                                 <div>
                                     <h6 class="my-0 font-weight-bold text-capitalize small">
-                                        {{ item.produit.name|safe }}
+                                        {{ item.produit.name }}
                                     </h6>
                                     <small class="text-success font-weight-bold text-uppercase">
-                                        {{ item.prix_total|floatformat:0|safe }} fcfa
+                                        {{ item.prix_total|floatformat:0 }} fcfa
                                     </small><br>
                                     <small class="text-muted">
                                         {% trans "Quantity" %}:
@@ -48,24 +46,25 @@
                                 {% with code=panier.coupon.code discount=panier.coupon.discount %}
                                     <div class="text-success">
                                         <h6 class="my-0">{% trans "Promo code" %}</h6>
-                                        <small>"{{ code|safe }}"</small>
+                                        <small>"{{ code }}"</small>
                                     </div>
                                     <span class="text-success">-{{ panier.get_discount|floatformat:0|safe }}</span>
                                 {% endwith %}
                             </li>
                         {% endif %}
+
                         <li class="list-group-item d-flex justify-content-between">
                             <span class="text-uppercase font-weight-bold">
-                                {% trans "total" %} (frcfa)
+                                {% trans "total" %} (fcfa)
                             </span>
                             <span class="h5 text-uppercase font-weight-bold text-success">
-                                {{ panier.get_cout_total_apres_discount|floatformat:0|safe }}
+                                {{ panier.get_cout_total_apres_discount|floatformat:0 }}
                             </span>
                         </li>
                     </ul><!-- ./Cart -->
 
                     <div class="card shadow-none p-2 text-center text-uppercase font-weight-bold">
-                        <a href="{% url "panier:detail_panier" %}" class="text-success">
+                        <a href="{% url "shop:all_categorie" %}" class="text-success">
                         {% trans "back to shopping cart" %}</a>
                     </div>
                 </aside>
@@ -86,17 +85,25 @@
                             <div class="row px-3 justify-content-center">
                                 <div class="col-md-6 mb-2">
                                     <div class="md-form form-group">
+                                        {{ formulaire.first_name.label_tag }}
+                                        {{ formulaire.first_name }}
+                                        {{ formulaire.first_name.errors }}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-2">
+                                    <div class="md-form form-group">
                                         {{ formulaire.last_name.label_tag }}
                                         {{ formulaire.last_name }}
                                         {{ formulaire.last_name.errors }}
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="md-form form-group">
-                                        {{ formulaire.first_name.label_tag }}
-                                        {{ formulaire.first_name }}
-                                        {{ formulaire.first_name.errors }}
+                                        {{ formulaire.email.label_tag }}
+                                        {{ formulaire.email }}
+                                        {{ formulaire.email.errors }}
                                     </div>
                                 </div>
 

@@ -1,0 +1,155 @@
+{% extends "shop/base.html" %}
+{% load i18n static shop_tags humanize %}
+
+
+{% block content %}
+    <style type="text/css">
+        .badge-new, .badge-sale {
+            position: absolute;
+            top: 0.25rem; z-index: 10;
+            width: 50px; height: 25px;
+            margin-top: 0.25rem;
+            background-color: #cf5050;
+            color: #efefef; font-size: 16px; font-weight: 500;
+        }
+
+        .badge-sale {
+            background-color: #cf5055;
+        }
+
+        .l-container .l-container-img >:first-child {
+            position: relative; display: block;
+        }
+
+        .l-container:hover {
+            outline: 1px solid #aaa;
+        }
+
+        .l-container .l-container-img .l-container-tags {
+            top: 0; right: 0; vertical-align: inherit; border-width: 0; direction: rtl;
+        }
+        .l-container .l-container-img .l-container-tags > .l-container-label-tags {
+            margin: 1px 0 0 0; opacity: .92; direction: ltr;
+        }
+
+        .l-sb-heading h3:after { content: ''; display: block; width: 100px; height: 2px;
+            margin-top: .6rem; background: #4fbfa8; }
+        .l-sb-heading h3 { letter-spacing: 0.1em; line-height: 1.1; }
+        .category-menu { letter-spacing: 0.1em; font-weight: 700; }
+        .text-sm { font-size: 0.9rem; }
+
+        .l-sidebar-menu .l-container-body .category-listing li a { color: #6c757d !important; }
+        .sort-navigation ul li { cursor: pointer; color: rgba(0, 0, 0, 0.5); }
+    </style>
+
+    <!--section: Products -->
+    <main class="section-product-list my-5">
+        <div class="container">
+            <div class="row rounded-0 shadow-none justify-content-center">
+
+                <!--section: sidebar categories listing -->
+                {% include "./tags/shop_sidebar.html" %}
+                <!-- ./section: sidebar categories listing -->
+
+                <!--section: ./categories listing -->
+                <div class="col-md-8 col-lg-8 col-sm-12">
+                    <div class="search-top-bar clearfix border-bottom">
+                        {% if query %}
+                            <hgroup class="mb-3 border-bottom text-center">
+                                <h5 class="text-muted small m-0">
+                                    <strong>{{ produits.count }}</strong>
+                                    {% trans "results were found for the search for" %}
+                                    <strong class="text-muted">{{ query }}</strong>
+                                </h5>
+                            </hgroup>
+                        {% endif %}
+                        <!-- topbar navigation -->
+                        <div class="search-navigation float-left ">
+                            <nav aria-label="Page navigation start">
+                                <ul class="pagination pagination-sm pg-teal">
+                                    <li class="page-item active" aria-current="page">
+                                        <a class="page-link shadow-none">1
+                                            <span class="sr-only">(current)</span>
+                                        </a>
+                                    </li>
+
+                                    <li class="page-item">
+                                        <a href="#" class="page-link">2</a>
+                                    </li>
+
+                                    <li class="page-item">
+                                        <a href="#" class="page-link">...</a>
+                                    </li>
+
+                                    <li class="page-item">
+                                        <a href="#" class="page-link">5</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a href="#" class="page-link">6</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a href="#" class="page-link" aria-label="Next">
+                                            <span aria-hidden="true">
+                                                <i class="fa fa-chevron-right"></i>
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+
+                        <!-- topbar sort navigation -->
+                        <div class="sort-navigation float-right">
+                            <span class="d-inline-block font-weight-bold">{% trans "Sort by" %}:</span>
+                            <ul class="d-inline-block position-relative ml-1 list-unstyled">
+                                <li>
+                                    <span class="d-inline-block text-muted sort-text">
+                                        {% trans "highest rated" %}
+                                        <i class="fas fa-chevron-down d-inline-block align-middle ml-1">
+                                        </i>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="row listing">
+                        {% for produit in produits %}
+                            <div class="l-container col-md-3 col-sm-3 m-1">
+                                <div class="l-container-product">
+                                    <div class="l-container-img position-relative overflow-hidden text-center">
+                                        <a href="{{ produit.get_absolute_url }}" class="{{ produit.get_absolute_url }}">
+                                            <img src="{% if produit.image %}{{ produit.image.url }} {% else %} {% static "img/noimage.png" %}{% endif %}" alt="{{ produit.name }}"
+                                            class="img-fluid">
+                                            <a href="{{ produit.get_absolute_url }}" class="stretched-link"></a>
+                                        </a>
+
+                                        {% if produit.label %}
+                                            <div class="l-container-tags position-absolute visible">
+                                                <div class="l-container-label-tags my-1">
+                                                    <span class="label label-danger bg-success text-white text-center small px-2 py-1">
+                                                    {% if produit.label == 'N' %} new {% elif produit.label == 'S' %} {{ coupon.discount }} {% endif %} </span>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+
+
+                                        <a href="{{ produit.get_absolute_url }}" class="text-dark font-weight-normal text-sm">
+                                            {{ produit.name|safe|truncatewords:6 }}
+                                        </a>
+                                        <span class="text-uppercase small d-inline-block">
+                                            {{ produit.prix_reduit | floatformat:0 }} frcfa
+                                            <del class="text-muted small ml-1">
+                                                {{ produit.prix|floatformat:0 }} frcfa
+                                            </del>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div><!--section: ./categories listing -->
+            </div>
+        </div>
+    </main><!--./section: Products -->
+{% endblock content %}

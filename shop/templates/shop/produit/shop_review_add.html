@@ -1,0 +1,36 @@
+{% load i18n static shop_tags humanize %}
+<div class="col-6">
+    {% if user.is_authenticated %}
+        <form action="{% url 'shop:add_review' produit.id %}" method="post">
+            <h3 class=" text-justify text-monospace">
+            Add your review</h3>
+            {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+            {% csrf_token %}
+            <div class="d-inline-flex mb-3">
+                <div class="col">
+                    {{ form.rating }}
+                    {{ form.rating.errors }}
+                </div>
+
+                <div class="col col-lg-12">
+                    <input type="text" name="{{ form.user_name.name }}" class="form-control shadow-none" id="{{ form.user_name.id_for_label }}" placeholder="{{ form.user_name.label }}*">
+                </div>
+            </div>
+
+            <div class="col-12">
+                <textarea name="{{ form.comment.name }}" class="form-control form-control-sm shadow-none" id="{{ form.comment.id_for_label }}" cols="10" rows="10" placeholder="Laisser votre avis sur le produit ..."></textarea>
+
+                {{ form.honeypot }}{{ form.content_type }}{{ form.object_pk }}{{ form.timestamp }}{{ form.security_hash }}
+            </div>
+
+            <div class="col-12 text-center">
+                <input class="btn btn-sm btn-success shadow-none" type="submit" name="" value="add">
+            </div>
+        </form>
+
+        <li class="list-unstyled">
+            <a href="{% url 'shop:user_recommendation_list' %}">
+            product suggestions</a>
+        </li>
+    {% endif %}
+</div>

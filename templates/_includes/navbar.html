@@ -28,13 +28,12 @@
                 }
             </style>
 
-            <div id="topbar lang" class="p-1">
+            <!--<div id="topbar lang" class="p-1">
                 <div class="container">
                     <div class="row d-flex align-items-center">
                         {% get_current_language as LANGUAGE_CODE %}
                         {% get_available_languages as LANGUAGES %}
                         {% get_language_info_list for LANGUAGES as languages %}
-                        <!-- navigation icon -->
                         <div class="col-lg-12 text-center text-lg-right">
                             <ul class="menu list-inline mb-0">
                                 {% for language in languages %}
@@ -48,7 +47,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <!-- topbar-->
             <div id="topbar" class="p-1">
@@ -134,7 +133,7 @@
 
             <!-- topbar-->
             <div id="lang">
-                <div class="container-fluid">
+                <div class="container">
                     <div class="row d-flex align-items-center text-center">
                         <div class="col-12">
                             <!-- section service content -->
@@ -181,17 +180,6 @@
                                     <small class="d-block">{% trans "in complete security" %}</small>
                                 </div>
                             </div>
-
-                            <div class="btn btn-sm shadow-none icon d-inline-flex align-items-center text-left">
-                                <div class="d-none d-md-inline-block text-center icon-wrap icon-sm rounded-circle border-success border text-success d-inline-block position-relative">
-                                    <i class="icon-support"></i>
-                                </div>
-
-                                <div class="text-wrap d-none d-md-inline-block">
-                                    <div class="font-weight-bolder">{% trans "Help" %}</div>
-                                    <small class="d-block">{% trans "How to buy ?" %}</small>
-                                </div>
-                            </div><!-- ./section service content -->
                         </div>
                     </div>
                 </div>
@@ -238,7 +226,7 @@
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item">
                                 <a href="{% url "shop:all_produit" %}" class="nav-link text-uppercase font-weight-bold">
-                                    {% trans "e-market" %}
+                                    {{ site_name }}
                                 </a>
                             </li><!-- home-->
                         </ul><!-- ./Links left-->
@@ -249,7 +237,7 @@
                             <a data-toggle="collapse" href="#search" class="btn btn-sm navbar-btn btn-success shadow-sm border-0 d-none d-md-inline-block d-sm-inline-block">
                                 <span class="sr-only">search</span><i class="fa fa-search"></i>
                             </a>
-                            {% if user.is_authenticated %}
+                            {% if request.user.is_authenticated %}
                                 <li class="nav-item d-none d-md-inline-block d-sm-inline-block ">
                                     <a class="nav-link" href="{% url "panier:detail_panier" %}">
                                         <i class="icon-bag"></i>

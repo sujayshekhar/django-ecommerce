@@ -28,7 +28,7 @@
         <div class="row">
           <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
             <a href="{% url "shop:all_produit" %}" class="stretched-link">
-              <img src="{% static "img/cart.png" %}" alt="" class="w-25 d-block img-fluid mb-3">
+              <img src="{% static "img/logo.png" %}" alt="" class="w-25 d-block img-fluid mb-3">
             </a>
             <p class="font-italic text-muted small">
               Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
@@ -51,18 +51,13 @@
           <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
             <h6 class="text-uppercase font-weight-bold mb-4">Shop</h6>
             <ul class="list-unstyled mb-0">
-              <li class="mb-2"><a href="#" class="text-muted">For Women</a></li>
-              <li class="mb-2"><a href="#" class="text-muted">For Men</a></li>
               <li class="mb-2"><a href="#" class="text-muted">Stores</a></li>
-              <li class="mb-2"><a href="#" class="text-muted">Our Blog</a></li>
             </ul>
           </div><!-- ./shopping -->
 
           <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
             <h6 class="text-uppercase font-weight-bold mb-4">Company</h6>
             <ul class="list-unstyled mb-0">
-              <li class="mb-2"><a href="#" class="text-muted">Login</a></li>
-              <li class="mb-2"><a href="#" class="text-muted">Register</a></li>
               <li class="mb-2"><a href="#" class="text-muted">Wishlist</a></li>
               <li class="mb-2"><a href="#" class="text-muted">Our Products</a></li>
             </ul>
@@ -75,15 +70,15 @@
               {% trans "Subscribe to our communications to receive our best offers !" %}
             </p>
             <div class="rounded border">
-              <div class="input-group">
-                <input type="email" placeholder="{% trans "Enter your email address" %}"
-                aria-describedby="button-addon" class="form-control border shadow-none">
+              <form class="input-group" action="{% url "shop:marketing" %}" method="POST">
+                {% csrf_token %}
+                <input id="{{ form.email.id_for_label }}" name="{{ form.email.name }}" type="{{ form.email.label }}" placeholder="{% trans "Enter your email address" %}" aria-describedby="button-addon" class="form-control border shadow-none" required>
                 <div class="input-group-append">
                   <button id="button-addon" type="submit" class="input-group-text">
                     <i class="fa fa-paper-plane"></i>
                   </button>
                 </div>
-              </div>
+              </form>
             </div>
           </div><!-- ./subscribe -->
         </div>

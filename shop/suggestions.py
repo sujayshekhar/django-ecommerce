@@ -11,14 +11,14 @@ def update_clusters():
     if num_reviews % update_step == 0:
         # using some magic numbers here, sorry...
         # Create a sparse matrix from user reviews
-        all_user_names = map(lambda x: x.username, User.objects.only("username"))
-        all_wine_ids = set(map(lambda x: x.produit.id, Review.objects.only("produit")))
+        all_user_names = map(lambda x: x.username, User.objects.only("user"))
+        all_produit_ids = set(map(lambda x: x.produit.id, Review.objects.only("produit")))
         num_users = len(all_user_names)
-        ratings_m = dok_matrix((num_users, max(all_wine_ids)+1), dtype=np.float32)
+        ratings_m = dok_matrix((num_users, max(all_produit_ids)+1), dtype=np.float32)
         for i in range(num_users): # each user corresponds to a row, in the order of all_user_names
             user_reviews = Review.objects.filter(user_name=all_user_names[i])
             for user_review in user_reviews:
-                ratings_m[i,user_review.wine.id] = user_review.rating
+                ratings_m[i,user_review.produit.id] = user_review.rating
 
         # Perform kmeans clustering
         k = int(num_users / 10) + 2
@@ -30,5 +30,5 @@ def update_clusters():
         new_clusters = {i: Cluster(name=i) for i in range(k)}
         for cluster in new_clusters.values(): # clusters need to be saved before referring to users
             cluster.save()
-        for i,cluster_label in enumerate(clustering.labels_):
+        for i, cluster_label in enumerate(clustering.labels_):
             new_clusters[cluster_label].users.add(User.objects.get(username=all_user_names[i]))

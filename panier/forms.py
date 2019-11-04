@@ -2,6 +2,7 @@
 
 from django import forms
 from django.utils.translation import gettext_lazy as _
+
 CHOIX_QUANTITE_PRODUITS = [(i, str(i)) for i in range(1, 11)]
 
 
@@ -15,9 +16,3 @@ class AjouterProduitPanierForm(forms.Form):
 
     # Modification de l'affichage des variables
     quantite.widget.attrs.update({'class': 'custom-select custom-select-sm shadow-none border-0'})
-
-    def clean(self):
-        cleaned_data = super(AjouterProduitPanierForm, self).clean()
-        quantite = cleaned_data.get('quantite')
-        if not quantite:
-            raise forms.ValidationError('Champs requis')

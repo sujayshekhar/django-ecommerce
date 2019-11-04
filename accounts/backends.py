@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from accounts.models import User
 import logging
+from accounts.models import User
+
 
 
 class MyAuthBackend(object):

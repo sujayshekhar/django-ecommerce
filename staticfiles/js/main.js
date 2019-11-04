@@ -119,4 +119,18 @@ $(document).ready(function() {
             });
         }); // each end.//
     }
+
+    // Animations initialization
+    new WOW().init();
+    // init masonry
+    if ($('.grid').length > 0) {
+       $(".grid").each(function() {
+            $('.grid').masonry({
+                itemSelector: '.grid-item',
+                columnWidth: 160,
+                gutter: 20
+            });
+       });
+       $('.grid').imagesLoaded().progress( function() {$grid.masonry()});
+    }
 });

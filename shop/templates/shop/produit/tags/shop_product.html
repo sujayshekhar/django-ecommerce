@@ -1,0 +1,7 @@
+{% load i18n static shop_tags humanize %}
+
+<div class="slick-slider mx-3">
+    {% for produit in produits %}
+        {% include "./shop_list_product.html" %}
+    {% endfor %}
+</div>

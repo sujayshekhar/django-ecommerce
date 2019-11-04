@@ -1,25 +1,28 @@
 # -*- coding: utf-8 -*-
 
-from django.utils.translation import gettext_lazy as _
 from decimal import Decimal
-from django.conf import settings
-from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
-from coupons.models import Coupon
-from shop.models import Produit
+from django.conf import settings
+from django.utils.translation import gettext_lazy as _
+from django.core.validators import MinValueValidator, MaxValueValidator
 
-# Medeles pour l'enregistrement des commandes des clients
+from shop.models import Produit
+from coupons.models import Coupon
+
+# Modeles pour l'enregistrement des commandes des clients
 
 class Commande(models.Model):
-    coupon = models.ForeignKey(Coupon, related_name="Commandes", null=True, blank=True, on_delete=models.SET_NULL)
     first_name = models.CharField(_('first name'), max_length=50)
     last_name = models.CharField(_('last name'), max_length=50)
+    email = models.EmailField(_('e-mail'))
     adresse = models.CharField(_('adress'), max_length=250)
     telephone = models.CharField(_('phone number'), max_length=8)
     ville = models.CharField(_('city'), max_length=100)
     creer = models.DateTimeField(_('created'), auto_now_add=True)
-    updated = models.DateTimeField(_('updated'), auto_now=True)
+    updated = models.DateTimeField(auto_now=True)
     payer = models.BooleanField(_('paid'), default=True)
+    coupon = models.ForeignKey(Coupon, related_name="Commandes", null=True, blank=True,
+        on_delete=models.SET_NULL)
     discount = models.IntegerField(_('discount'), default=0, validators=[MinValueValidator(0),
         MaxValueValidator(100)])
     # table de paiement
@@ -49,7 +52,7 @@ class ItemCommande(models.Model):
         verbose_name_plural = "Elements Commandés"
 
     def __str__(self):
-        return f"{ self.quantite } of {self.commande.id}"
+        return f"{ self.quantite } of { self.commande.id }"
 
     def get_depense(self):
         return self.prix * self.quantite

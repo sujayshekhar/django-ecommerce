@@ -1,7 +1,17 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib import admin
-from .models import Categorie, Pub, Produit, Review, Cluster
+from .models import Marque, Categorie, Pub, Produit, Review, Cluster
+
+
+@admin.register(Marque)
+class MarqueAdmin(admin.ModelAdmin):
+    """ Admin View for CategorieAdmin """
+    list_display = ('name', 'is_active')
+    list_display_links = ('name',)
+    ordering = ['name']
+    search_fields = ['name', 'is_active']
+    prepopulated_fields = {'slug': ('name',)}
 
 @admin.register(Categorie)
 class CategorieAdmin(admin.ModelAdmin):
@@ -10,7 +20,7 @@ class CategorieAdmin(admin.ModelAdmin):
     list_display_links = ('name',)
     list_per_page = 20
     ordering = ['name']
-    search_fields = ['name', 'description', 'meta_description', 'meta_keywords']
+    search_fields = ['name', 'meta_keywords']
     prepopulated_fields = {'slug': ('name',)}
 
 @admin.register(Pub)
@@ -27,11 +37,11 @@ class ProduitAdmin(admin.ModelAdmin):
     """ Admin View for ProduitAdmin """
     model = Produit
     date_hierarchy = 'update'
-    list_display = ('name', 'prix_reduit', 'prix', 'disponible', 'creation')
+    list_display = ('marque', 'name', 'prix_reduit', 'prix', 'disponible', 'creation')
     list_display_links = ('name',)
-    list_filter = ['disponible', 'creation', 'update']
+    list_filter = ['marque', 'disponible', 'creation', 'update']
     list_editable = ['prix_reduit', 'disponible']
-    search_fields = ['name', 'description', 'meta_keywords', 'meta_description']
+    search_fields = ['name', 'marque', 'meta_keywords']
     exclude = ['creation', 'update']
     prepopulated_fields = {'slug': ('name',)}
 

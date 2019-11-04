@@ -128,7 +128,7 @@
             </style>
 
             <!-- Carousel Products-->
-			<section class="section-main mt-3 mb-3">
+			<section class="section-main my-3">
                 <div class="container">
                     <div class="row row-sm">
                         <aside class="col-3 d-none d-md-inline-block">
@@ -253,48 +253,28 @@
 
                         <div class="col-sm-12 col-md-6">
                             <div class="owl-init slider-main owl-carousel" data-items="1" data-nav="true" data-dots="false">
-                                <div class="item-slide">
-                                    <img src="{% static "img/banners/slide1.jpg" %}">
-                                    <a href="#" class="stretched-link"></a>
-                                </div>
-
-                                <div class="item-slide">
-                                    <img src="{% static "img/banners/slide2.jpg" %}">
-                                    <a href="#" class="stretched-link"></a>
-                                </div>
-
-                                <div class="item-slide">
-                                    <img src="{% static "img/banners/slide3.jpg" %}">
-                                    <a href="#" class="stretched-link"></a>
-                                </div>
-
-                                <div class="item-slide">
-                                    <img src="{% static "img/banners/slide2.jpg" %}">
-                                    <a href="#" class="stretched-link"></a>
-                                </div>
-
-                                <div class="item-slide">
-                                    <img src="{% static "img/banners/slide1.jpg" %}">
-                                    <a href="#" class="stretched-link"></a>
-                                </div>
-
-                                <div class="item-slide">
-                                    <img src="{% static "img/banners/slide3.jpg" %}">
-                                    <a href="#" class="stretched-link"></a>
-                                </div>
+                                {% for p in pub %}
+                                    <div class="item-slide">
+                                        <img src="{{ p.pub.url }}" alt="{{ p.name }}">
+                                        <a href="#" class="stretched-link"></a>
+                                    </div>
+                                {% endfor %}
                             </div>
                         </div><!-- ./carousel -->
 
                         <aside class="col-3 d-none d-md-inline-block">
                             <div class="box d-block border-0 shadow-sm pb-4">
+
                                 <div class="icon d-inline-flex align-items-center mb-3">
                                     <div class="text-center icon-wrap icon-sm rounded-circle border-success border text-success d-inline-block">
-                                        <i class="ps-icon-customer-service"></i>
+                                        <i class="icon-support"></i>
                                     </div>
 
                                     <div class="text-wrap">
-                                        <div class="font-weight-bolder">{% trans "Call us" %}</div>
-                                        <small>00 000 000 / 00 000 000</small>
+                                        <a class="text-muted" href="#" title="">
+                                            <div class="font-weight-bolder">{% trans "Help" %}</div>
+                                            <small>{% trans "How to buy on een?" %}</small>
+                                        </a>
                                     </div>
                                 </div>
 
@@ -304,8 +284,10 @@
                                     </div>
 
                                     <div class="text-wrap">
-                                        <div class="font-weight-bolder">{% trans "Free delivery" %}</div>
-                                        <small>{% trans "in less than 24H" %}</small>
+                                        <a class="text-muted" href="#" title="">
+                                            <div class="font-weight-bolder">{% trans "Free delivery" %}</div>
+                                            <small>{% trans "in less than 24H" %}</small>
+                                        </a>
                                     </div>
                                 </div> <!-- ./icon -->
 
@@ -315,8 +297,10 @@
                                     </div>
 
                                     <div class="text-wrap">
-                                        <div class="font-weight-bolder">{% trans "Availability" %}</div>
-                                        <small>{% trans "7 days/7" %}</small>
+                                        <a class="text-muted" href="#" title="">
+                                            <div class="font-weight-bolder">{% trans "Availability" %}</div>
+                                            <small>{% trans "7 days/7" %}</small>
+                                        </a>
                                     </div>
                                 </div>
 
@@ -326,19 +310,10 @@
                                     </div>
 
                                     <div class="text-wrap">
-                                       <div class="font-weight-bolder">{% trans "Payment" %}</div>
-                                       <small>{% trans "in complete security" %}</small>
-                                    </div>
-                                </div>
-
-                                <div class="icon d-inline-flex align-items-center">
-                                    <div class="text-center icon-wrap icon-sm rounded-circle border-success border text-success d-inline-block">
-                                        <i class="icon-support"></i>
-                                    </div>
-
-                                    <div class="text-wrap">
-                                        <div class="font-weight-bolder">{% trans "Help" %}</div>
-                                        <small>{% trans "How to buy on een?" %}</small>
+                                        <a class="text-muted" href="#" title="">
+                                           <div class="font-weight-bolder">{% trans "Payment" %}</div>
+                                           <small>{% trans "in complete security" %}</small>
+                                        </a>
                                     </div>
                                 </div>
                             </div><!-- ./box -->

@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-# Configuration du panier
+
 from decimal import Decimal
 from django.conf import settings
+
 from shop.models import Produit
 from coupons.models import Coupon
 
-User = settings.AUTH_USER_MODEL
 
 class Panier(object):
     """ docstring for panier """
@@ -22,6 +22,27 @@ class Panier(object):
 
         # On stocke le coupon du jour
         self.id_coupon = self.session.get('id_coupon')
+
+    def __iter__(self):
+        """ On Itére sur les articles dans le panier et
+        jusqu'à obtenir tous les produits de la base de données."""
+        ids_produit = self.panier.keys()
+
+        # On récupérer les objets produits et les ajoute au panier
+        produits = Produit.objects.filter(id__in=ids_produit)
+
+        panier = self.panier.copy()
+        for produit in produits:
+            panier[str(produit.id)]['produit'] = produit
+
+        for item in panier.values():
+            item['prix'] = Decimal(item['prix'])
+            item['prix_total'] = item['prix'] * item['quantite']
+            yield item
+
+    def __len__(self):
+        """ On profile tous les items dans le panier """
+        return sum(item['quantite'] for item in self.panier.values())
 
     def ajout(self, produit, quantite=1, update_quantite=False):
         """ Ajouter un produit au panier ou mettre a jour son panier"""
@@ -47,38 +68,6 @@ class Panier(object):
             del self.panier[id_produit]
             self.save()
 
-    # Dans la méthode __iter__(), nous récupérons les instances du produit qui sont
-    # présentes dans le panier pour les inclure dans les articles du panier.
-    # Nous copions le panier courant dans la variable panier et y ajoutons
-    # les instances du produit. Enfin, nous itérons sur les articles du panier,
-    # en convertissant le prix de l'article en décimale, et ajoutons un attribut
-    # prix_total à chaque article. Maintenant, nous pouvons facilement itérer sur
-    # les articles dans le panier.
-
-    def __iter__(self):
-        """ On Itére sur les articles dans le panier et
-        jusqu'à obtenir tous les produits de la base de données."""
-        ids_produit = self.panier.keys()
-
-        # On récupérer les objets produits et les ajoute au panier
-        produits = Produit.objects.filter(id__in=ids_produit)
-
-        panier = self.panier.copy()
-        for produit in produits:
-            panier[str(produit.id)]['produit'] = produit
-
-        for item in panier.values():
-            item['prix'] = Decimal(item['prix'])
-            item['prix_total'] = item['prix'] * item['quantite']
-            yield item
-
-    # Nous avons également besoin d'un moyen de retourner le nombre total d'articles dans le panier.
-    # Nous allons définir une méthode personnalisée __len__() pour retourner le nombre total d'articles
-    # stockés dans le panier
-
-    def __len__(self):
-        """ On profile tous les items dans le panier """
-        return sum(item['quantite'] for item in self.panier.values())
 
     # On calcule le coût total des articles dans le panier
     def get_cout_total(self):

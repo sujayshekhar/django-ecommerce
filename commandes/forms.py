@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from django.utils.translation import gettext_lazy as _
 from django import forms
 from django.forms import TextInput, EmailInput
+from django.utils.translation import gettext_lazy as _
+
 from .models import Commande
 
 CHOICES_VILLE = [("choose", _("Choose...")), ("Bouaké", "Bouaké"), ("Beoumi", "Beoumi"), ("Botro", "Botro")]
@@ -18,9 +19,10 @@ class FormCreationCommande(forms.ModelForm):
 
     class Meta:
         model = Commande
-        fields = ['first_name', 'last_name', 'telephone', 'adresse', 'ville']
+        fields = ['first_name', 'last_name', 'email', 'telephone', 'adresse', 'ville']
         widgets = {
             'first_name': TextInput(attrs={'class': 'form-control'}),
             'last_name': TextInput(attrs={'class': 'form-control'}),
+            'email': EmailInput(attrs={'class': 'form-control'}),
             'adresse': TextInput(attrs={'class': 'form-control'}),
         }

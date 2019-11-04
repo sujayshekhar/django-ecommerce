@@ -5,19 +5,26 @@
         <!--[if IE 9]><html class="ie ie9"><![endif]-->
 
         <meta charset="utf-8">
+        <meta http-equiv='content-language' content='fr'>
         <meta http-equiv="x-ua-compatible" content="ie=edge,chrome=1">
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8; X-Content-Type-Options=nosniff"/>
-        <meta name="twitter:card" content="">
-        <meta name="twitter:site" content="">
-        <meta name="twitter:title" content="">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8; X-Content-Type-Options=nosniff">
+        {% if page_title %}<meta name="title" content="{{ page_title }}">{% else %}<meta name="title" content="{{ site_name }}">{% endif %}
+
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="format-detection" content="telephone=no">
         <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="author" content="">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="google" content="nositelinkssearchbox">
+
         <meta name="keywords" content="{{ meta_keywords }}">
         <meta name="description" content="{{ meta_description }}">
         <meta name="robots" content="noindex,follow">
-        <meta rel="canonical" href="">
+        <meta rel="canonical" href="{% url "shop:all_produit" %}{{ site_name }}">
+
+        <meta name="author" content="">
+        <meta name="twitter:card" content="">
+        <meta name="twitter:site" content="">
+        <meta name="twitter:title" content="">
         <!-- ./meta -->
 
         {% compress css %}

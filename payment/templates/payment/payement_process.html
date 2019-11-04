@@ -1,0 +1,100 @@
+{% extends "shop/base.html" %}
+{% load i18n static %}
+
+{% block carousel %}{% endblock carousel %}
+
+{% block content %}
+    <main>
+        <div class="container">
+            <script src="https://js.stripe.com/v3/"></script>
+            <!-- Bootstrap inspired Braintree Hosted Fields example -->
+            <h2 class="mt-4 h4 text-center text-uppercase">{% trans "payment information" %}</h2>
+            <div class="row justify-content-center">
+                <div class="col-10 mb-4 justify-content-center">
+                    <hr class="mb-4">
+                    <form action="." method="post" id="payment">
+                        {% csrf_token %}
+                        <div class="row justify-content-center">
+                            <div class="col-12 col-sm-6 mb-3">
+                                <label for="card-number">{% trans "Credit card number" %}</label>
+                                <div id="card-number" class="form-control shadow-none"></div>
+
+                                <label for="cvv">{% trans "cvv" %}</label>
+                                <div id="cvv" class="form-control shadow-none"></div>
+
+                                <label for="expiration-date">{% trans "Expiration Date" %}</label>
+                                <div id="expiration-date" class="form-control shadow-none"></div>
+                            </div>
+                        </div>
+
+                        <div class="text-center my-3">
+                            <button id="none" name="payment_method_nonce" class="btn btn-md btn-primary shadow-sm border-0" type="submit">
+                                {% trans " pay with" %}
+                                <span id="card-brand">{% trans "card" %}</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- includes the Braintree JS client SDK -->
+        <script src="https://js.braintreegateway.com/web/3.44.2/js/client.min.js"></script>
+        <script src="https://js.braintreegateway.com/web/3.44.2/js/hosted-fields.min.js"></script>
+
+        <script>
+            var form = document.querySelector('#payment');
+            var submit = document.querySelector('.btn');
+
+            braintree.client.create({
+                authorization: '{{ client_token }}'
+            }, function (clientErr, clientInstance) {
+                if (clientErr) {
+                    console.error(clientErr);
+                    return;
+                }
+
+                braintree.hostedFields.create({
+                    client: clientInstance,
+                    styles: {
+                      'input': {'font-size': '13px'},
+                      'input.invalid': {'color': 'red'},
+                      'input.valid': {'color': 'green'}
+                      ':focus': {'color': 'black'},
+                      '.valid': {'color': 'black'},
+                      '.invalid': {'color': 'black'},
+                    },
+                    fields: {
+                        number: {selector: '#card-number'},
+                        cvv: {selector: '#cvv'},
+                        expirationDate: {selector: '#expiration-date'}
+                    }
+                }, function (hostedFieldsErr, hostedFieldsInstance) {
+                    if (hostedFieldsErr) {
+                        console.error(hostedFieldsErr);
+                        return;
+                    }
+                    function findLabel(field) {
+                        return $('.hosted-field--label[for="'+ field.container.id +'"]');
+                    }
+
+                    submit.removeAttribute('disabled');
+
+                    form.addEventListener('submit', function (event) {
+                        event.preventDefault();
+                        hostedFieldsInstance.tokenize(function (tokenizeErr, payload) {
+                            if (tokenizeErr) {
+                              console.error(tokenizeErr);
+                              return;
+                            }
+                            // set nonce to send to the server
+                            document.getElementById('nonce').value = payload.nonce;
+                            // submit form
+                            document.getElementById('payment').submit();
+                        });
+                    }, false);
+                });
+            });
+        </script>
+    </main>
+{% endblock content %}

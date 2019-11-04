@@ -4,11 +4,10 @@ import datetime
 from django.db import models
 from django.urls import reverse
 from django.conf import settings
-from tinymce.models import HTMLField
-from django.contrib.auth.models import User
 from django.utils.encoding import python_2_unicode_compatible
 
 import numpy as np
+from tinymce.models import HTMLField
 
 # Definition du model Categorie
 
@@ -17,6 +16,25 @@ LABEL_CHOICES = (
     ('S', 'badge-sale'),
 )
 
+class Marque(models.Model):
+    name = models.CharField("Marque du produit", max_length=50)
+    slug = models.SlugField(max_length=200, unique=True)
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('shop:listing_marques', args=[self.slug])
+
+    @property
+    def count(self):
+        return Produit.objects.filter(marque__name=self).count()
+
+    class Meta:
+        ordering = ('-name',)
+        verbose_name = 'marque'
+        verbose_name_plural = 'marques'
 
 class Categorie(models.Model):
     """ Definition du model Categorie : nom et slug de la categorie """
@@ -33,14 +51,15 @@ class Categorie(models.Model):
         return reverse('shop:listing_categorie', args=[self.slug])
 
     @property
-    def get_cat_count(self):
-        return Produit.objects.filter(categorie__name=self.name).count()
+    def count(self):
+        return Produit.objects.filter(categorie__name=self).count()
 
     class Meta:
         db_table = 'categories'
         ordering = ('-name',)
         verbose_name = 'categorie'
         verbose_name_plural = 'categories'
+
 
 class Pub(models.Model):
     """docstring for Pub"""
@@ -58,24 +77,23 @@ class Pub(models.Model):
 class Produit(models.Model):
     """ Definition des params du produits : nom, description, image, prix, disponibilite """
 
+    marque = models.ForeignKey(Marque, null=True, blank=True, on_delete=models.SET_NULL)
     categorie = models.ManyToManyField(Categorie)
+
     name = models.CharField("Nom du produit", max_length=200)
     slug = models.SlugField(max_length=200, unique=True, help_text='Unique value for product page URL, created from name.')
     description = HTMLField("Description du produit", null=True, blank=True)
+    image = models.ImageField("Ajouter une image", upload_to='produits/img/%Y/%m/%d', blank=True)
 
     prix = models.DecimalField("Prix de vente", max_digits=10, decimal_places=2)
     prix_reduit = models.DecimalField("Prix promo", max_digits=10, decimal_places=2, blank=True, null=True)
-
-    image = models.ImageField("Ajouter une image", upload_to='produits/img/%Y/%m/%d', blank=True)
 
     disponible = models.BooleanField("Disponibilité", default=True)
     label = models.CharField(choices=LABEL_CHOICES, max_length=1, null=True, blank=True)
     is_bestseller = models.BooleanField(default=False)
 
-    meta_keywords = models.CharField(max_length=255,
-        help_text='Comma-delimited set of SEO keywords for meta tag')
-    meta_description = models.CharField(max_length=255,
-        help_text='Content for description meta tag')
+    meta_keywords = models.CharField(max_length=255, help_text='Comma-delimited set of SEO keywords for meta tag')
+    meta_description = models.CharField(max_length=255, help_text='Content for description meta tag')
 
     creation = models.DateTimeField(auto_now_add=True, auto_now=False)
     update = models.DateTimeField("Ajouté le", auto_now_add=False, default=datetime.datetime.now)
@@ -89,7 +107,7 @@ class Produit(models.Model):
 
     @property
     def view_product_count(self):
-        return Produit.objects.filter(name=self.name).count()
+        return Produit.objects.filter(name=self).count()
 
     def get_absolute_url(self):
         return reverse('shop:detail_produit', args=[self.slug, self.id])
@@ -128,7 +146,7 @@ class Cluster(models.Model):
     users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="cluster")
 
     def get_members(self):
-        return "\n".join([u.username for u in self.users.all()])
+        return "\n".join([u.username.user for u in self.users.all()])
 
     class Meta:
         verbose_name = "Cluster"

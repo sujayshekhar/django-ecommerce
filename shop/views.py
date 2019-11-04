@@ -1,31 +1,29 @@
 # -*- coding: utf-8 -*-
 
-from django.contrib.auth.models import User
-from django.db.models import Avg, Count, Max, Min
+import datetime
+from django.urls import reverse
+from django.conf import settings
 from django.core.paginator import Paginator
+from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
+from django.db.models import Avg, Count, Max, Min, Q
+from django.views.decorators.cache import cache_page
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponseRedirect
-from django.urls import reverse
-import datetime
-
-from shop.setlang import strip_language
-
-from shop.models import Categorie, Produit, Review, Cluster
-from shop.forms import ReviewAdminForm
-
-from panier.forms import AjouterProduitPanierForm
-from .suggestions import update_clusters
-
 
 # from .recommender import Recommender
+from shop.forms import ReviewAdminForm
+from shop.setlang import strip_language
+from shop.suggestions import update_clusters
+from marketing.forms import EmailSubscribeForm
+from panier.forms import AjouterProduitPanierForm
+from .models import Marque, Categorie, Produit, Pub, Review, Cluster
 
-# Creation des vues de notre catalogue
 # Vue pour les recherches sur le site
 @require_http_methods(["GET"])
 def search(request):
     next_lang = strip_language(request.path)
-    categories = Categorie.is_active.all()
+    categories = Categorie.objects.all()
     produits = Produit.objects.filter(disponible=True)
     try:
         q = request.GET.get('q')
@@ -33,15 +31,15 @@ def search(request):
         q = None
 
     if q:
-        produits = produits.filter(name__icontains=q)
+        produits = produits.filter(
+            Q(name__icontains=q) |
+            Q(meta_keywords__icontains=q)
+        ).distinct()
     else:
         return redirect('shop:search')
 
-    if not produits.exists():
-        produits = produits.filter(categorie__name__icontains=q)
-
     context = {'query': q, 'produits': produits, 'categories': categories, 'next':next_lang}
-    template = 'shop/produit/resultat.html'
+    template = 'shop/produit/shop_category_product.html'
 
     return render(request, template, context)
 
@@ -50,14 +48,21 @@ def search(request):
 def all_produit(request, category_slug=None):
     next_lang = strip_language(request.path)
     categorie = None
-    categories = Categorie.objects.all()
+    categories = Categorie.objects.filter()
     produits = Produit.objects.filter(disponible=True).prefetch_related('categorie')
+
+    pub = Pub.objects.all().prefetch_related('categorie')
+
+    form = EmailSubscribeForm()
 
     if category_slug:
         categorie = get_object_or_404(Categorie, slug=category_slug)
-        produits = produits.filter(categorie__name__icontains='produits')
+        produits = produits.filter(categorie=categorie)
 
-    context = {'category': categorie, 'categories': categories, 'produits': produits, 'next': next_lang}
+    context = {'categories': categories,
+        'produits': produits, 'form': form, 'pub': pub, 'next': next_lang
+    }
+
     template = 'shop/produit/shop_listing.html'
 
     return render(request, template, context)
@@ -68,13 +73,10 @@ def all_produit(request, category_slug=None):
 def detail_produit(request, id, slug):
     next_lang = strip_language(request.path)
     produit = get_object_or_404(Produit, id=id, slug=slug, disponible=True)
-    categories = produit.categorie.filter()
+    categories = produit.categorie.all()
     page_title = produit.name
     meta_keywords = produit.meta_keywords
     meta_description = produit.meta_description
-
-    #
-    form = ReviewAdminForm()
 
     # Similar products
     product_cat_ids = produit.categorie.values_list('id')
@@ -82,16 +84,18 @@ def detail_produit(request, id, slug):
         categorie__in=product_cat_ids).exclude(id=produit.id).annotate(
         Count("categorie", distinct=True)).prefetch_related('categorie').order_by()[:6]
 
-    # popular views products
+    #
+    form = ReviewAdminForm()
     formulaire_panier_produit = AjouterProduitPanierForm(auto_id='id_%s')
+
     # r = Recommender()
-    # recommended_products = r.suggest_products_for([produit], 4)
+    # recommended_produits = r.suggest_produits_for([produit], 4)
+
     template = 'shop/produit/shop_detail.html'
     context = {
         'produit': produit, 'categories':categories,
-        'similar_products': similar_products,
         'formulaire_panier_produit': formulaire_panier_produit,
-        'form': form,
+        'form': form, 'similar_products': similar_products,
         'page_title' : page_title, 'meta_keywords' : meta_keywords,
         'meta_description' : meta_description, 'next': next_lang
     }
@@ -106,9 +110,36 @@ def all_categorie(request):
     categories = Categorie.objects.all()
     produits = Produit.objects.filter(disponible=True).prefetch_related('categorie')
 
-    context = {'categories': categories, 'produits': produits,
-        'page_title' : page_title, 'next': next_lang }
-    template = 'shop/produit/shop_all_cat.html'
+    context = {'categories': categories, 'produits': produits, 'page_title': page_title, 'next': next_lang }
+    template = 'shop/produit/shop_category_product.html'
+
+    return render(request, template, context)
+
+# Vue pour lister toutes les marques de produits
+def all_marques(request):
+    next_lang = strip_language(request.path)
+    page_title = 'marques'
+    marques = Marque.objects.filter()
+    produits = Produit.objects.filter(disponible=True).prefetch_related('marque')
+
+    context = {'marques': marques, 'produits': produits, 'page_title': page_title, 'next': next_lang }
+    template = 'shop/produit/shop_category_product.html'
+
+    return render(request, template, context)
+
+# Vue pour lister tous les produits par categorie
+def liste_marques(request, marque_slug=None):
+    next_lang = strip_language(request.path)
+    marque = None
+    marques = Marque.objects.filter()
+    produits = Produit.objects.filter(disponible=True).prefetch_related('marque')
+    if marque_slug:
+        marque = get_object_or_404(Marque, slug=marque_slug)
+        produits = produits.filter(marque=marque)
+        page_title = marque.name
+
+    context = {'marques': marques, 'produits': produits, 'page_title' : page_title, 'next': next_lang}
+    template = 'shop/produit/shop_category_product.html'
 
     return render(request, template, context)
 
@@ -125,9 +156,9 @@ def liste_categorie(request, category_slug=None):
         meta_keywords = categorie.meta_keywords
         meta_description = categorie.meta_description
 
-    context = {'produits': produits, 'page_title' : page_title, 'meta_keywords' : meta_keywords,
-        'meta_description' : meta_description, 'next': next_lang}
-    template = 'shop/produit/shop_list_cat.html'
+    context = {'produits': produits, 'page_title': page_title, 'meta_keywords': meta_keywords,
+        'meta_description': meta_description, 'next': next_lang}
+    template = 'shop/produit/shop_category_product.html'
 
     return render(request, template, context)
 

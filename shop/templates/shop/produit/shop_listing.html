@@ -11,8 +11,6 @@
 
         .card-product:hover {
             outline: 1px solid #aaa;
-            --webkit-box-shadow: 0 4px 8px rgba(0, 0, 0, .175);
-                box-shadow: 0 4px 8px rgba(0, 0, 0, .175);
         }
 
         .card-product:after {
@@ -51,19 +49,6 @@
                 object-fit: cover;
         }
 
-        .badge-new, .badge-sale {
-            position: absolute;
-            top: 0.25rem; right: 0.40rem; z-index: 10;
-            width: 60px; height: 25px;
-            margin-top: 0.25rem;
-            background-color: #cf5050;
-            color: #efefef; font-size: 16px; font-weight: 500;
-        }
-
-        .badge-sale {
-            background-color: #cf5055;
-        }
-
         /* section: Category itemside */
 
         .itemside {
@@ -94,15 +79,31 @@
     <!--section: recent products list -->
     <main class="section-product-list mt-1">
         <div class="container">
+            {% if messages %}
+                <div class="col-12">
+                    {% for message in messages %}
+                    <div class="alert {% if message.tags %} alert-{{ message.tags }} {% endif %} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button class="close" type="button" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
             <div class="card shadow-sm rounded-0">
                 <div class="card-header bg-success text-white font-family font-weight-bolder">
                     <div class="float-left">
                         {% trans "New products" %}
                     </div>
                     <div class="text-right">
-                        <a class="text-white" href="{% url "shop:all_categorie" %}">
+                        <a class="text-white d-none d-md-inline" href="{% url "shop:all_categorie" as all_categorie %}">
                             {% trans "View more product" %}
-                            <i class="fa fa-chevron-right"></i>
+                        </a>
+
+                        <a href="{{ all_categorie }}" class="text-white font-weight-bolder">
+                            <i class="icon-arrow-right-circle ml-1"></i>
                         </a>
                     </div>
                 </div>
@@ -136,11 +137,11 @@
                 <div class="card-body p-1">
                     <div class="row no-gutters">
                         <div class="col-6 col-lg-6">
-                            <img class="img-fluid" src="{% static "img/jumia.jpg" %}">
+                            <img class="img-fluid" src="{% static "img/banners/slide2.jpg" %}">
                         </div>
 
                         <div class="col-6 col-lg-6">
-                            <img class="img-fluid" src="{% static "img/jumia-ordi.jpg" %}">
+                            <img class="img-fluid" src="{% static "img/banners/slide1.jpg" %}">
                         </div>
                     </div>
                 </div>
@@ -148,51 +149,33 @@
         </div>
     </section><!-- ./section: Publicité -->
 
+
+    <!-- section: smartphone -->
     <section class="section-pub my-2">
         <div class="container">
             <div class="card shadow-none border">
-                <h5 class="card-header blue-gradient text-white font-family font-weight-bolder">
-                    {% trans "Best deals smartphone" %}
-                </h5>
-                <div class="slick-slider mx-3">
-                    {% for produit in produits %}
-                        <div class="item-slide p-2">
-                            <figure class="card-product shadow-none">
-                                <div class="img-wrap d-block text-center">
-                                    <img src="{% if produit.image %}{{ produit.image.url }} {% else %} {% static "img/noimage.png" %}{% endif %}" alt="{{ produit.name }}" class="d-inline-block w-auto img-fluid">
-                                    <a href="{{ produit.get_absolute_url }}" class="stretched-link"></a>
-                                </div>
+                <div class="card-header blue-gradient d-flex justify-content-between">
+                    <div>
+                        <span class="text-white font-weight-bolder">
+                            {% trans "Best deals smartphone" %}
+                        </span>
+                    </div>
 
-                                <figcaption class="info-wrap">
-                                    <a href="{{ produit.get_absolute_url }}" class="title">
-                                    {{ produit.name | truncatewords:5 }}</a>
-                                    <span>{{ produit.review.count }} reviews</span>
-                                    <span>
-                                        {{ produit.average_rating|floatformat }} average rating
-                                    </span>
-                                    <span class="text-uppercase d-inline-block">
-                                        {% if produit.prix_reduit > produit.prix %}
-                                            {{ produit.prix|floatformat:0 }}
-                                        {% else %}
-                                            {{ produit.prix_reduit|floatformat:0 }}
-                                        {% endif %} fcfa
+                    <div>
+                        <a class="text-white font-weight-bolder d-none d-md-inline" href="{{ all_categorie }}">
+                            {% trans "View more smartphone product" %}
+                        </a>
 
-                                        <del class="text-muted small ml-1">
-                                            {% if produit.prix_reduit > produit.prix %}
-                                                {{ produit.prix_reduit|floatformat:0 }}
-                                            {% else %}
-                                                {{ produit.prix|floatformat:0 }}
-                                            {% endif %} fcfa
-                                        </del>
-                                    </span>
-                                </figcaption>
-                            </figure>
-                        </div>
-                    {% endfor %}
+                        <a href="{{ all_categorie }}" class="text-white font-weight-bolder">
+                            <i class="icon-arrow-right-circle ml-1"></i>
+                        </a>
+                    </div>
                 </div>
+
+                {% include "./tags/shop_product.html" %}
             </div>
         </div>
-    </section>
+    </section><!-- ./section: smartphone -->
 
     <section class="section-pub my-2">
         <div class="container">
@@ -200,84 +183,21 @@
                 <h5 class="card-header peach-gradient text-white font-family font-weight-bolder">
                     {% trans "Best deals TV &amp; audio" %}
                 </h5>
-                <div class="slick-slider mx-3">
-                    {% for produit in produits %}
-                        <div class="item-slide p-2">
-                            <figure class="card-product shadow-none">
-                                <div class="img-wrap d-block text-center">
-                                    <img src="{% if produit.image %}
-                                    {{ produit.image.url }} {% else %} {% static "img/noimage.png" %}
-                                    {% endif %}" alt="{{ produit.name }}">
-                                    <a href="{{ produit.get_absolute_url }}" class="stretched-link"></a>
-                                </div>
-                                <figcaption class="info-wrap">
-                                    <a href="{{ produit.get_absolute_url }}" class="title">
-                                    {{ produit.name | truncatewords:5 }}</a>
-                                    <span class="text-uppercase d-inline-block">
-                                        {% if produit.prix_reduit > produit.prix %}
-                                            {{ produit.prix|floatformat:0 }}
-                                        {% else %}
-                                            {{ produit.prix_reduit|floatformat:0 }}
-                                        {% endif %} fcfa
-
-                                        <del class="text-muted small ml-1">
-                                            {% if produit.prix_reduit > produit.prix %}
-                                                {{ produit.prix_reduit|floatformat:0 }}
-                                            {% else %}
-                                                {{ produit.prix|floatformat:0 }}
-                                            {% endif %} fcfa
-                                        </del>
-                                    </span>
-                                </figcaption>
-                            </figure>
-                        </div>
-                    {% endfor %}
-                </div>
+                {% include "./tags/shop_product.html" %}
             </div>
         </div>
     </section>
 
-    <section class="section-pub my-2">
-        <div class="container">
-            <div class="card shadow-none border rounded-0">
-                <h5 class="card-header bg-white text-black font-family">
-                    {% trans "Recently viewed articles" %}
-                </h5>
-                <div class="slick-slider mx-3">
-                    {% for produit in produits %}
-                        <div class="item-slide p-2">
-                            <figure class="card-product shadow-none">
-                                <div class="img-wrap d-block text-center">
-                                    <img src="{% if produit.image %}
-                                    {{ produit.image.url }} {% else %} {% static "img/noimage.png" %}
-                                    {% endif %}" alt="{{ produit.name }}">
-                                    <a href="{{ produit.get_absolute_url }}" class="stretched-link"></a>
-                                </div>
-                                <figcaption class="info-wrap">
-                                    <a href="{{ produit.get_absolute_url }}" class="title">
-                                    {{ produit.name | truncatewords:3 }}</a>
-                                    <span class="text-uppercase d-inline-block">
-                                        {% if produit.prix_reduit > produit.prix %}
-                                            {{ produit.prix|floatformat:0 }}
-                                        {% else %}
-                                            {{ produit.prix_reduit|floatformat:0 }}
-                                        {% endif %} fcfa
-
-                                        <del class="text-muted small ml-1">
-                                            {% if produit.prix_reduit > produit.prix %}
-                                                {{ produit.prix_reduit|floatformat:0 }}
-                                            {% else %}
-                                                {{ produit.prix|floatformat:0 }}
-                                            {% endif %} fcfa
-                                        </del>
-                                    </span>
-                                </figcaption>
-                            </figure>
-                        </div>
-                    {% endfor %}
+    {% if user.is_authenticated %}
+        <section class="section-pub my-2">
+            <div class="container">
+                <div class="card shadow-none border rounded-0">
+                    <h5 class="card-header bg-white text-black font-family">
+                        {% trans "Recently viewed articles" %}
+                    </h5>
+                    {% include "./tags/shop_product.html" %}
                 </div>
             </div>
-        </div>
-    </section>
-
+        </section>
+    {% endif %}
 {% endblock content %}

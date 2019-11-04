@@ -1,8 +1,5 @@
 {% extends "shop/base.html" %}
-{% load i18n static %}
-
-{% block carousel %}
-{% endblock carousel %}
+{% load i18n static shop_tags humanize %}
 
 {% block content %}
     <!--Main layout-->
@@ -57,14 +54,14 @@
                                         <tbody>
                                             {% for element in panier %}
                                                 {% with produit=element.produit %}
-                                                    <tr>
-                                                        <th scope="row" class="border-0">
+                                                    <tr class="{% if forloop.first %}border-bottom{% endif %}">
+                                                        <th scope="row">
                                                             <div class="p-1">
-                                                                <img src="{% if produit.image %}{{ produit.image.url }} {% else %}{% static "img/cart.png" %}{% endif %}" alt="{{ produit.name|safe}}" width="70" class="img-fluid rounded shadow-none">
+                                                                <img src="{% if produit.image %}{{ produit.image.url }} {% else %}{% static "img/cart.png" %}{% endif %}" alt="{{ produit.name}}" width="70" class="img-fluid rounded shadow-none">
                                                                 <div class="ml-2 d-inline-block align-middle">
                                                                     <h5 class="mb-0 my-2">
-                                                                        <a href="{{ produit.get_absolute_url }}" class="text-dark d-inline-block align-middle font-weight-bold h6">
-                                                                            {{ produit.name | truncatewords:4 }}
+                                                                        <a href="{{ produit.get_absolute_url }}" class="text-dark d-inline-block align-middle h6">
+                                                                            {{ produit.name | truncatewords:10 }}
                                                                         </a>
                                                                     </h5>
 
@@ -75,28 +72,28 @@
                                                                         </a>
 
                                                                         <a href="#" class="ml-3 text-danger">
-                                                                            <i class="far fa-heart"></i>
+                                                                            <i class="icon-heart"></i>
                                                                             {% trans "add to favorite" %}
                                                                         </a>
                                                                     </span>
                                                                 </div>
                                                             </div>
                                                         </th>
-                                                        <td class="border-0 align-middle">
-                                                            <form action="{% url "panier:ajout_panier" produit.id %}" class="form-inline" method="post" novalidate>
+                                                        <td class="align-middle">
+                                                            <form action="{% url "panier:ajout_panier" produit.id %}" class="form-inline" method="post">
                                                                 {{ element.form_update_quantite.quantite }}
                                                                 {{ element.form_update_quantite.update }}
                                                                 {% csrf_token %}
                                                                 <button type="submit" class="btn btn-sm p-0 shadow-none">
-                                                                    <i class="fas fa-redo text-left text-success font-weight-bold" aria-hidden="true"></i>
+                                                                    <span class="icon-refresh text-success font-weight-bolder h6" aria-hidden="true"></span>
                                                                 </button>
                                                             </form>
                                                         </td>
-                                                        <td class="border-0 align-middle">
+                                                        <td class="align-middle">
                                                             <strong>{{ produit.prix|floatformat:"0" }}
                                                             </strong>
                                                         </td>
-                                                        <td class="border-0 align-middle font-weight-bold text-success text-uppercase">
+                                                        <td class="align-middle font-weight-bold text-success text-uppercase">
                                                             {% if element.prix_total %}
                                                                 {{ element.prix_total|floatformat:"0" }} frcfa
                                                             {% endif %}
@@ -175,12 +172,12 @@
                                         {% endif %}
                                     </ul>
 
-                                    <div class="d-flex justify-content-around">
-                                        <a type="submit" href="{% url "shop:all_produit" %}" class="btn btn-md btn-light bg-white rounded-pill py-2 shadow-none">
-                                        {% trans "Continue shopping" %}</a>
+                                    <div class="d-flex justify-content-between">
+                                        <div><a type="submit" href="{% url "shop:all_categorie" %}" class="btn btn-md btn-light bg-white rounded-pill py-2 shadow-none">
+                                        {% trans "Continue shopping" %}</a></div>
 
-                                        <a type="submit" href="{% url "commandes:commander" %}" class="btn btn-md btn-success rounded-pill py-2 shadow-none">
-                                        {% trans "Procced to checkout" %}</a>
+                                        <div><a type="submit" href="{% url "commandes:commander" %}" class="btn btn-md btn-success rounded-pill py-2 shadow-none">
+                                        {% trans "Procced to checkout" %}</a></div>
                                     </div>
                                 </div>
                             </div>
@@ -192,34 +189,12 @@
                             <div class="empty-cart-content">
                                 <i class="icon-handbag icons d-inline-block"></i>
                                 <h3 class="font-weight-bold">{% trans "Your cart is empty" %} !</h3>
-                                <h4 text-capitalize>
-                                    {% trans "Back to" %} <a href="{% url "shop:all_categorie" %}"
-                                    class="font-weight-normal">{% trans "return shopping shopping" %}</a>
+                                <h4>{% trans "Return" %}
+                                    <a href="{% url "shop:all_categorie" %}" class="font-weight-normal">{% trans "shopping cart" %}</a>
                                 </h4>
                             </div>
                         </div>
                     </section>
-                {% endif %}
-
-                <!--Grid row produit recommandé -->
-                {% if recommande_produit %}
-                    <div class="row wow fadeIn">
-                        <h3 class="text-center font-weight-bold">
-                            {% trans "People who bought this also bought" %}
-                        </h3>
-
-                        {% for p in recommande_produit %}
-                        <div class="col-lg-4 col-md-6 mb-4 view zoom overlay">
-                            <a href="{{ p.get_absolute_url }}" class="stretched-link" title="">
-                                <img src="{% if p.image %}
-                                {{ p.image.url }} {% else %}
-                                {% static "img/noimage.png" %}
-                                {% endif %}" alt="" class="img-fluid">
-                                <div class="mask rgba-white-slight"></div>
-                            </a>
-                        </div>
-                        {% endfor %}
-                    </div>
                 {% endif %}
             </div>
         </div>

@@ -12,11 +12,14 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 import braintree
+from dotenv import load_dotenv
 from django.utils.translation import gettext_lazy as _
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -26,8 +29,13 @@ SECRET_KEY = '^)c9&3f@b6wlc(e_6-c4cqo*@#$9fmvq)k)(7oajatasoz%%%m'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-DEFAULT_FROM_EMAIL = 'flavienhgs@gmail.com'
 ALLOWED_HOSTS = []
+
+ADMINS = (
+    ('flavien', 'flavienhgs@gmail.com'),
+)
+
+MANAGERS = ADMINS
 
 AUTH_USER_MODEL = 'accounts.User'
 AUTHENTICATION_BACKENDS = (
@@ -38,27 +46,11 @@ SITE_NAME = 'e-market'
 META_KEYWORDS = 'Shopping, ecommerce, accessories, TV, Audio, smartphone, Mode'
 META_DESCRIPTION = 'ecommerce shopping'
 
-DEFAULT_CHARSET = 'utf-8'
-CORS_REPLACE_HTTPS_REFERER= False
-HOST_SCHEME= "http://"
-SECURE_CONTENT_TYPE_NOSNIFF = True
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_PRELOAD = True
-SECURE_BROWSER_XSS_FILTER = True
-SECURE_PROXY_SSL_HEADER= None
-SECURE_SSL_REDIRECT = False
-USE_X_FORWARRED_HOST = True
-
 # Cookie name. This can be whatever you want.
 SESSION_COOKIE_NAME = 'sessionid'
+
 # The module to store sessions data.
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
-# Age of cookie, in seconds (default: 2 weeks).
-SESSION_COOKIE_AGE = 60 * 60 * 24 * 7 * 2
-# Whether a user's session cookie expires when the Web browser is closed
-SESSION_EXPIRE_AT_BROWSER_CLOSE = False
-# Whether the session cookie should be secure (https:// only).
-SESSION_COOKIE_SECURE = False
 
 # Application definition
 
@@ -77,8 +69,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.humanize',
-    'django.contrib.redirects',
-    'django.contrib.flatpages',
 
     # ajout application shop
     'shop.apps.ShopConfig',
@@ -95,33 +85,50 @@ INSTALLED_APPS = [
     # ajout application de coupons
     'coupons.apps.CouponsConfig',
 
+    # ajout application de coupons
+    'marketing.apps.MarketingConfig',
+
     # ajout de hitcoun : compteur de vues
     # 'hitcount',
+
+    # ajout de hitcoun : compteur de vues
+    # 'debug_toolbar',
 
     # ajout tinymce
     'tinymce',
 
-    # ajout tinymce
+    # ajout compressor
     'compressor',
 
     # ajout application de rosetta translate interface
     'rosetta',
 ]
 
+# Config Django-suit
+SUIT_CONFIG = {
+    'ADMIN_NAME': 'e-market'
+}
+
 SITE_ID = 1
-
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    #
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
+
+
+# MIDDLEWARE_CLASSES = [
+#     'debug_toolbar.middleware.DebugToolbarMiddleware',
+# ]
 
 ROOT_URLCONF = 'ecommerce.urls'
 
@@ -142,7 +149,6 @@ TEMPLATES = [
                 # ...
                 # Processeur de contexte du panier
                 'panier.context_processors.panier',
-                'panier.context_processors.get_client_ip',
                 'panier.context_processors.ecommerce',
             ],
         },
@@ -150,19 +156,18 @@ TEMPLATES = [
 ]
 
 BREADCRUMBS_HOME_LABEL = 'Home'
+PANIER_SESSION_ID = 'panier'
 
 WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'flavienhgs@gmail.com'
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_PASSWORD = os.environ.get('MAIL')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-SESSION_ENGINE = "django.contrib.sessions.backends.cache"
-
-# argon2
+# argon2 settings
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.Argon2PasswordHasher',
     'django.contrib.auth.hashers.PBKDF2PasswordHasher',
@@ -173,14 +178,23 @@ PASSWORD_HASHERS = [
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'OPTIONS': {
-            'read_default_file': '/etc/mysql/db_ecommerce.conf',
+if DEBUG:
+    DATABASES = {
+        'default': {
+           'ENGINE': 'django.db.backends.mysql',
+            'OPTIONS': {
+                'read_default_file': '/etc/mysql/db_ecommerce.conf',
+            }
         }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -200,11 +214,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Configuration de redis : plugins pour proposer des articles similaires
-REDIS_HOST = 'localhost'
-REDIS_PORT = 6379
-REDIS_DB = 1
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -223,6 +232,7 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
+
 # formatage des nombres avec les séparateurs de milliers
 USE_THOUSAND_SEPARATOR = True
 
@@ -261,33 +271,24 @@ COMPRESS_ENABLED = True
 LOGIN_REDIRECT_URL = 'accounts:profile'
 LOGIN_URL = 'accounts:login'
 
-# Configuration des sessions
-PANIER_SESSION_ID = 'cart'
-
-# # default value
-# HITCOUNT_KEEP_HIT_ACTIVE = { 'days': 7 }
-
-# # default value
-# HITCOUNT_KEEP_HIT_IN_DATABASE = { 'days': 30 }
-
-# # default value
-# HITCOUNT_HITS_PER_IP_LIMIT = 0
-
-# # example value, default is empty tuple
-# HITCOUNT_EXCLUDE_USER_GROUP = ( 'Editor', )
-
 # Configuration de l'API braintree
 # https://www.braintreepayments.com/sandbox
-
 
 gateway = braintree.BraintreeGateway(
     braintree.Configuration(
         environment=braintree.Environment.Sandbox,
-        merchant_id='y5jkkwv943v76c9q',
-        public_key='gmrrt6d9qggcjw2r',
-        private_key='c70db4ac0b03d4df804b676ba19807a9'
+        merchant_id=os.environ.get('MERCHAND_ID'),
+        public_key=os.environ.get('PUBLIC_KEY'),
+        private_key=os.environ.get('PRIVATE_KEY')
     )
 )
 
-STRIPE_SECRET_KEY = 'sk_test_DbwZ3lr8iGvOkl3Qd07h0CVP00megoFfg'
-STRIPE_PUBLISHABLE_KEY = 'pk_test_MM8om54M1hyKMVHpU1pFojFd00lIvQEoUV'
+# Configuration de redis : plugins pour proposer des articles similaires
+# REDIS_HOST = 'localhost'
+# REDIS_PORT = 6379
+# REDIS_DB = 1
+
+# MAILCHIMP
+MAILCHIMP_API_KEY = os.environ.get('MAILCHIMP_API_KEY')
+MAILCHIMP_DATA_CENTER = os.environ.get('MAILCHIMP_DATA_CENTER')
+MAILCHIMP_EMAIL_LIST_ID = os.environ.get('MAILCHIMP_EMAIL_LIST_ID')

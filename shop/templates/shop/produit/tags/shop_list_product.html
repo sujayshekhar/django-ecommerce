@@ -1,0 +1,31 @@
+{% load i18n static shop_tags humanize %}
+
+<div class="item-slide p-2">
+    <figure class="card-product shadow-none">
+        <div class="img-wrap d-block text-center">
+            <img class="d-inline-block w-auto img-fluid" src="{% if produit.image %}
+            {{ produit.image.url }} {% else %} {% static "img/noimage.png" %}
+            {% endif %}" alt="{{ produit.name }}">
+            <a href="{{ produit.get_absolute_url }}" class="stretched-link"></a>
+        </div>
+        <figcaption class="info-wrap">
+            <a href="{{ produit.get_absolute_url }}" class="title">
+            {{ produit.name|safe|truncatewords:5 }}</a>
+            <span class="text-uppercase d-inline-block">
+                {% if produit.prix_reduit > produit.prix %}
+                {{ produit.prix|floatformat:0 }}
+                {% else %}
+                {{ produit.prix_reduit|floatformat:0 }}
+                {% endif %} fcfa
+
+                <del class="text-muted small ml-1">
+                    {% if produit.prix_reduit > produit.prix %}
+                    {{ produit.prix_reduit|floatformat:0 }}
+                    {% else %}
+                    {{ produit.prix|floatformat:0 }}
+                    {% endif %} fcfa
+                </del>
+            </span>
+        </figcaption>
+    </figure>
+</div>

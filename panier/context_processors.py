@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 # Context processors
 
-from .panier import Panier
-from shop.models import Categorie
 from ecommerce import settings
+
+from .panier import Panier
+from shop.models import Marque, Categorie
+
 
 
 # On instancie le panier à l'aide d'une requête et
@@ -23,6 +25,7 @@ def get_client_ip(request):
 def ecommerce(request):
     return {
         'active_categories': Categorie.objects.filter(is_active=True),
+        'active_marques': Marque.objects.filter(is_active=True),
         'site_name': settings.SITE_NAME,
         'meta_keywords': settings.META_KEYWORDS,
         'meta_description': settings.META_DESCRIPTION,
