@@ -1,4 +1,4 @@
-        {% load static compress %}
+        {% load static %}
 
         <!--[if IE 7]><html class="ie ie7"><![endif]-->
         <!--[if IE 8]><html class="ie ie8"><![endif]-->
@@ -27,7 +27,6 @@
         <meta name="twitter:title" content="">
         <!-- ./meta -->
 
-        {% compress css %}
             <!-- plugins: icons -->
             <link href="{% static "fontawesome/css/all.css" %}" rel="stylesheet">
             <link href="{% static "lineicon/css/simple-line-icons.css" %}" rel="stylesheet">
@@ -41,7 +40,7 @@
             <link href="{% static "css/mdb.min.css" %}" rel="stylesheet">
 
             <!-- plugin : ps-icon -->
-            <link rel="stylesheet" type="text/css" href="{% static "ps-icon/style.css" %}">
+            <link rel="stylesheet" type="text/css" href="{% static "psicon/style.css" %}">
 
             <!-- plugin : owlcarousel -->
             <link href="{% static "owl/owl.carousel.min.css" %}" rel="stylesheet">
@@ -65,7 +64,6 @@
                     html, body, header{ height: 100vh; }
                 }
             </style>
-        {% endcompress %}
         <!--[if IE 7]><body class="ie7 lt-ie8 lt-ie9 lt-ie10"><![endif]-->
         <!--[if IE 8]><body class="ie8 lt-ie9 lt-ie10"><![endif]-->
         <!--[if IE 9]><body class="ie9 lt-ie10"><![endif]-->

@@ -27,6 +27,7 @@ def ecommerce(request):
         'active_categories': Categorie.objects.filter(is_active=True),
         'active_marques': Marque.objects.filter(is_active=True),
         'site_name': settings.SITE_NAME,
+        'site_desc' : settings.SITE_DESCRIPTION,
         'meta_keywords': settings.META_KEYWORDS,
         'meta_description': settings.META_DESCRIPTION,
         'request': request

@@ -30,5 +30,4 @@ if 'rosetta' in settings.INSTALLED_APPS:
 
 if settings.DEBUG:
      urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-     urlpatterns += static(settings.COMPRESS_ROOT, document_root=settings.COMPRESS_ROOT)
      urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

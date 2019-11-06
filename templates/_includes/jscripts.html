@@ -1,21 +1,18 @@
-        {% load static compress %}
+        {% load static %}
 
         <!-- JQuery tooltips -->
-        {% compress js %}
-            <script type="text/javascript" src="{% static "js/jquery.min.js" %}" async></script>
+
+            <script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
             <!-- Bootstrap4 files-->
-            <script type="text/javascript" src="{% static "js/popper.min.js" %}" async></script>
-            <script type="text/javascript" src="{% static "js/bootstrap.min.js" %}" async></script>
+            <script type="text/javascript" src="{% static "js/popper.min.js" %}" ></script>
+            <script type="text/javascript" src="{% static "js/bootstrap.min.js" %}"></script>
             <!-- MDB core JavaScript -->
-            <script type="text/javascript" src="{% static "js/mdb.min.js" %}" async></script>
+            <script type="text/javascript" src="{% static "js/mdb.min.js" %}"></script>
             <!-- plugin: owl carousel  -->
-            <script type="text/javascript" src="{% static "owl/owl.carousel.min.js" %}" async></script>
+            <script type="text/javascript" src="{% static "owl/owl.carousel.min.js" %}"></script>
             <!-- plugin: slickslider  -->
-            <script type="text/javascript" src="{% static "slick/slick.min.js" %}" async></script>
+            <script type="text/javascript" src="{% static "slick/slick.min.js" %}"></script>
             <!-- plugin: fancybox  -->
-            <script type="text/javascript" src="{% static "fancybox/fancybox.min.js" %}" async></script>
-            <!-- plugin: isotope  -->
-            <script type="text/javascript" src="{% static "js/isotope.pkgd.min.js" %}" async></script>
+            <script type="text/javascript" src="{% static "fancybox/fancybox.min.js" %}"></script>
             <!-- custom js -->
-            <script type="text/javascript" src="{% static "js/main.js" %}" async></script>
-        {% endcompress %}
+            <script type="text/javascript" src="{% static "js/main.js" %}"></script>

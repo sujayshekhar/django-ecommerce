@@ -27,7 +27,6 @@ def enlever_panier(request, id_produit):
     panier = Panier(request)
     produit = get_object_or_404(Produit, id=id_produit)
     panier.enlever(produit)
-
     return redirect('panier:detail_panier')
 
 def detail_panier(request):
@@ -37,8 +36,7 @@ def detail_panier(request):
         return redirect('accounts:login')
 
     for item in panier:
-        item['form_update_quantite'] = AjouterProduitPanierForm(
-            initial={'quantite': item['quantite'], 'update': True})
+        item['form_update_quantite'] = AjouterProduitPanierForm(initial={'quantite': item['quantite'], 'update': True})
 
     # On ajout le coupon au panier
     appliquer_le_coupon = CouponForm()

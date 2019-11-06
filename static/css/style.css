@@ -1,14 +1,72 @@
 /* Required height of parents of the Half Page Carousel for proper displaying carousel itself */
 html,
 body,
-.view {
-  height: 100%; }
+.view {height: 100%; }
 
-/* Half Page Carousel itself*/
-.carousel { height: 50%; }
-.carousel .carousel-inner { height: 100%; }
-.carousel .carousel-inner .carousel-item,
-.carousel .carousel-inner .active { height: 100%; }
+#lang, #header { background-color: #f5F5f5; }
+
+.header-ctn { padding: 15px 0px; }
+
+.header-search form .input {
+  width: calc(100% - 260px);
+}
+
+.input {
+  height: 40px;
+  background-color: #FFF;
+  border-radius: 40px 0px 0px 40px;
+}
+
+.header-search form .search-btn {
+  background: #D10024;
+  font-weight: 700;
+  border-radius: 0px 40px 40px 0px;
+}
+
+.header-ctn > div {
+  display: inline-block;
+}
+.header-ctn > div + div { margin-left: 15px; }
+.header-ctn > div > a {
+  display: block;
+  position: relative;
+  width: 90px; text-align: center;
+}
+.header-ctn > div > a > i {
+  display: block;
+  font-size: 18px;
+}
+.header-ctn > div > a > span {
+  font-size: 12px;
+}
+.header-ctn > div > a >.cart-quantity {
+  position: absolute;
+  right: 15px;
+  top: -10px;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  font-weight: 700;
+  text-align: center;
+  border-radius: 50%;
+  font-size: 10px;
+  background: #D10024;
+}
+
+#topbar {
+  font-size: 0.9rem;
+  background-color: #1E1F29;
+}
+
+#topbar .offer .btn {
+  letter-spacing: 0.1em;
+}
+
+
+#topbar a.login-btn, #topbar a.signup-btn {
+  letter-spacing: 0.1em;
+  font-size: 0.75rem;
+}
 
 .icon-sm {
   width: 42px;
@@ -23,68 +81,26 @@ body,
 }
 
 /* Adjustment for mobile devices*/
-@media (max-width: 776px) {
-  .carousel {
-    height: 100%; } }
+
 
 /* Footer color for sake of consistency with Navbar */
 .page-footer {
   background-color: #929FBA; }
 
-
 /* Within style tags in your html file */
 * { box-sizing: border-box; }
 
-.grid:after {
-  content: '';
-  display: block;
-  clear: both;
+@media only screen and (max-width: 480px) {
+
+}
+@media only screen and (max-width: 767px) {
+
 }
 
-.grid-sizer,
-.grid-item {
-  width: 33.333%;
-}
-@media (max-width: 575px) {
-  .grid-sizer,
-  .grid-item {
-    width: 100%;
-  }
-}
-@media (min-width: 576px) and (max-width: 767px) {
-  .grid-sizer,
-  .grid-item {
-    width: 50%;
+@media only screen and (max-width: 991px) {
+  .header-logo .logo {
+    display: inline-block;
   }
 }
 
-/* To change the amount of columns on larger devices, uncomment the code below */
-
-@media (min-width: 768px) and (max-width: 991px) {
-  .grid-sizer,
-  .grid-item {
-    width: 33.333%;
-  }
-}
-@media (min-width: 992px) and (max-width: 1199px) {
-  .grid-sizer,
-  .grid-item {
-    width: 25%;
-  }
-}
-
-@media (min-width: 1200px) {
-  .grid-sizer,
-  .grid-item {
-    width: 20%;
-  }
-}
-
-.grid-item {
-  float: left;
-}
-
-.grid-item img {
-  display: block;
-  max-width: 100%;
-}
+@media only screen and (max-width: 1201px) {}

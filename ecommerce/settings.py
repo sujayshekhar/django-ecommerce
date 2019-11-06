@@ -43,6 +43,7 @@ AUTHENTICATION_BACKENDS = (
 )
 
 SITE_NAME = 'e-market'
+SITE_DESCRIPTION = 'Votre boutique en ligne'
 META_KEYWORDS = 'Shopping, ecommerce, accessories, TV, Audio, smartphone, Mode'
 META_DESCRIPTION = 'ecommerce shopping'
 
@@ -241,7 +242,6 @@ USE_THOUSAND_SEPARATOR = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
-COMPRESS_ROOT = os.path.join(BASE_DIR, 'stcompress/')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
@@ -262,11 +262,10 @@ COMPRESS_PRECOMPILERS = (
     ('text/less', 'lessc {infile} {outfile}'),
     ('text/x-sass', 'sass {infile} {outfile}'),
     ('text/x-scss', 'sass --scss {infile} {outfile}'),
-    ('text/stylus', 'stylus < {infile} > {outfile}'),
     ('text/foobar', 'path.to.MyPrecompilerFilter'),
 )
 
-COMPRESS_ENABLED = True
+COMPRESS_ENABLED = False
 
 LOGIN_REDIRECT_URL = 'accounts:profile'
 LOGIN_URL = 'accounts:login'

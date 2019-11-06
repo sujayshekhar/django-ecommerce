@@ -14,7 +14,6 @@ class Panier(object):
         """ Initialisation du panier """
         self.session = request.session
         panier = self.session.get(settings.PANIER_SESSION_ID)
-
         if not panier:
             # Enregistre un panier vide dans la session
             panier = self.session[settings.PANIER_SESSION_ID] = {}
@@ -22,27 +21,6 @@ class Panier(object):
 
         # On stocke le coupon du jour
         self.id_coupon = self.session.get('id_coupon')
-
-    def __iter__(self):
-        """ On Itére sur les articles dans le panier et
-        jusqu'à obtenir tous les produits de la base de données."""
-        ids_produit = self.panier.keys()
-
-        # On récupérer les objets produits et les ajoute au panier
-        produits = Produit.objects.filter(id__in=ids_produit)
-
-        panier = self.panier.copy()
-        for produit in produits:
-            panier[str(produit.id)]['produit'] = produit
-
-        for item in panier.values():
-            item['prix'] = Decimal(item['prix'])
-            item['prix_total'] = item['prix'] * item['quantite']
-            yield item
-
-    def __len__(self):
-        """ On profile tous les items dans le panier """
-        return sum(item['quantite'] for item in self.panier.values())
 
     def ajout(self, produit, quantite=1, update_quantite=False):
         """ Ajouter un produit au panier ou mettre a jour son panier"""
@@ -58,6 +36,7 @@ class Panier(object):
 
     def save(self):
         # marque la session comme modifiee pour qu'elle soit enregistrer
+        self.session[settings.PANIER_SESSION_ID] = self.panier
         self.session.modified = True
 
     def enlever(self, produit):
@@ -67,6 +46,26 @@ class Panier(object):
         if id_produit in self.panier:
             del self.panier[id_produit]
             self.save()
+
+    def __iter__(self):
+        """ On Itére sur les articles dans le panier et
+        jusqu'à obtenir tous les produits de la base de données."""
+        ids_produit = self.panier.keys()
+
+        # On récupérer les objets produits et les ajoute au panier
+        produits = Produit.objects.filter(id__in=ids_produit)
+        panier = self.panier.copy()
+        for produit in produits:
+            panier[str(produit.id)]['produit'] = produit
+
+        for item in panier.values():
+            item['prix'] = Decimal(item['prix'])
+            item['prix_total'] = item['prix'] * item['quantite']
+            yield item
+
+    def __len__(self):
+        """ On profile tous les items dans le panier """
+        return sum(item['quantite'] for item in self.panier.values())
 
 
     # On calcule le coût total des articles dans le panier
