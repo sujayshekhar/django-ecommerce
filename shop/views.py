@@ -2,12 +2,9 @@
 
 import datetime
 from django.urls import reverse
-from django.conf import settings
-from django.core.paginator import Paginator
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
-from django.db.models import Avg, Count, Max, Min, Q
-from django.views.decorators.cache import cache_page
+from django.db.models import Count, Q
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import render, redirect, get_object_or_404
 
